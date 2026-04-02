@@ -76,7 +76,7 @@ defmodule BetterMe.Accounts do
   """
   def register_user(attrs) do
     %User{}
-    |> User.email_changeset(attrs)
+    |> User.registration_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -107,6 +107,10 @@ defmodule BetterMe.Accounts do
       %Ecto.Changeset{data: %User{}}
 
   """
+  def change_user_registration(user, attrs \\ %{}) do
+    User.registration_changeset(user, attrs)
+  end
+
   def change_user_email(user, attrs \\ %{}, opts \\ []) do
     User.email_changeset(user, attrs, opts)
   end

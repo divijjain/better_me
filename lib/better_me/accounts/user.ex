@@ -23,6 +23,12 @@ defmodule BetterMe.Accounts.User do
       uniqueness of the email, useful when displaying live validations.
       Defaults to `true`.
   """
+  def registration_changeset(user, attrs) do
+    user
+    |> email_changeset(attrs)
+    |> password_changeset(attrs)
+  end
+
   def email_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, [:email])

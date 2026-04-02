@@ -2,8 +2,7 @@ defmodule BetterMe.Repo.Migrations.CreateHabits do
   use Ecto.Migration
 
   def change do
-    create table(:habits, primary_key: false) do
-      add :id, :binary_id, primary_key: true
+    create table(:habits) do
       add :name, :string, null: false
       add :category, :string, null: false
       add :frequency, :string, null: false, default: "daily"
@@ -15,12 +14,11 @@ defmodule BetterMe.Repo.Migrations.CreateHabits do
 
     create index(:habits, [:user_id])
 
-    create table(:habit_logs, primary_key: false) do
-      add :id, :binary_id, primary_key: true
+    create table(:habit_logs) do
       add :date, :date, null: false
       add :completed, :boolean, null: false, default: true
       add :note, :string
-      add :habit_id, references(:habits, type: :binary_id, on_delete: :delete_all), null: false
+      add :habit_id, references(:habits, on_delete: :delete_all), null: false
 
       timestamps(type: :utc_datetime)
     end

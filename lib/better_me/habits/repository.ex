@@ -71,6 +71,14 @@ defmodule BetterMe.Habits.Repository do
     |> Repo.all()
   end
 
+  def get_log_dates_since(habit_id, since) do
+    HabitLog
+    |> where(habit_id: ^habit_id, completed: true)
+    |> where([l], l.date >= ^since)
+    |> select([l], l.date)
+    |> Repo.all()
+  end
+
   def list_recent_logs(habit_id, since) do
     HabitLog
     |> where(habit_id: ^habit_id)

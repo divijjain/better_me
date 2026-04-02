@@ -29,8 +29,7 @@ users → todos, habits (+ habit_logs), workouts (+ exercises), body_metrics,
 4. Analytics dashboards
 
 ## current phase
-[ update this line when moving between phases ]
-Phase 1 — Week 1: bootstrapping Phoenix API + Expo skeleton
+Phase 1 — Week 2: Habits + streak calculation complete. Next: Todos + body metrics (Week 3)
 
 ## rules
 - Jido wraps Ecto, never replaces it. Data layer unchanged when agents enter.

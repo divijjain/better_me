@@ -194,7 +194,39 @@ defmodule BetterMeWeb.UserAuth do
     end
   end
 
-  defp signed_in_path(_conn), do: ~p"/"
+  defp signed_in_path(_conn), do: ~p"/habits"
+
+  @doc """
+  LiveView on_mount hook — mounts current_scope from session.
+  Use :require_authenticated to enforce login.
+  """
+  def on_mount(:require_authenticated, _params, session, socket) do
+    socket = mount_current_scope(socket, session)
+
+    if socket.assigns.current_scope && socket.assigns.current_scope.user do
+      {:cont, socket}
+    else
+      {:halt, Phoenix.LiveView.redirect(socket, to: ~p"/users/log-in")}
+    end
+  end
+
+  def on_mount(:mount_current_scope, _params, session, socket) do
+    {:cont, mount_current_scope(socket, session)}
+  end
+
+  defp mount_current_scope(socket, session) do
+    Phoenix.Component.assign_new(socket, :current_scope, fn ->
+      user =
+        with token when is_binary(token) <- session["user_token"],
+             {user, _} <- Accounts.get_user_by_session_token(token) do
+          user
+        else
+          _ -> nil
+        end
+
+      Scope.for_user(user)
+    end)
+  end
 
   @doc """
   Plug for routes that require the user to be authenticated.

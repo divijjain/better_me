@@ -32,14 +32,15 @@ defmodule BetterMeWeb.HabitsLive.Index do
       <ul class="space-y-3">
         <li
           :for={habit <- @habits}
-          class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm"
+          class="relative flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm hover:bg-gray-50 transition"
         >
-          <div class="flex items-center gap-3">
+          <.link navigate={~p"/habits/#{habit.id}"} class="absolute inset-0"></.link>
+          <div class="relative flex items-center gap-3 pointer-events-none">
             <button
               phx-click="log_today"
               phx-value-id={habit.id}
               class={[
-                "flex h-8 w-8 items-center justify-center rounded-full border-2 transition",
+                "flex h-8 w-8 items-center justify-center rounded-full border-2 transition pointer-events-auto",
                 if(habit.logged_today,
                   do: "border-indigo-600 bg-indigo-600 text-white",
                   else: "border-gray-300 text-gray-300 hover:border-indigo-400"
@@ -55,7 +56,7 @@ defmodule BetterMeWeb.HabitsLive.Index do
               <p class="text-xs text-gray-400 capitalize">{habit.category}</p>
             </div>
           </div>
-          <div class="flex items-center gap-3">
+          <div class="relative flex items-center gap-3">
             <span class="text-sm font-semibold text-indigo-600">
               {habit.streak}🔥
             </span>

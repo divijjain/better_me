@@ -295,30 +295,25 @@ Schemas define shape. Changesets define rules. Keep them separate
 and composable. One changeset per action when actions have different rules.
 
 ### rules
-- Use binary_id (UUID) as primary key everywhere — better for distributed
-  systems and avoids sequential ID enumeration
+- Use plain integer primary keys — phx.gen.auth generates integer-keyed tables and
+  mixing binary_id causes foreign key type mismatches that are hard to debug
 - Embed metadata as :map for flexible fields (measurements, tags, macros)
   rather than normalising into extra tables prematurely
 - Use Ecto.Enum for fields with a fixed set of values
 - Never put authorization logic in a changeset
-- Multiple changesets per schema when different actions need different rules
+- Multiple changesets per schema when different actions have different rules
 
-### uuid primary keys — set once in config
-```elixir
-# config/config.exs
-config :better_me, BetterMe.Repo,
-  migration_primary_key: [type: :binary_id],
-  migration_foreign_key: [type: :binary_id]
-```
+### integer primary keys — default, no config needed
+Plain integers are the Ecto default. Do not set `migration_primary_key` in config.
+Do not set `@primary_key` or `@foreign_key_type` in schemas unless you have a
+specific reason — letting Ecto default to `:id` keeps everything consistent with
+phx.gen.auth generated tables.
 
 ### multiple changesets for different actions
 ```elixir
 defmodule BetterMe.Habits.Habit do
   use Ecto.Schema
   import Ecto.Changeset
-
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
 
   schema "habits" do
     field :name,      :string

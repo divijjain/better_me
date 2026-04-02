@@ -24,9 +24,6 @@ config :better_me,
   ecto_repos: [BetterMe.Repo],
   generators: [timestamp_type: :utc_datetime]
 
-config :better_me, BetterMe.Repo,
-  migration_primary_key: [type: :binary_id],
-  migration_foreign_key: [type: :binary_id]
 
 # Configure the endpoint
 config :better_me, BetterMeWeb.Endpoint,

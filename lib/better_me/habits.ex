@@ -1,6 +1,6 @@
 defmodule BetterMe.Habits do
   alias BetterMe.Habits.Repository
-  alias BetterMe.Habits.Actions.{LogHabit, ListWithMeta, CurrentStreak, RecentLogs, LoggedToday}
+  alias BetterMe.Habits.Actions.{LogHabit, ListWithMeta, CurrentStreak, RecentLogs, LoggedToday, HabitStats}
 
   defdelegate list_habits(user_id, opts \\ []), to: Repository
   defdelegate list_habits_with_meta(user_id), to: ListWithMeta, as: :run
@@ -15,4 +15,5 @@ defmodule BetterMe.Habits do
   defdelegate current_streak(habit_id, user_id), to: CurrentStreak, as: :run
   defdelegate recent_logs(habit_id, user_id, days \\ 30), to: RecentLogs, as: :run
   defdelegate logged_today?(habit_id, user_id), to: LoggedToday, as: :run
+  defdelegate habit_stats(habit_id, user_id),   to: HabitStats, as: :run
 end

@@ -2,9 +2,6 @@ defmodule BetterMe.Habits.HabitLog do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
-
   schema "habit_logs" do
     field :date, :date
     field :completed, :boolean, default: true
