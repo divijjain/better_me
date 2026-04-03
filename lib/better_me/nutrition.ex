@@ -1,4 +1,5 @@
 defmodule BetterMe.Nutrition do
+  alias BetterMe.Nutrition.Actions
   alias BetterMe.Nutrition.Repository
 
   # Ingredients
@@ -32,4 +33,8 @@ defmodule BetterMe.Nutrition do
   defdelegate log_meal(user_id, attrs), to: Repository
   defdelegate delete_meal_log(meal_log), to: Repository
   defdelegate get_meal_log(id, user_id), to: Repository
+
+  defdelegate log_meal_for_user(user_id, attrs), to: Actions.LogMeal, as: :run
+  defdelegate daily_summary(user_id, date), to: Actions.DailySummary, as: :run
+  defdelegate meal_type_order(), to: Actions.DailySummary
 end
