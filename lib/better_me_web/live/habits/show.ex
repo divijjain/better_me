@@ -7,7 +7,7 @@ defmodule BetterMeWeb.HabitsLive.Show do
     user_id = socket.assigns.current_scope.user.id
 
     case Habits.habit_stats(id, user_id) do
-      {:ok, stats}         -> {:ok, assign(socket, stats: stats, user_id: user_id, habit_id: id)}
+      {:ok, stats} -> {:ok, assign(socket, stats: stats, user_id: user_id, habit_id: id)}
       {:error, :not_found} -> {:ok, push_navigate(socket, to: ~p"/habits")}
     end
   end

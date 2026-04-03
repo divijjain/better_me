@@ -29,7 +29,7 @@ users → todos, habits (+ habit_logs), workouts (+ exercises), body_metrics,
 4. Analytics dashboards
 
 ## current phase
-Phase 1 — Week 2: Habits + streak calculation complete. Next: Todos + body metrics (Week 3)
+Phase 1 — Week 4 complete: Habits + Todos + Body Metrics + Gym tracking done. Phase 1 complete.
 
 ## rules
 - Jido wraps Ecto, never replaces it. Data layer unchanged when agents enter.

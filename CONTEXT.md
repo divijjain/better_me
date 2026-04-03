@@ -2,8 +2,14 @@
 # Read this at the start of every new conversation instead of exploring the codebase.
 
 ## current state
-Phase 1 — Week 3 complete. Habits + Todos + Body Metrics all working.
-Next: Week 4 — Gym tracking (workouts → exercises → sets/reps/weight, PR detection).
+Phase 1 — ALL WEEKS COMPLETE. Habits + Todos + Body Metrics + Gym tracking all working.
+Next: Phase 2 — Nutrition + Go microservice.
+
+## fitness data sync (future — Phase 2)
+Apple Health: no server API, data is on-device only.
+  → react-native-health in Expo app → POST to Phoenix API
+Google Fit: has OAuth2 REST API, can sync server-side via Oban job, or via react-native-google-fit.
+Both platforms feed the same Phoenix workout/body_metrics endpoints — no special handling needed in Phoenix.
 
 ## what is built and working
 - Auth: magic link + password login via phx.gen.auth (plain integer IDs everywhere)
@@ -85,10 +91,26 @@ priv/repo/
 Email: divij@better.me / Password: betterme2026!
 Email: test@better.me  / Password: betterme2026!
 
-## week 4 plan (next session)
-Gym tracking:
-- `workouts` schema: date, type (strength/cardio/flexibility), duration, notes, user_id
-- `exercises` schema: workout_id, name, sets, reps, weight, rpe
-- PR detection: track personal best per exercise (max weight × reps)
-- LiveView: workout list, workout detail (exercise log), create workout + add exercises
-- Follow same three-layer pattern as habits/todos/health
+## what is built — gym tracking (week 4)
+- `workouts` schema: date, type (strength/cardio/flexibility/sport/other), duration, notes
+- `exercises` schema: workout_id, name, sets, reps, weight, rpe, is_pr
+- PR detection: `actions/detect_pr.ex` — compares weight against previous best per exercise name per user, marks `is_pr: true`
+- `actions/add_exercise.ex` — adds exercise then runs PR detection, returns `:pr | :no_pr`
+- LiveViews: `/workouts` list, `/workouts/:id` show with inline add-exercise form + PR badge 🏆, `/workouts/new` + `/workouts/:id/edit` forms
+- Gym tab added to bottom nav
+
+Key files:
+  lib/better_me/workouts.ex                          # public API
+  lib/better_me/workouts/repository.ex               # all Repo calls
+  lib/better_me/workouts/schema/workout.ex
+  lib/better_me/workouts/schema/exercise.ex
+  lib/better_me/workouts/actions/detect_pr.ex
+  lib/better_me/workouts/actions/add_exercise.ex
+  lib/better_me_web/live/workouts/index.ex show.ex form.ex
+
+## phase 2 plan (next)
+- Recipes CRUD (title, ingredients jsonb, macros jsonb, tags)
+- Meal logging (date, recipe_id, servings, meal_type)
+- Go microservice: POST /calculate-macros, POST /calculate-tdee
+- Daily macro progress view
+- Push notifications via Expo Push API
