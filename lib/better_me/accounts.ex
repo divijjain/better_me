@@ -4,9 +4,9 @@ defmodule BetterMe.Accounts do
   """
 
   import Ecto.Query, warn: false
-  alias BetterMe.Repo
 
-  alias BetterMe.Accounts.{User, UserToken, UserNotifier}
+  alias BetterMe.Accounts.{User, UserNotifier, UserToken}
+  alias BetterMe.Repo
 
   ## Database getters
 

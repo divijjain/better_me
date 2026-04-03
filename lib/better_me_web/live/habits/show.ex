@@ -6,9 +6,8 @@ defmodule BetterMeWeb.HabitsLive.Show do
   def mount(%{"id" => id}, _session, socket) do
     user_id = socket.assigns.current_scope.user.id
 
-    with {:ok, stats} <- Habits.habit_stats(id, user_id) do
-      {:ok, assign(socket, stats: stats, user_id: user_id, habit_id: id)}
-    else
+    case Habits.habit_stats(id, user_id) do
+      {:ok, stats}         -> {:ok, assign(socket, stats: stats, user_id: user_id, habit_id: id)}
       {:error, :not_found} -> {:ok, push_navigate(socket, to: ~p"/habits")}
     end
   end
@@ -17,32 +16,29 @@ defmodule BetterMeWeb.HabitsLive.Show do
 
   def render(assigns) do
     ~H"""
-    <div class="max-w-xl mx-auto px-4 py-8">
+    <.page_container>
       <%!-- Header --%>
       <div class="mb-6 flex items-center gap-3">
         <.link navigate={~p"/habits"} class="text-gray-400 hover:text-gray-600">
           <.icon name="hero-arrow-left" class="h-5 w-5" />
         </.link>
         <div class="flex-1">
-          <h1 class="text-2xl font-bold text-gray-900"><%= @stats.habit.name %></h1>
-          <p class="text-sm text-gray-400 capitalize"><%= @stats.habit.category %> · <%= @stats.habit.frequency %></p>
+          <h1 class="text-2xl font-bold text-gray-900">{@stats.habit.name}</h1>
+          <p class="text-sm text-gray-400 capitalize">
+            {@stats.habit.category} · {@stats.habit.frequency}
+          </p>
         </div>
-        <.link
-          navigate={~p"/habits/#{@stats.habit.id}/edit"}
-          class="text-gray-400 hover:text-gray-600"
-        >
-          <.icon name="hero-pencil-square" class="h-5 w-5" />
-        </.link>
+        <.edit_link path={~p"/habits/#{@stats.habit.id}/edit"} />
       </div>
 
       <%!-- Streak stats --%>
       <div class="grid grid-cols-2 gap-4 mb-8">
         <div class="rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm text-center">
-          <p class="text-3xl font-bold text-indigo-600"><%= @stats.current_streak %>🔥</p>
+          <p class="text-3xl font-bold text-indigo-600">{@stats.current_streak}🔥</p>
           <p class="mt-1 text-sm text-gray-500">Current streak</p>
         </div>
         <div class="rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm text-center">
-          <p class="text-3xl font-bold text-amber-500"><%= @stats.longest_streak %>⭐</p>
+          <p class="text-3xl font-bold text-amber-500">{@stats.longest_streak}⭐</p>
           <p class="mt-1 text-sm text-gray-500">Longest streak</p>
         </div>
       </div>
@@ -52,16 +48,14 @@ defmodule BetterMeWeb.HabitsLive.Show do
         <h2 class="text-sm font-semibold text-gray-700 mb-4">Last 30 days</h2>
         <div class="grid grid-cols-10 gap-1.5">
           <%= for day <- last_30_days() do %>
-            <div
-              class={[
-                "h-9 w-9 rounded-md flex items-center justify-center text-xs font-medium",
-                if(MapSet.member?(@stats.calendar_dates, day),
-                  do: "bg-indigo-500 text-white",
-                  else: "bg-gray-100 text-gray-400"
-                )
-              ]}
-            >
-              <%= day.day %>
+            <div class={[
+              "h-9 w-9 rounded-md flex items-center justify-center text-xs font-medium",
+              if(MapSet.member?(@stats.calendar_dates, day),
+                do: "bg-indigo-500 text-white",
+                else: "bg-gray-100 text-gray-400"
+              )
+            ]}>
+              {day.day}
             </div>
           <% end %>
         </div>
@@ -89,7 +83,7 @@ defmodule BetterMeWeb.HabitsLive.Show do
           Log for today
         <% end %>
       </button>
-    </div>
+    </.page_container>
     """
   end
 
@@ -98,7 +92,8 @@ defmodule BetterMeWeb.HabitsLive.Show do
   end
 
   defp do_log_today(socket) do
-    with {:ok, _log} <- Habits.log_habit(socket.assigns.habit_id, %{date: Date.utc_today(), completed: true}),
+    with {:ok, _log} <-
+           Habits.log_habit(socket.assigns.habit_id, %{date: Date.utc_today(), completed: true}),
          {:ok, stats} <- Habits.habit_stats(socket.assigns.habit_id, socket.assigns.user_id) do
       assign(socket, :stats, stats)
     else

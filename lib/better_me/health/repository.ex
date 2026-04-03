@@ -1,7 +1,8 @@
 defmodule BetterMe.Health.Repository do
   import Ecto.Query
-  alias BetterMe.Repo
+
   alias BetterMe.Health.Schema.BodyMetric
+  alias BetterMe.Repo
 
   def list_metrics(user_id, opts \\ []) do
     limit = Keyword.get(opts, :limit, 90)
@@ -15,14 +16,14 @@ defmodule BetterMe.Health.Repository do
 
   def get_metric(id, user_id) do
     case Repo.get_by(BodyMetric, id: id, user_id: user_id) do
-      nil    -> {:error, :not_found}
+      nil -> {:error, :not_found}
       metric -> {:ok, metric}
     end
   end
 
   def get_metric!(id, user_id) do
     case get_metric(id, user_id) do
-      {:ok, metric}        -> metric
+      {:ok, metric} -> metric
       {:error, :not_found} -> raise Ecto.NoResultsError, queryable: BodyMetric
     end
   end

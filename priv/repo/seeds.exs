@@ -11,7 +11,7 @@ alias BetterMe.Habits
 
 users = [
   %{email: "divij@better.me", password: "betterme2026!"},
-  %{email: "test@better.me",  password: "betterme2026!"}
+  %{email: "test@better.me", password: "betterme2026!"}
 ]
 
 created_users =

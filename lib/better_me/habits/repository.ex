@@ -1,8 +1,8 @@
 defmodule BetterMe.Habits.Repository do
   import Ecto.Query
 
-  alias BetterMe.Repo
   alias BetterMe.Habits.{Habit, HabitLog}
+  alias BetterMe.Repo
 
   # ---------------------------------------------------------------------------
   # Habits CRUD

@@ -16,16 +16,8 @@ defmodule BetterMeWeb.TodosLive.Index do
 
   def render(assigns) do
     ~H"""
-    <div class="max-w-xl mx-auto px-4 py-8">
-      <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold text-gray-900">Todos</h1>
-        <.link
-          navigate={~p"/todos/new"}
-          class="inline-flex items-center gap-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-500"
-        >
-          <.icon name="hero-plus" class="h-4 w-4" /> New
-        </.link>
-      </div>
+    <.page_container>
+      <.page_header title="Todos" new_path={~p"/todos/new"} />
 
       <%!-- Filter tabs --%>
       <div class="flex gap-2 mb-5">
@@ -33,7 +25,10 @@ defmodule BetterMeWeb.TodosLive.Index do
           patch={~p"/todos?filter=pending"}
           class={[
             "rounded-full px-3 py-1 text-sm font-medium transition",
-            if(@filter == "pending", do: "bg-indigo-600 text-white", else: "bg-gray-100 text-gray-600 hover:bg-gray-200")
+            if(@filter == "pending",
+              do: "bg-indigo-600 text-white",
+              else: "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            )
           ]}
         >
           Pending
@@ -42,20 +37,29 @@ defmodule BetterMeWeb.TodosLive.Index do
           patch={~p"/todos?filter=done"}
           class={[
             "rounded-full px-3 py-1 text-sm font-medium transition",
-            if(@filter == "done", do: "bg-indigo-600 text-white", else: "bg-gray-100 text-gray-600 hover:bg-gray-200")
+            if(@filter == "done",
+              do: "bg-indigo-600 text-white",
+              else: "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            )
           ]}
         >
           Done
         </.link>
       </div>
 
-      <div :if={@todos == []} class="text-center py-16 text-gray-400">
-        <%= if @filter == "done", do: "No completed todos.", else: "Nothing pending. Add your first one!" %>
-      </div>
+      <.empty_state
+        :if={@todos == []}
+        message={
+          if @filter == "done",
+            do: "No completed todos.",
+            else: "Nothing pending. Add your first one!"
+        }
+      />
 
       <ul class="space-y-2">
         <li
           :for={todo <- @todos}
+          :key={todo.id}
           class="relative flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm hover:bg-gray-50 transition"
         >
           <button
@@ -74,7 +78,10 @@ defmodule BetterMeWeb.TodosLive.Index do
           </button>
 
           <div class="flex-1 min-w-0">
-            <p class={["text-sm font-medium truncate", if(todo.completed, do: "line-through text-gray-400", else: "text-gray-900")]}>
+            <p class={[
+              "text-sm font-medium truncate",
+              if(todo.completed, do: "line-through text-gray-400", else: "text-gray-900")
+            ]}>
               {todo.title}
             </p>
             <p class="text-xs text-gray-400 capitalize">
@@ -92,15 +99,10 @@ defmodule BetterMeWeb.TodosLive.Index do
             {todo.priority}
           </span>
 
-          <.link
-            navigate={~p"/todos/#{todo.id}/edit"}
-            class="flex-shrink-0 text-gray-400 hover:text-gray-600"
-          >
-            <.icon name="hero-pencil-square" class="h-4 w-4" />
-          </.link>
+          <.edit_link path={~p"/todos/#{todo.id}/edit"} />
         </li>
       </ul>
-    </div>
+    </.page_container>
     """
   end
 
@@ -108,7 +110,7 @@ defmodule BetterMeWeb.TodosLive.Index do
     user_id = socket.assigns.current_scope.user.id
 
     with {:ok, todo} <- Todos.get_todo(id, user_id),
-         {:ok, _}    <- Todos.complete_todo(todo) do
+         {:ok, _} <- Todos.complete_todo(todo) do
       {:noreply, load_todos(socket, user_id, socket.assigns.filter)}
     else
       {:error, _} -> {:noreply, put_flash(socket, :error, "Could not complete todo")}
@@ -120,8 +122,8 @@ defmodule BetterMeWeb.TodosLive.Index do
     assign(socket, todos: Todos.list_todos(user_id, completed: completed), filter: filter)
   end
 
-  defp priority_class(:high),   do: "bg-red-100 text-red-700"
+  defp priority_class(:high), do: "bg-red-100 text-red-700"
   defp priority_class(:medium), do: "bg-yellow-100 text-yellow-700"
-  defp priority_class(:low),    do: "bg-green-100 text-green-700"
-  defp priority_class(_),       do: "bg-gray-100 text-gray-600"
+  defp priority_class(:low), do: "bg-green-100 text-green-700"
+  defp priority_class(_), do: "bg-gray-100 text-gray-600"
 end

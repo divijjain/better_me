@@ -1,171 +1,94 @@
-# better-me — project context
+# better-me — session context snapshot
+# Read this at the start of every new conversation instead of exploring the codebase.
 
-## what this is
-A mobile-first personal OS for Divij. Tracks daily todos, gym workouts, body metrics,
-nutrition/recipes, habits/streaks, journaling, and AI-powered insights over personal data.
-Built for personal use first. Not a SaaS product.
+## current state
+Phase 1 — Week 3 complete. Habits + Todos + Body Metrics all working.
+Next: Week 4 — Gym tracking (workouts → exercises → sets/reps/weight, PR detection).
 
-## stack decisions
+## what is built and working
+- Auth: magic link + password login via phx.gen.auth (plain integer IDs everywhere)
+- Habits: CRUD, streak calculation, 30-day calendar, one-tap log, show page with stats
+- Todos: CRUD, priority (low/medium/high), category, due date, repeat, pending/done filter, one-tap complete
+- Body Metrics: CRUD, weight + body fat %, unique per user per day
+- Bottom nav bar: Habits / Todos / Health tabs (fixed, mobile-first)
+- UI components extracted to `ui_components.ex`
+- Credo configured and passing (`mix credo --strict`)
 
-### Phoenix + Ecto (no Ash)
-Plain Phoenix API (JSON mode) + Ecto + PostgreSQL. Ash was considered and rejected —
-too much learning curve for a personal project with no team. Plain contexts + changesets
-move faster and are easier to debug. Ash becomes relevant if the resource count grows
-beyond 15 and an auto-generated API is needed.
-
-### React Native (Expo)
-Mobile-first. Expo gives cross-platform iOS + Android without going fully native.
-Phoenix serves a JSON API; React Native consumes it.
-
-LiveView is acceptable for Phase 1 — LiveView apps run in any mobile browser, so
-the personal daily-driver UI can be built with LiveView without a separate React
-Native project. React Native enters in Phase 2+ when native device features are
-needed (push notifications, offline, sensors).
-
-### Oban
-Background jobs: morning digest, habit reminders, streak calculations, embedding jobs.
-Standard Oban — no agentic behaviour here, just reliable scheduled work.
-
-### Go microservice
-Single bounded service for nutrition/macro calculations. Reasons:
-- CPU-bound math (TDEE, macro splits, BMR) is a natural fit for Go
-- Self-contained — no shared state with Phoenix
-- Learning vehicle for Go without abandoning Elixir
-- Ships as a static binary, called over internal HTTP from Phoenix
-- If Go knowledge is never needed, this service can be rewritten in Elixir with no
-  architectural impact
-
-### pgvector
-Vector similarity search inside the existing PostgreSQL instance. Powers the AI insights
-phase. Embeddings table stores vectors for journal entries, workout notes, meal logs.
-No separate vector DB — keeps the infrastructure simple.
-
-### Jido (Phase 3 only)
-Agent framework on top of OTP. NOT used for CRUD, scheduled jobs, or single LLM calls.
-Used only where the LLM needs to decide what to query next — insight agent, meal planner,
-habit coach. Jido actions wrap existing Ecto context functions. No data layer changes
-when Jido is introduced.
-
-### LLM API
-Anthropic (Claude) or OpenAI via req_llm. Direct API calls in Phase 3. No LangChain
-or high-level wrappers — keeps the stack transparent and debuggable.
-
----
-
-## domain model
-
+## key file map
 ```
-users
-  todos          (title, category, due_date, completed, priority, repeat)
-  habits         (name, category, target_frequency)
-    habit_logs   (date, completed, note)
-  workouts       (date, type, duration, notes)
-    exercises    (name, sets, reps, weight, rpe)
-  body_metrics   (date, weight, body_fat_pct, measurements jsonb)
-  recipes        (title, ingredients jsonb, macros jsonb, tags)
-    meal_logs    (date, recipe_id, servings, meal_type)
-  journal_entries(date, content, mood, energy_level)
-  embeddings     (content, source_type, source_id, vector)
+lib/better_me/
+  habits.ex                          # public API — defdelegate only
+  habits/
+    repository.ex                    # all Repo calls
+    streak.ex                        # pure streak calc
+    schema/habit.ex                  # Ecto schema
+    schema/habit_log.ex
+    actions/log_habit.ex
+    actions/list_with_meta.ex        # bulk load habits+streak+today (2 queries)
+    actions/current_streak.ex
+    actions/recent_logs.ex
+    actions/logged_today.ex
+    actions/habit_stats.ex           # show page stats (streak + calendar)
+
+  todos.ex                           # public API — defdelegate only
+  todos/
+    repository.ex
+    schema/todo.ex
+
+  health.ex                          # public API — defdelegate only
+  health/
+    repository.ex
+    schema/body_metric.ex
+
+  accounts.ex                        # phx.gen.auth generated + register_user added
+  accounts/user.ex
+
+lib/better_me_web/
+  router.ex                          # all routes in live_session :authenticated
+  user_auth.ex                       # on_mount :require_authenticated
+  components/
+    core_components.ex               # Phoenix primitives (input, flash, icon)
+    ui_components.ex                 # app components (page_header, form_header, etc.)
+    layouts/root.html.heex           # bottom nav, top auth bar, data-theme="light"
+  live/
+    habits/index.ex show.ex form.ex
+    todos/index.ex form.ex
+    health/index.ex form.ex
+
+priv/repo/
+  migrations/
+    20260402105243_create_users_auth_tables.exs
+    20260402105329_create_habits.exs
+    20260402233816_create_todos.exs
+    20260402234051_create_body_metrics.exs
+  seeds.exs                          # divij@better.me / betterme2026!
 ```
 
----
+## architecture rules (summary — full detail in PRINCIPLES.md)
+- Three layers per context: `context.ex` (defdelegate only) → `repository.ex` (all Repo.*) → `actions/*.ex` (coordination)
+- Actions never call Repo.* directly. Repository never coordinates.
+- Schemas live in `context/schema/schema_name.ex`, private to their context.
+- All context functions scoped to user_id — never fetch without it.
+- `%Struct{user_id: user_id}` before cast — never `Map.put(attrs, :user_id, ...)` on string-keyed maps.
+- LiveViews use `<.page_container>`, `<.page_header>`, `<.form_header>`, `<.form_actions>`, `<.empty_state>`, `<.edit_link>` from `ui_components.ex`.
+- Plain Tailwind only — no daisyUI classes on form elements.
+- `:key={item.id}` on every `:for` loop.
 
-## build phases
+## decisions made (non-obvious)
+- Plain integer PKs everywhere — UUID caused type mismatches with phx.gen.auth
+- LiveView for Phase 1 mobile UI (runs in mobile browser, no React Native needed yet)
+- Plain Tailwind + Heroicons — no component library (daisyUI present but locked to light theme, its classes avoided on form elements)
+- `data-theme="light"` hardcoded on `<html>` — dark mode disabled (was making inputs invisible)
+- `precommit` alias: `mix compile --warnings-as-errors && mix deps.unlock --unused && mix format && mix credo --strict && mix test`
 
-### phase 1 — daily driver (weeks 1–4)
-Goal: app usable for yourself. Full stack wired end to end.
+## seed credentials
+Email: divij@better.me / Password: betterme2026!
+Email: test@better.me  / Password: betterme2026!
 
-- Week 1: Phoenix API + Expo skeleton + one working endpoint (habits CRUD)
-- Week 2: Habits + streak calculation
-- Week 3: Todos (with categories) + body metrics
-- Week 4: Gym tracking (workouts → exercises → sets/reps/weight, PR detection)
-
-Start with Habits. It is the smallest complete vertical slice — one resource,
-one screen, one streak calculation. Everything else is a variation on that pattern.
-
-### phase 2 — nutrition + Go (weeks 5–8)
-- Go microservice: POST /calculate-macros, POST /calculate-tdee
-- Recipes CRUD with ingredients and macros
-- Meal logging (one-tap from recipe)
-- Daily macro progress
-- Push notifications via Expo Push API
-
-### phase 3 — AI insights (weeks 9–12)
-- pgvector extension + embeddings table
-- Oban job: embed all existing data on write
-- RAG pipeline: embed question → similarity search → LLM call
-- Jido introduced here for insight agent, meal planner, habit coach
-- Example queries the agent handles:
-  - "Why did my energy crash Thursday?"
-  - "What did I eat on my best training days?"
-  - "Suggest a meal for today based on my macro target and past preferences"
-
-### phase 4 — analytics (weeks 13–16)
-- Body weight trend + 7-day moving average
-- Workout volume per week per muscle group
-- Habit completion heatmap
-- Macro adherence % over time
-- Mood/energy vs sleep/nutrition correlation
-
----
-
-## key architectural rules
-
-1. Jido wraps Ecto, not the other way around. Data layer never changes when agents
-   are introduced.
-2. Go microservice is stateless. Phoenix owns all persistent state.
-3. One PostgreSQL instance for everything — relational data + pgvector. No separate
-   vector DB.
-4. Oban for all async work. No raw Task.async in production paths.
-5. Phase 1 ships with zero AI. Agents require good data to reason over — build the
-   data layer first.
-
----
-
-## concurrency model reference
-
-| need | tool |
-|---|---|
-| scheduled/background jobs | Oban |
-| parallel data fetching | Task.async_stream |
-| long-running stateful agent | Jido AgentServer |
-| real-time push to mobile | Phoenix Channels + Expo Push |
-| CPU-bound computation | Go microservice |
-
----
-
-## go learning path (parallel track)
-Week 1: Go tour (tour.golang.org), structs, interfaces, error handling pattern
-Week 2: net/http or Gin, JSON encode/decode, write the macro calculator, unit tests,
-        build binary, call from Phoenix
-
-Go is a secondary tool. Elixir remains primary. Go enters only for the nutrition
-microservice and any future CLI tooling or infrastructure scripts.
-
----
-
-## what RAG is (for reference)
-Retrieval-Augmented Generation. Gives the LLM access to personal data without
-retraining it.
-
-Phase 1 — indexing: chunk personal data → embedding model → store vectors in pgvector
-Phase 2 — query: embed user question → similarity search → retrieve top N chunks →
-          stuff into LLM prompt → LLM answers grounded in real data
-
-The LLM never saw the personal data in training. It reads it at query time.
-
----
-
-## what agents vs workflows means here
-
-Workflow: code controls the flow. LLM fills slots at fixed points.
-  Examples: morning digest (Oban), workout auto-tagging, weekly summary
-
-Agent: LLM controls the flow. Decides which tools to call and in what order.
-  Examples: insight agent, meal planner, habit coach
-
-Test: "Could I draw a complete flowchart before the LLM runs?"
-  Yes → workflow. No → agent.
-
-Use workflows for Phase 1–2. Agents enter in Phase 3 only where dynamic
-tool selection is genuinely needed.
+## week 4 plan (next session)
+Gym tracking:
+- `workouts` schema: date, type (strength/cardio/flexibility), duration, notes, user_id
+- `exercises` schema: workout_id, name, sets, reps, weight, rpe
+- PR detection: track personal best per exercise (max weight × reps)
+- LiveView: workout list, workout detail (exercise log), create workout + add exercises
+- Follow same three-layer pattern as habits/todos/health

@@ -1,8 +1,8 @@
 defmodule BetterMe.Accounts.UserNotifier do
   import Swoosh.Email
 
-  alias BetterMe.Mailer
   alias BetterMe.Accounts.User
+  alias BetterMe.Mailer
 
   # Delivers the email using the application mailer.
   defp deliver(recipient, subject, body) do

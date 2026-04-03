@@ -24,7 +24,6 @@ config :better_me,
   ecto_repos: [BetterMe.Repo],
   generators: [timestamp_type: :utc_datetime]
 
-
 # Configure the endpoint
 config :better_me, BetterMeWeb.Endpoint,
   url: [host: "localhost"],

@@ -3,8 +3,8 @@ defmodule BetterMe.Health.Schema.BodyMetric do
   import Ecto.Changeset
 
   schema "body_metrics" do
-    field :date,         :date
-    field :weight,       :float
+    field :date, :date
+    field :weight, :float
     field :body_fat_pct, :float
     field :measurements, :map, default: %{}
 

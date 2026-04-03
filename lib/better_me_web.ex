@@ -84,12 +84,13 @@ defmodule BetterMeWeb do
 
       # HTML escaping functionality
       import Phoenix.HTML
-      # Core UI components
+      # Core UI components and app-specific UI components
       import BetterMeWeb.CoreComponents
+      import BetterMeWeb.UIComponents
 
       # Common modules used in templates
-      alias Phoenix.LiveView.JS
       alias BetterMeWeb.Layouts
+      alias Phoenix.LiveView.JS
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())

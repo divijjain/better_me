@@ -14,24 +14,15 @@ defmodule BetterMeWeb.HabitsLive.Index do
 
   def render(assigns) do
     ~H"""
-    <div class="max-w-xl mx-auto px-4 py-8">
-      <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold text-gray-900">Habits</h1>
-        <.link
-          navigate={~p"/habits/new"}
-          class="inline-flex items-center gap-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-500"
-        >
-          <.icon name="hero-plus" class="h-4 w-4" /> New
-        </.link>
-      </div>
+    <.page_container>
+      <.page_header title="Habits" new_path={~p"/habits/new"} />
 
-      <div :if={@habits == []} class="text-center py-16 text-gray-400">
-        No habits yet. Add your first one!
-      </div>
+      <.empty_state :if={@habits == []} message="No habits yet. Add your first one!" />
 
       <ul class="space-y-3">
         <li
           :for={habit <- @habits}
+          :key={habit.id}
           class="relative flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm hover:bg-gray-50 transition"
         >
           <.link navigate={~p"/habits/#{habit.id}"} class="absolute inset-0"></.link>
@@ -60,16 +51,11 @@ defmodule BetterMeWeb.HabitsLive.Index do
             <span class="text-sm font-semibold text-indigo-600">
               {habit.streak}🔥
             </span>
-            <.link
-              navigate={~p"/habits/#{habit.id}/edit"}
-              class="text-gray-400 hover:text-gray-600"
-            >
-              <.icon name="hero-pencil-square" class="h-4 w-4" />
-            </.link>
+            <.edit_link path={~p"/habits/#{habit.id}/edit"} />
           </div>
         </li>
       </ul>
-    </div>
+    </.page_container>
     """
   end
 

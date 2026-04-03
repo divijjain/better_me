@@ -5,26 +5,26 @@ defmodule BetterMe.Todos.Repository do
 
   def list_todos(user_id, opts \\ []) do
     completed = Keyword.get(opts, :completed, false)
-    category  = Keyword.get(opts, :category)
+    category = Keyword.get(opts, :category)
 
     Todo
     |> where(user_id: ^user_id, completed: ^completed)
     |> maybe_where_category(category)
-    |> order_by([t], [asc: t.priority, asc: t.due_date, asc: t.inserted_at])
+    |> order_by([t], asc: t.priority, asc: t.due_date, asc: t.inserted_at)
     |> limit(200)
     |> Repo.all()
   end
 
   def get_todo(id, user_id) do
     case Repo.get_by(Todo, id: id, user_id: user_id) do
-      nil  -> {:error, :not_found}
+      nil -> {:error, :not_found}
       todo -> {:ok, todo}
     end
   end
 
   def get_todo!(id, user_id) do
     case get_todo(id, user_id) do
-      {:ok, todo}        -> todo
+      {:ok, todo} -> todo
       {:error, :not_found} -> raise Ecto.NoResultsError, queryable: Todo
     end
   end

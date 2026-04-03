@@ -16,20 +16,21 @@ defmodule BetterMeWeb.TodosLive.Form do
 
   def render(assigns) do
     ~H"""
-    <div class="max-w-xl mx-auto px-4 py-8">
-      <div class="mb-6 flex items-center gap-2">
-        <.link navigate={~p"/todos"} class="text-gray-400 hover:text-gray-600">
-          <.icon name="hero-arrow-left" class="h-5 w-5" />
-        </.link>
-        <h1 class="text-2xl font-bold text-gray-900">
-          {if @action == :new, do: "New Todo", else: "Edit Todo"}
-        </h1>
-      </div>
+    <.page_container>
+      <.form_header
+        title={if @action == :new, do: "New Todo", else: "Edit Todo"}
+        back_path={~p"/todos"}
+      />
 
       <.form for={@form} phx-change="validate" phx-submit="save" class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
-          <.input field={@form[:title]} type="text" placeholder="What needs to be done?" class="w-full" />
+          <.input
+            field={@form[:title]}
+            type="text"
+            placeholder="What needs to be done?"
+            class="w-full"
+          />
         </div>
 
         <div>
@@ -57,7 +58,9 @@ defmodule BetterMeWeb.TodosLive.Form do
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Due date <span class="text-gray-400">(optional)</span></label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Due date <span class="text-gray-400">(optional)</span>
+          </label>
           <.input field={@form[:due_date]} type="date" class="w-full" />
         </div>
 
@@ -70,31 +73,9 @@ defmodule BetterMeWeb.TodosLive.Form do
           />
         </div>
 
-        <div class="flex gap-3 pt-2">
-          <button
-            type="submit"
-            class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500"
-          >
-            {if @action == :new, do: "Create", else: "Save"}
-          </button>
-          <.link
-            navigate={~p"/todos"}
-            class="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-          >
-            Cancel
-          </.link>
-          <button
-            :if={@action == :edit}
-            type="button"
-            phx-click="delete"
-            data-confirm="Delete this todo?"
-            class="ml-auto rounded-md text-sm font-medium text-red-500 hover:text-red-700"
-          >
-            Delete
-          </button>
-        </div>
+        <.form_actions action={@action} cancel_path={~p"/todos"} on_delete="delete" />
       </.form>
-    </div>
+    </.page_container>
     """
   end
 
@@ -109,34 +90,40 @@ defmodule BetterMeWeb.TodosLive.Form do
 
   def handle_event("save", %{"todo" => params}, socket) do
     case socket.assigns.action do
-      :new  -> create_todo(socket, params)
+      :new -> create_todo(socket, params)
       :edit -> update_todo(socket, params)
     end
   end
 
   def handle_event("delete", _params, socket) do
     case Todos.delete_todo(socket.assigns.todo) do
-      {:ok, _}    -> {:noreply, push_navigate(socket, to: ~p"/todos")}
+      {:ok, _} -> {:noreply, push_navigate(socket, to: ~p"/todos")}
       {:error, _} -> {:noreply, put_flash(socket, :error, "Could not delete todo")}
     end
   end
 
   defp create_todo(socket, params) do
     case Todos.create_todo(socket.assigns.user_id, params) do
-      {:ok, _}           -> {:noreply, socket |> put_flash(:info, "Todo created") |> push_navigate(to: ~p"/todos")}
-      {:error, changeset} -> {:noreply, assign_form(socket, changeset)}
+      {:ok, _} ->
+        {:noreply, socket |> put_flash(:info, "Todo created") |> push_navigate(to: ~p"/todos")}
+
+      {:error, changeset} ->
+        {:noreply, assign_form(socket, changeset)}
     end
   end
 
   defp update_todo(socket, params) do
     case Todos.update_todo(socket.assigns.todo, params) do
-      {:ok, _}           -> {:noreply, socket |> put_flash(:info, "Todo updated") |> push_navigate(to: ~p"/todos")}
-      {:error, changeset} -> {:noreply, assign_form(socket, changeset)}
+      {:ok, _} ->
+        {:noreply, socket |> put_flash(:info, "Todo updated") |> push_navigate(to: ~p"/todos")}
+
+      {:error, changeset} ->
+        {:noreply, assign_form(socket, changeset)}
     end
   end
 
   defp load_todo(%{"id" => id}, user_id), do: {Todos.get_todo!(id, user_id), :edit}
-  defp load_todo(_params, _user_id),      do: {Todos.new_todo(), :new}
+  defp load_todo(_params, _user_id), do: {Todos.new_todo(), :new}
 
   defp assign_form(socket, changeset), do: assign(socket, :form, to_form(changeset))
 end

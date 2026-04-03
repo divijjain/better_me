@@ -238,7 +238,11 @@ defmodule BetterMeWeb.CoreComponents do
       <select
         id={@id}
         name={@name}
-        class={[@class || "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500", @errors != [] && "border-red-500"]}
+        class={[
+          @class ||
+            "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500",
+          @errors != [] && "border-red-500"
+        ]}
         multiple={@multiple}
         {@rest}
       >
@@ -258,7 +262,8 @@ defmodule BetterMeWeb.CoreComponents do
         id={@id}
         name={@name}
         class={[
-          @class || "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500",
+          @class ||
+            "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500",
           @errors != [] && "border-red-500"
         ]}
         {@rest}
@@ -279,7 +284,8 @@ defmodule BetterMeWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          @class || "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500",
+          @class ||
+            "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500",
           @errors != [] && "border-red-500"
         ]}
         {@rest}

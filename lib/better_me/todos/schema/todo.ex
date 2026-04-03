@@ -3,12 +3,12 @@ defmodule BetterMe.Todos.Schema.Todo do
   import Ecto.Changeset
 
   schema "todos" do
-    field :title,     :string
-    field :category,  Ecto.Enum, values: [:work, :personal, :health, :learning, :misc]
-    field :priority,  Ecto.Enum, values: [:low, :medium, :high], default: :medium
-    field :due_date,  :date
+    field :title, :string
+    field :category, Ecto.Enum, values: [:work, :personal, :health, :learning, :misc]
+    field :priority, Ecto.Enum, values: [:low, :medium, :high], default: :medium
+    field :due_date, :date
     field :completed, :boolean, default: false
-    field :repeat,    Ecto.Enum, values: [:none, :daily, :weekly, :monthly], default: :none
+    field :repeat, Ecto.Enum, values: [:none, :daily, :weekly, :monthly], default: :none
 
     belongs_to :user, BetterMe.Accounts.User
 
