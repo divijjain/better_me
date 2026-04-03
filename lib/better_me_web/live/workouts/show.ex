@@ -264,21 +264,12 @@ defmodule BetterMeWeb.WorkoutsLive.Show do
   end
 
   def handle_event("update_set", %{"set" => params, "set-id" => set_id}, socket) do
-    %{workout: workout} = socket.assigns
     {id, _} = Integer.parse(set_id)
 
-    with {:ok, exercise} <- find_exercise_for_set(workout, id),
-         {:ok, set} <- Workouts.get_exercise_set(id, exercise.id) do
-      attrs = %{
-        "weight" => parse_float(params["weight"]),
-        "reps" => parse_int(params["reps"]),
-        "completed" => params["weight"] not in [nil, ""] or params["reps"] not in [nil, ""]
-      }
-
-      case Workouts.update_exercise_set(set, attrs) do
-        {:ok, _} -> {:noreply, reload_workout(socket)}
-        {:error, _} -> {:noreply, socket}
-      end
+    with {:ok, exercise} <- find_exercise_for_set(socket.assigns.workout, id),
+         {:ok, set} <- Workouts.get_exercise_set(id, exercise.id),
+         {:ok, _} <- Workouts.update_exercise_set(set, set_attrs(params)) do
+      {:noreply, reload_workout(socket)}
     else
       _ -> {:noreply, socket}
     end
@@ -357,6 +348,14 @@ defmodule BetterMeWeb.WorkoutsLive.Show do
       end)
 
     if exercise, do: {:ok, exercise}, else: {:error, :not_found}
+  end
+
+  defp set_attrs(params) do
+    %{
+      "weight" => parse_float(params["weight"]),
+      "reps" => parse_int(params["reps"]),
+      "completed" => params["weight"] not in [nil, ""] or params["reps"] not in [nil, ""]
+    }
   end
 
   defp parse_float(nil), do: nil

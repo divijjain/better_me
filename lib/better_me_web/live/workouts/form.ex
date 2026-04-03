@@ -22,6 +22,8 @@ defmodule BetterMeWeb.WorkoutsLive.Form do
      |> assign_form(changeset)}
   end
 
+  def handle_params(_params, _url, socket), do: {:noreply, socket}
+
   def render(assigns) do
     ~H"""
     <.page_container>

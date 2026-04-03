@@ -108,9 +108,32 @@ Key files:
   lib/better_me/workouts/actions/add_exercise.ex
   lib/better_me_web/live/workouts/index.ex show.ex form.ex
 
-## phase 2 plan (next)
-- Recipes CRUD (title, ingredients jsonb, macros jsonb, tags)
-- Meal logging (date, recipe_id, servings, meal_type)
-- Go microservice: POST /calculate-macros, POST /calculate-tdee
-- Daily macro progress view
+## what is built — nutrition (phase 2, in progress)
+Data model decision: ingredients are a first-class table (not jsonb) — select from existing
+ingredients when building a recipe, macros computed from quantity_grams × macros_per_100g.
+
+```
+ingredients        — food items with macros per 100g (shared, no user_id)
+recipes            — title, tags[], user_id
+recipe_ingredients — recipe_id + ingredient_id + quantity_grams (join table)
+meal_logs          — date, recipe_id, servings, meal_type, user_id
+```
+
+Key files:
+  lib/better_me/nutrition.ex                                   # public API — defdelegate only
+  lib/better_me/nutrition/repository.ex                        # all Repo calls
+  lib/better_me/nutrition/macros.ex                            # pure macro calc (no DB)
+  lib/better_me/nutrition/schema/ingredient.ex
+  lib/better_me/nutrition/schema/recipe.ex
+  lib/better_me/nutrition/schema/recipe_ingredient.ex
+  lib/better_me/nutrition/schema/meal_log.ex
+  priv/repo/migrations/20260403110000_create_ingredients.exs
+  priv/repo/migrations/20260403110001_create_recipes.exs
+  priv/repo/migrations/20260403110002_create_recipe_ingredients.exs
+  priv/repo/migrations/20260403110003_create_meal_logs.exs
+
+## phase 2 remaining
+- LiveViews: /ingredients, /recipes CRUD, /nutrition daily view
+- Go microservice: POST /calculate-tdee (macro targets)
+- Daily macro progress view (totals vs targets)
 - Push notifications via Expo Push API

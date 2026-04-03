@@ -129,6 +129,47 @@ defmodule BetterMeWeb.UIComponents do
   end
 
   @doc """
+  Tab bar for the Nutrition section — shared across /recipes and /ingredients.
+
+  ## Examples
+
+      <.nutrition_tabs active={:recipes} />
+      <.nutrition_tabs active={:ingredients} />
+  """
+  attr :active, :atom, required: true, values: [:recipes, :ingredients]
+
+  def nutrition_tabs(assigns) do
+    ~H"""
+    <div class="mb-6 flex border-b border-gray-200">
+      <.link
+        navigate={~p"/recipes"}
+        class={[
+          "px-4 py-2 text-sm font-medium border-b-2 -mb-px",
+          if(@active == :recipes,
+            do: "border-indigo-600 text-indigo-600",
+            else: "border-transparent text-gray-500 hover:text-gray-700"
+          )
+        ]}
+      >
+        Recipes
+      </.link>
+      <.link
+        navigate={~p"/ingredients"}
+        class={[
+          "px-4 py-2 text-sm font-medium border-b-2 -mb-px",
+          if(@active == :ingredients,
+            do: "border-indigo-600 text-indigo-600",
+            else: "border-transparent text-gray-500 hover:text-gray-700"
+          )
+        ]}
+      >
+        Ingredients
+      </.link>
+    </div>
+    """
+  end
+
+  @doc """
   Standard page wrapper — constrains width and adds padding.
   Use as the outermost div on every page.
 
