@@ -67,6 +67,14 @@ defmodule BetterMeWeb.Router do
       live "/habits/new", HabitsLive.Form, :new
       live "/habits/:id", HabitsLive.Show, :show
       live "/habits/:id/edit", HabitsLive.Form, :edit
+
+      live "/todos", TodosLive.Index, :index
+      live "/todos/new", TodosLive.Form, :new
+      live "/todos/:id/edit", TodosLive.Form, :edit
+
+      live "/health", HealthLive.Index, :index
+      live "/health/new", HealthLive.Form, :new
+      live "/health/:id/edit", HealthLive.Form, :edit
     end
   end
 
