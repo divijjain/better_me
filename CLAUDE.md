@@ -19,17 +19,23 @@ Plain contexts + changesets. Ash was considered and rejected — too much overhe
 for a personal project. Revisit if resource count grows past 15.
 
 ## domain
-users → todos, habits (+ habit_logs), workouts (+ exercises), body_metrics,
-        recipes (+ meal_logs), journal_entries, embeddings
+users → todos, habits (+ habit_logs), workouts (+ exercises + exercise_sets + routine_templates),
+        body_metrics, ingredients, recipes (+ recipe_ingredients + meal_logs),
+        user_profiles, journal_entries, embeddings
 
 ## phases
 1. Daily driver (habits, todos, body metrics, gym) — plain Phoenix + Ecto
-2. Nutrition + Go microservice
+2. Nutrition + user profiles + Go microservice
 3. AI insights — RAG (pgvector) + Jido agents
 4. Analytics dashboards
 
 ## current phase
-Phase 1 — Week 4 complete: Habits + Todos + Body Metrics + Gym tracking done. Phase 1 complete.
+Phase 2 — In progress.
+- Phase 1 complete: Habits, Todos, Body Metrics, Gym tracking (workouts, exercises, exercise_sets, routine_templates).
+- Phase 2 started: Ingredients, Recipes, Meal logs, User Profiles (TDEE/macro targets) done.
+- Nutrition log LiveView in progress (lib/better_me_web/live/nutrition/index.ex).
+- User profile LiveView scaffolded (lib/better_me_web/live/profile/).
+- Profiles context includes TDEE calculation (BetterMe.Profiles.TDEE).
 
 ## rules
 - Jido wraps Ecto, never replaces it. Data layer unchanged when agents enter.

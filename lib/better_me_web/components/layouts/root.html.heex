@@ -16,6 +16,7 @@
     <div class="flex items-center justify-end gap-4 px-4 py-2 text-sm text-gray-500">
       <%= if @current_scope do %>
         <span>{@current_scope.user.email}</span>
+        <.link navigate={~p"/profile"} class="hover:text-gray-800">Profile</.link>
         <.link href={~p"/users/settings"} class="hover:text-gray-800">Settings</.link>
         <.link href={~p"/users/log-out"} method="delete" class="hover:text-gray-800">
           Log out

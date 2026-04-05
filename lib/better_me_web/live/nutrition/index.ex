@@ -1,7 +1,7 @@
 defmodule BetterMeWeb.NutritionLive.Index do
   use BetterMeWeb, :live_view
 
-  alias BetterMe.Nutrition
+  alias BetterMe.{Nutrition, Profiles}
 
   @meal_type_labels %{
     breakfast: "Breakfast",
@@ -14,10 +14,12 @@ defmodule BetterMeWeb.NutritionLive.Index do
     user_id = socket.assigns.current_scope.user.id
     today = Date.utc_today()
 
+    targets = load_targets(user_id)
+
     {:ok,
      socket
      |> assign(user_id: user_id, date: today, show_log_form: false)
-     |> assign(recipes: Nutrition.list_recipes(user_id))
+     |> assign(recipes: Nutrition.list_recipes(user_id), targets: targets)
      |> load_summary(user_id, today)}
   end
 
@@ -44,24 +46,62 @@ defmodule BetterMeWeb.NutritionLive.Index do
         </div>
       </div>
 
-      <%!-- Daily macro totals --%>
-      <div class="mb-6 grid grid-cols-4 gap-2 rounded-xl border border-gray-200 bg-white p-4 shadow-sm text-center">
-        <div>
-          <p class="text-lg font-bold text-gray-900">{round(@summary.totals.calories)}</p>
-          <p class="text-xs text-gray-400">kcal</p>
+      <%!-- Daily macro totals / progress --%>
+      <div class="mb-6 rounded-xl border border-gray-200 bg-white p-4 shadow-sm space-y-3">
+        <.macro_row
+          :if={@targets}
+          label="Calories"
+          actual={round(@summary.totals.calories)}
+          target={@targets.calories}
+          unit="kcal"
+          color="bg-indigo-500"
+        />
+        <div :if={!@targets} class="grid grid-cols-4 gap-2 text-center">
+          <div>
+            <p class="text-lg font-bold text-gray-900">{round(@summary.totals.calories)}</p>
+            <p class="text-xs text-gray-400">kcal</p>
+          </div>
+          <div>
+            <p class="text-lg font-bold text-gray-900">{Float.round(@summary.totals.protein, 1)}g</p>
+            <p class="text-xs text-gray-400">protein</p>
+          </div>
+          <div>
+            <p class="text-lg font-bold text-gray-900">{Float.round(@summary.totals.carbs, 1)}g</p>
+            <p class="text-xs text-gray-400">carbs</p>
+          </div>
+          <div>
+            <p class="text-lg font-bold text-gray-900">{Float.round(@summary.totals.fat, 1)}g</p>
+            <p class="text-xs text-gray-400">fat</p>
+          </div>
         </div>
-        <div>
-          <p class="text-lg font-bold text-gray-900">{Float.round(@summary.totals.protein, 1)}g</p>
-          <p class="text-xs text-gray-400">protein</p>
-        </div>
-        <div>
-          <p class="text-lg font-bold text-gray-900">{Float.round(@summary.totals.carbs, 1)}g</p>
-          <p class="text-xs text-gray-400">carbs</p>
-        </div>
-        <div>
-          <p class="text-lg font-bold text-gray-900">{Float.round(@summary.totals.fat, 1)}g</p>
-          <p class="text-xs text-gray-400">fat</p>
-        </div>
+        <.macro_row
+          :if={@targets}
+          label="Protein"
+          actual={Float.round(@summary.totals.protein, 1)}
+          target={@targets.protein_g}
+          unit="g"
+          color="bg-rose-400"
+        />
+        <.macro_row
+          :if={@targets}
+          label="Carbs"
+          actual={Float.round(@summary.totals.carbs, 1)}
+          target={@targets.carbs_g}
+          unit="g"
+          color="bg-amber-400"
+        />
+        <.macro_row
+          :if={@targets}
+          label="Fat"
+          actual={Float.round(@summary.totals.fat, 1)}
+          target={@targets.fat_g}
+          unit="g"
+          color="bg-emerald-400"
+        />
+        <p :if={!@targets} class="text-center text-xs text-gray-400 pt-1">
+          <.link navigate={~p"/profile"} class="text-indigo-500 hover:underline">Set up your profile</.link>
+          to see targets and progress bars
+        </p>
       </div>
 
       <%!-- Meals by type --%>
@@ -269,6 +309,49 @@ defmodule BetterMeWeb.NutritionLive.Index do
   defp meal_type_calories(logs) do
     logs
     |> Enum.reduce(0.0, fn log, acc -> acc + log.macros.calories end)
+    |> round()
+  end
+
+  defp load_targets(user_id) do
+    case Profiles.get_profile(user_id) do
+      {:ok, profile} -> Profiles.calculate_targets(profile)
+      {:error, _}    -> nil
+    end
+  end
+
+  attr :label,  :string,  required: true
+  attr :actual, :any,     required: true
+  attr :target, :any,     required: true
+  attr :unit,   :string,  required: true
+  attr :color,  :string,  required: true
+
+  defp macro_row(assigns) do
+    assigns = assign(assigns, :pct, progress_pct(assigns.actual, assigns.target))
+
+    ~H"""
+    <div>
+      <div class="flex justify-between text-xs mb-1">
+        <span class="font-medium text-gray-700">{@label}</span>
+        <span class="text-gray-400">
+          {@actual} / {@target} {@unit}
+        </span>
+      </div>
+      <div class="h-2 w-full rounded-full bg-gray-100">
+        <div
+          class={["h-2 rounded-full transition-all", @color]}
+          style={"width: #{@pct}%"}
+        />
+      </div>
+    </div>
+    """
+  end
+
+  defp progress_pct(_actual, 0), do: 0
+  defp progress_pct(actual, target) do
+    actual
+    |> Kernel./(target)
+    |> Kernel.*(100)
+    |> min(100)
     |> round()
   end
 end
