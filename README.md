@@ -29,14 +29,16 @@ Most health and productivity apps do one thing. better_me is a single place that
 - Log workouts by type (strength, cardio, flexibility, sport, other) with duration and notes
 - Add exercises with sets, reps, weight, and RPE
 - Automatic PR detection — marks a new personal record when weight exceeds previous best for that exercise
+- Routine templates — save and reuse workout structures
 
-### phase 2 — nutrition (in progress)
+### phase 2 — nutrition (complete)
 
 **Ingredients**
-- Food database with macros per 100g (calories, protein, carbs, fat, fiber, sugar)
-- Fiber and sugar tracked separately — net carbs and simple/complex carbs derivable at display time
-- Categorised (protein, vegetable, fruit, grain, dairy, etc.) and brand-aware
-- Shared across all recipes — 35 common fruits and vegetables pre-seeded
+- Food database with macros per 100g: calories, protein, carbs, fat, fiber, sugar, glycemic index, sodium
+- Vegetarian / non-vegetarian flag
+- Categorised (protein, vegetable, fruit, grain, dairy, legume, seafood, etc.) and brand-aware
+- 76 ingredients pre-seeded across fruits, vegetables, proteins, grains, dairy, and legumes
+- Collapsible category groups with search and color-coded macro display
 
 **Recipes**
 - Build recipes by selecting ingredients and specifying quantity in grams
@@ -58,6 +60,7 @@ Most health and productivity apps do one thing. better_me is a single place that
 
 ### phase 3 — AI insights (planned)
 
+- Journal entries — daily mood, free-form notes, tags
 - RAG-powered insight agent using pgvector — embeds journal, habits, workouts, and nutrition into a searchable vector store
 - Natural language queries: "why did my energy drop last week?"
 - Jido agents for habit coaching and meal planning
@@ -75,10 +78,10 @@ Most health and productivity apps do one thing. better_me is a single place that
 | Backend | Elixir / Phoenix (LiveView + JSON API) |
 | Database | PostgreSQL + Ecto |
 | Background jobs | Oban |
-| Nutrition calculations | Go microservice (stateless, called from Phoenix) |
 | AI / vector search | pgvector + Jido (Phase 3) |
-| Frontend (Phase 1) | Phoenix LiveView — runs in mobile browser |
-| Frontend (Phase 2+) | React Native + Expo — native features |
+| LLM | Anthropic / OpenAI via req_llm (Phase 3) |
+| Frontend (Phase 1–2) | Phoenix LiveView — runs in mobile browser |
+| Frontend (Phase 3+) | React Native + Expo — native features |
 
 ## getting started
 
@@ -155,7 +158,9 @@ priv/repo/
     users.exs
     habits.exs
     routine_template.exs
-    ingredients.exs         # 35 fruits & vegetables with full macro data
+    ingredients.exs          # fruits & vegetables (35 items)
+    ingredients_proteins.exs # meat, seafood, eggs, dairy, plant proteins (23 items)
+    ingredients_grains.exs   # grains, pasta, bread (18 items)
 ```
 
 ## build phases
@@ -163,8 +168,8 @@ priv/repo/
 | Phase | Scope | Status |
 |---|---|---|
 | 1 | Habits, todos, body metrics, gym tracking | complete |
-| 2 | Nutrition + Go microservice | in progress |
-| 3 | AI insights — RAG + Jido agents | planned |
+| 2 | Nutrition — ingredients, recipes, meal logs, user profile | complete |
+| 3 | AI insights — journal, RAG, Jido agents | planned |
 | 4 | Analytics dashboards | planned |
 
 ## key commands
