@@ -33,9 +33,10 @@ Most health and productivity apps do one thing. better_me is a single place that
 ### phase 2 — nutrition (in progress)
 
 **Ingredients**
-- Food database with macros per 100g (calories, protein, carbs, fat)
+- Food database with macros per 100g (calories, protein, carbs, fat, fiber, sugar)
+- Fiber and sugar tracked separately — net carbs and simple/complex carbs derivable at display time
 - Categorised (protein, vegetable, fruit, grain, dairy, etc.) and brand-aware
-- Shared across all recipes
+- Shared across all recipes — 35 common fruits and vegetables pre-seeded
 
 **Recipes**
 - Build recipes by selecting ingredients and specifying quantity in grams
@@ -47,6 +48,13 @@ Most health and productivity apps do one thing. better_me is a single place that
 - Multiple entries per meal type supported
 - Per-meal and daily macro totals (kcal, protein, carbs, fat)
 - Navigate back through previous days
+- Progress bars vs daily targets when a profile is set up
+
+**User Profile & Macro Targets**
+- Set height, weight, age, gender, and activity level
+- TDEE calculated using Mifflin-St Jeor BMR formula
+- Configure macro split (protein %, carbs %, fat auto-derived)
+- Daily targets shown as progress bars on the nutrition log
 
 ### phase 3 — AI insights (planned)
 
@@ -124,6 +132,7 @@ lib/
     health/           schema/, repository.ex
     workouts/         schema/, actions/, repository.ex
     nutrition/        schema/, actions/, repository.ex, macros.ex
+    profiles/         schema/, repository.ex, tdee.ex
     accounts/         phx.gen.auth generated
   better_me_web/
     live/
@@ -134,10 +143,19 @@ lib/
       nutrition/      index.ex
       recipes/        index.ex  show.ex  form.ex
       ingredients/    index.ex  form.ex
+      profile/        index.ex
     components/
       core_components.ex    # Phoenix primitives
       ui_components.ex      # app-specific components
     router.ex
+
+priv/repo/
+  seeds.exs                 # orchestrator — delegates to seeds/
+  seeds/
+    users.exs
+    habits.exs
+    routine_template.exs
+    ingredients.exs         # 35 fruits & vegetables with full macro data
 ```
 
 ## build phases
@@ -155,5 +173,6 @@ lib/
 |---|---|
 | `mix ecto.reset` | Drop, recreate, and seed the database |
 | `mix ecto.migrate` | Run pending migrations |
+| `mix run priv/repo/seeds.exs` | Re-seed (idempotent — safe to run anytime) |
 | `mix ecto.gen.migration name` | Generate a new migration |
 | `mix precommit` | Full check: compile + format + credo + test |

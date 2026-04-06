@@ -5,11 +5,11 @@ defmodule BetterMe.Profiles.TDEE do
   """
 
   @activity_multipliers %{
-    sedentary:        1.2,
-    lightly_active:   1.375,
+    sedentary: 1.2,
+    lightly_active: 1.375,
     moderately_active: 1.55,
-    very_active:      1.725,
-    extra_active:     1.9
+    very_active: 1.725,
+    extra_active: 1.9
   }
 
   @doc """
@@ -18,14 +18,14 @@ defmodule BetterMe.Profiles.TDEE do
   Returns %{calories: integer, protein_g: float, carbs_g: float, fat_g: float}.
   """
   def calculate(profile) do
-    tdee     = tdee(profile)
-    fat_pct  = 100 - profile.protein_pct - profile.carbs_pct
+    tdee = tdee(profile)
+    fat_pct = 100 - profile.protein_pct - profile.carbs_pct
 
     %{
       calories: round(tdee),
       protein_g: macro_grams(tdee, profile.protein_pct, 4),
-      carbs_g:   macro_grams(tdee, profile.carbs_pct,   4),
-      fat_g:     macro_grams(tdee, fat_pct,             9)
+      carbs_g: macro_grams(tdee, profile.carbs_pct, 4),
+      fat_g: macro_grams(tdee, fat_pct, 9)
     }
   end
 

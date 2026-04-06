@@ -1,17 +1,17 @@
 defmodule BetterMe.Profiles.Repository do
-  alias BetterMe.Repo
   alias BetterMe.Profiles.Schema.UserProfile
+  alias BetterMe.Repo
 
   def get_profile(user_id) do
     case Repo.get_by(UserProfile, user_id: user_id) do
-      nil     -> {:error, :not_found}
+      nil -> {:error, :not_found}
       profile -> {:ok, profile}
     end
   end
 
   def save_profile(user_id, attrs) do
     case Repo.get_by(UserProfile, user_id: user_id) do
-      nil     -> insert_profile(user_id, attrs)
+      nil -> insert_profile(user_id, attrs)
       profile -> update_profile(profile, attrs)
     end
   end

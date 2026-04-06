@@ -26,6 +26,8 @@ defmodule BetterMe.Nutrition.Schema.Ingredient do
     field :protein_per_100g, :float
     field :carbs_per_100g, :float
     field :fat_per_100g, :float
+    field :fiber_per_100g, :float, default: 0.0
+    field :sugar_per_100g, :float, default: 0.0
 
     has_many :recipe_ingredients, BetterMe.Nutrition.Schema.RecipeIngredient
 
@@ -41,7 +43,9 @@ defmodule BetterMe.Nutrition.Schema.Ingredient do
       :calories_per_100g,
       :protein_per_100g,
       :carbs_per_100g,
-      :fat_per_100g
+      :fat_per_100g,
+      :fiber_per_100g,
+      :sugar_per_100g
     ])
     |> validate_required([
       :name,
@@ -56,6 +60,8 @@ defmodule BetterMe.Nutrition.Schema.Ingredient do
     |> validate_number(:protein_per_100g, greater_than_or_equal_to: 0)
     |> validate_number(:carbs_per_100g, greater_than_or_equal_to: 0)
     |> validate_number(:fat_per_100g, greater_than_or_equal_to: 0)
+    |> validate_number(:fiber_per_100g, greater_than_or_equal_to: 0)
+    |> validate_number(:sugar_per_100g, greater_than_or_equal_to: 0)
     |> unique_constraint(:name)
   end
 end

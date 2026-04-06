@@ -56,6 +56,14 @@ defmodule BetterMeWeb.IngredientsLive.Form do
             <label class="block text-sm font-medium text-gray-700 mb-1">Fat / 100g</label>
             <.input field={@form[:fat_per_100g]} type="number" step="0.1" class="w-full" />
           </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Fiber / 100g</label>
+            <.input field={@form[:fiber_per_100g]} type="number" step="0.1" class="w-full" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Sugar / 100g</label>
+            <.input field={@form[:sugar_per_100g]} type="number" step="0.1" class="w-full" />
+          </div>
         </div>
 
         <.form_actions action={@action} cancel_path={~p"/ingredients"} on_delete="delete" />

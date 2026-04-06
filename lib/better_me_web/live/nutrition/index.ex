@@ -99,7 +99,9 @@ defmodule BetterMeWeb.NutritionLive.Index do
           color="bg-emerald-400"
         />
         <p :if={!@targets} class="text-center text-xs text-gray-400 pt-1">
-          <.link navigate={~p"/profile"} class="text-indigo-500 hover:underline">Set up your profile</.link>
+          <.link navigate={~p"/profile"} class="text-indigo-500 hover:underline">
+            Set up your profile
+          </.link>
           to see targets and progress bars
         </p>
       </div>
@@ -315,15 +317,15 @@ defmodule BetterMeWeb.NutritionLive.Index do
   defp load_targets(user_id) do
     case Profiles.get_profile(user_id) do
       {:ok, profile} -> Profiles.calculate_targets(profile)
-      {:error, _}    -> nil
+      {:error, _} -> nil
     end
   end
 
-  attr :label,  :string,  required: true
-  attr :actual, :any,     required: true
-  attr :target, :any,     required: true
-  attr :unit,   :string,  required: true
-  attr :color,  :string,  required: true
+  attr :label, :string, required: true
+  attr :actual, :any, required: true
+  attr :target, :any, required: true
+  attr :unit, :string, required: true
+  attr :color, :string, required: true
 
   defp macro_row(assigns) do
     assigns = assign(assigns, :pct, progress_pct(assigns.actual, assigns.target))
@@ -347,6 +349,7 @@ defmodule BetterMeWeb.NutritionLive.Index do
   end
 
   defp progress_pct(_actual, 0), do: 0
+
   defp progress_pct(actual, target) do
     actual
     |> Kernel./(target)

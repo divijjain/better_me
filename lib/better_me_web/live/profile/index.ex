@@ -29,7 +29,10 @@ defmodule BetterMeWeb.ProfileLive.Index do
       <.page_header title="Profile & Targets" />
 
       <%!-- Current targets summary (only if profile exists) --%>
-      <div :if={@action == :edit} class="mb-6 grid grid-cols-4 gap-2 rounded-xl border border-gray-200 bg-white p-4 shadow-sm text-center">
+      <div
+        :if={@action == :edit}
+        class="mb-6 grid grid-cols-4 gap-2 rounded-xl border border-gray-200 bg-white p-4 shadow-sm text-center"
+      >
         <div>
           <p class="text-lg font-bold text-gray-900">{@targets.calories}</p>
           <p class="text-xs text-gray-400">kcal</p>
@@ -49,7 +52,6 @@ defmodule BetterMeWeb.ProfileLive.Index do
       </div>
 
       <.form for={@form} phx-change="validate" phx-submit="save" class="space-y-4">
-
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Age</label>
@@ -74,13 +76,17 @@ defmodule BetterMeWeb.ProfileLive.Index do
 
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Activity Level</label>
-          <.input field={@form[:activity_level]} type="select" options={@activity_levels} class="w-full" />
+          <.input
+            field={@form[:activity_level]}
+            type="select"
+            options={@activity_levels}
+            class="w-full"
+          />
         </div>
 
         <div>
           <h3 class="text-sm font-medium text-gray-700 mb-2">
-            Macro Split
-            <span class="text-gray-400 font-normal ml-1">(fat auto-adjusts)</span>
+            Macro Split <span class="text-gray-400 font-normal ml-1">(fat auto-adjusts)</span>
           </h3>
           <div class="grid grid-cols-3 gap-4">
             <div>
@@ -136,22 +142,22 @@ defmodule BetterMeWeb.ProfileLive.Index do
   defp assign_targets(socket, _profile, :new), do: assign(socket, targets: nil, fat_pct: 30)
 
   defp assign_targets(socket, profile, :edit) do
-    targets  = Profiles.calculate_targets(profile)
-    fat_pct  = 100 - profile.protein_pct - profile.carbs_pct
+    targets = Profiles.calculate_targets(profile)
+    fat_pct = 100 - profile.protein_pct - profile.carbs_pct
     assign(socket, targets: targets, fat_pct: fat_pct)
   end
 
   defp assign_fat_pct(socket, params) do
     protein = parse_int(params["protein_pct"], 30)
-    carbs   = parse_int(params["carbs_pct"],   40)
-    fat     = max(100 - protein - carbs, 0)
+    carbs = parse_int(params["carbs_pct"], 40)
+    fat = max(100 - protein - carbs, 0)
     assign(socket, :fat_pct, fat)
   end
 
   defp parse_int(val, default) do
     case Integer.parse(to_string(val)) do
       {n, _} -> n
-      :error  -> default
+      :error -> default
     end
   end
 

@@ -38,7 +38,7 @@ defmodule BetterMeWeb.IngredientsLive.Index do
               </span>
             </div>
             <p class="text-xs text-gray-400 mt-0.5">
-              {ingredient.calories_per_100g} kcal · {ingredient.protein_per_100g}g protein · {ingredient.carbs_per_100g}g carbs · {ingredient.fat_per_100g}g fat
+              {ingredient.calories_per_100g} kcal · {ingredient.protein_per_100g}g protein · {ingredient.carbs_per_100g}g carbs · {ingredient.fat_per_100g}g fat · {ingredient.fiber_per_100g}g fiber · {ingredient.sugar_per_100g}g sugar
             </p>
           </div>
           <.edit_link path={~p"/ingredients/#{ingredient.id}/edit"} />
