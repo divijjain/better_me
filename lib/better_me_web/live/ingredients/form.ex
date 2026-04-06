@@ -64,6 +64,29 @@ defmodule BetterMeWeb.IngredientsLive.Form do
             <label class="block text-sm font-medium text-gray-700 mb-1">Sugar / 100g</label>
             <.input field={@form[:sugar_per_100g]} type="number" step="0.1" class="w-full" />
           </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Glycemic Index <span class="text-gray-400 font-normal">(optional)</span>
+            </label>
+            <.input
+              field={@form[:glycemic_index]}
+              type="number"
+              step="1"
+              min="0"
+              max="100"
+              class="w-full"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Sodium mg / 100g <span class="text-gray-400 font-normal">(optional)</span>
+            </label>
+            <.input field={@form[:sodium_mg_per_100g]} type="number" step="0.1" class="w-full" />
+          </div>
+          <div class="col-span-2 flex items-center gap-3 pt-1">
+            <.input field={@form[:is_vegetarian]} type="checkbox" />
+            <label class="text-sm font-medium text-gray-700">Vegetarian</label>
+          </div>
         </div>
 
         <.form_actions action={@action} cancel_path={~p"/ingredients"} on_delete="delete" />
