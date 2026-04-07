@@ -1,5 +1,12 @@
 defmodule BetterMe.Workouts do
-  alias BetterMe.Workouts.Actions.{AddExercise, LogSet, PopulateFromRoutine}
+  alias BetterMe.Workouts.Actions.{
+    AddExercise,
+    CreateWorkout,
+    LogSet,
+    PopulateFromRoutine,
+    UpdateWorkout
+  }
+
   alias BetterMe.Workouts.Repository
 
   # Routine Templates
@@ -19,8 +26,8 @@ defmodule BetterMe.Workouts do
   defdelegate get_workout!(id, user_id), to: Repository
   defdelegate get_workout_with_exercises(id, user_id), to: Repository
   defdelegate new_workout(), to: Repository
-  defdelegate create_workout(user_id, attrs), to: Repository
-  defdelegate update_workout(workout, attrs), to: Repository
+  defdelegate create_workout(user_id, attrs), to: CreateWorkout, as: :run
+  defdelegate update_workout(workout, attrs), to: UpdateWorkout, as: :run
   defdelegate delete_workout(workout), to: Repository
   defdelegate change_workout(workout, attrs \\ %{}), to: Repository
 

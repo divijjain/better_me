@@ -11,7 +11,7 @@ Personal use. Not a SaaS product.
 - Oban (background jobs)
 - Go microservice (macro/nutrition calculations only)
 - pgvector (AI phase, same Postgres instance)
-- Jido (Phase 3 only — AI agents)
+- No Jido — insight feature is a plain Elixir workflow (see rules below)
 - LLM: Anthropic/OpenAI via req_llm
 
 ## no Ash
@@ -26,19 +26,18 @@ users → todos, habits (+ habit_logs), workouts (+ exercises + exercise_sets + 
 ## phases
 1. Daily driver (habits, todos, body metrics, gym) — plain Phoenix + Ecto
 2. Nutrition + user profiles + Go microservice
-3. AI insights — RAG (pgvector) + Jido agents
+3. AI insights — RAG (pgvector) + plain Elixir insight workflow + journal entries
 4. Analytics dashboards
+5. Native integrations — React Native + Expo, Apple Health (HealthKit via react-native-health), Android Health Connect (replaces deprecated Google Fit, SDK-only via Expo)
 
 ## current phase
-Phase 2 — In progress.
-- Phase 1 complete: Habits, Todos, Body Metrics, Gym tracking (workouts, exercises, exercise_sets, routine_templates).
-- Phase 2 started: Ingredients, Recipes, Meal logs, User Profiles (TDEE/macro targets) done.
-- Nutrition log LiveView in progress (lib/better_me_web/live/nutrition/index.ex).
-- User profile LiveView scaffolded (lib/better_me_web/live/profile/).
-- Profiles context includes TDEE calculation (BetterMe.Profiles.TDEE).
+Phase 3 — In progress.
+- Phase 1 complete: Habits, Todos, Body Metrics, Gym tracking.
+- Phase 2 complete: Ingredients, Recipes, Meal logs, User Profiles (TDEE/macro targets).
+- Phase 3 started: Journal entries done. pgvector + EmbedJob pipeline done. InsightWorkflow next.
 
 ## rules
-- Jido wraps Ecto, never replaces it. Data layer unchanged when agents enter.
+- No Jido. Insight feature is a plain Elixir workflow — code controls the steps.
 - Go microservice is stateless. Phoenix owns all state.
 - Oban for all async. No raw Task.async in production.
 - Phase 1 has zero AI. Build data layer first.
@@ -49,13 +48,11 @@ Phase 2 — In progress.
 RAG: embed data → store in pgvector → at query time, embed question →
      similarity search → retrieved chunks → LLM prompt → grounded answer
 
-Agent vs workflow: workflow = code controls flow, LLM fills slots.
-     agent = LLM controls flow, decides which tools to call.
-     Agents only in Phase 3: insight agent, meal planner, habit coach.
-
-Jido in this project: Jido Actions wrap existing Ecto context functions.
-     InsightAgent calls QueryWorkouts, QueryNutrition, QueryJournal, CallLLM
-     as actions. The agent decides the order. No data layer changes.
+Workflow vs agent: workflow = code controls flow, LLM fills a slot at the end.
+     agent = LLM controls flow, decides which tools to call next.
+     InsightWorkflow is a workflow: always embed → search journals → search nutrition
+     → search workouts → send to Claude. Steps never change, so no agent needed.
+     Upgrade to Jido only if the LLM needs to decide dynamically what to query.
 
 ## go context
 Learning Go in parallel. Two-week ramp:
@@ -68,4 +65,4 @@ Go is secondary. Elixir is primary.
 - "write the Ecto schema and context for [resource]"
 - "write the Expo screen for [feature]"
 - "help me write the Go macro calculator endpoint"
-- "scaffold the Jido insight agent using existing context functions"
+- "build the InsightWorkflow (plain Elixir, no Jido)"

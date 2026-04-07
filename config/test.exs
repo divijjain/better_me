@@ -29,6 +29,9 @@ config :better_me, BetterMe.Mailer, adapter: Swoosh.Adapters.Test
 # Disable swoosh api client as it is only required for production adapters
 config :swoosh, :api_client, false
 
+# Disable Oban in test — jobs are tested inline if needed
+config :better_me, Oban, testing: :inline
+
 # Print only warnings and errors during test
 config :logger, level: :warning
 

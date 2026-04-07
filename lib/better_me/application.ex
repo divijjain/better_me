@@ -12,9 +12,7 @@ defmodule BetterMe.Application do
       BetterMe.Repo,
       {DNSCluster, query: Application.get_env(:better_me, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: BetterMe.PubSub},
-      # Start a worker by calling: BetterMe.Worker.start_link(arg)
-      # {BetterMe.Worker, arg},
-      # Start to serve requests, typically the last entry
+      {Oban, Application.fetch_env!(:better_me, Oban)},
       BetterMeWeb.Endpoint
     ]
 

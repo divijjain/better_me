@@ -58,18 +58,24 @@ Most health and productivity apps do one thing. better_me is a single place that
 - Configure macro split (protein %, carbs %, fat auto-derived)
 - Daily targets shown as progress bars on the nutrition log
 
-### phase 3 — AI insights (planned)
+### phase 3 — AI insights (in progress)
 
-- Journal entries — daily mood, free-form notes, tags
-- RAG-powered insight agent using pgvector — embeds journal, habits, workouts, and nutrition into a searchable vector store
+- Journal entries — daily mood, free-form notes, tags ✓
+- pgvector embedding pipeline — embeds journal, workouts, and nutrition into a searchable vector store ✓
+- Insight workflow — embed question → similarity search → Claude answers
 - Natural language queries: "why did my energy drop last week?"
-- Jido agents for habit coaching and meal planning
 - Oban background jobs for weekly digests and streak alerts
 
 ### phase 4 — analytics (planned)
 
 - Cross-domain dashboards — correlate sleep, training, nutrition, and habit consistency
 - Trend charts and personal bests over time
+
+### phase 5 — native integrations (planned)
+
+- React Native + Expo app for native device features
+- Apple Health (HealthKit) — sync weight, workouts, calories burned, steps (requires Expo)
+- Android Health Connect — replacement for deprecated Google Fit, SDK-only, requires Expo
 
 ## stack
 
@@ -78,7 +84,7 @@ Most health and productivity apps do one thing. better_me is a single place that
 | Backend | Elixir / Phoenix (LiveView + JSON API) |
 | Database | PostgreSQL + Ecto |
 | Background jobs | Oban |
-| AI / vector search | pgvector + Jido (Phase 3) |
+| AI / vector search | pgvector (Phase 3) |
 | LLM | Anthropic / OpenAI via req_llm (Phase 3) |
 | Frontend (Phase 1–2) | Phoenix LiveView — runs in mobile browser |
 | Frontend (Phase 3+) | React Native + Expo — native features |
@@ -169,8 +175,147 @@ priv/repo/
 |---|---|---|
 | 1 | Habits, todos, body metrics, gym tracking | complete |
 | 2 | Nutrition — ingredients, recipes, meal logs, user profile | complete |
-| 3 | AI insights — journal, RAG, Jido agents | planned |
+| 3 | AI insights — journal, RAG, insight workflow | in progress |
 | 4 | Analytics dashboards | planned |
+| 5 | Native integrations — Apple Health, Google Fit | planned |
+
+## AI architecture
+
+### how embeddings work
+
+When you write a journal entry, log a meal, or create a workout, better_me converts that text into a vector — a list of numbers that represents the *meaning* of the content. These vectors are stored in Postgres using pgvector alongside the original text.
+
+```
+User writes journal entry
+        ↓
+Saved to DB → EmbedJob enqueued (Oban, async)
+        ↓
+EmbedJob fetches text → calls Ollama locally → gets vector [0.1, 0.4, ...]
+        ↓
+Upserted into embeddings table
+```
+
+The same happens for meal logs and workouts. Embeddings run in the background via Oban so they never block the user.
+
+### what is stored
+
+```
+source_type     source_id   content                                  embedding
+journal_entry   42          Date: 2026-04-01 / Mood: 2 / Felt sluggish, skipped gym   [0.1, 0.4, ...]
+meal_log        17          Date: 2026-04-01 / Meal: lunch / Recipe: Chicken Rice Bowl [0.3, 0.2, ...]
+workout         8           Date: 2026-03-30 / Type: strength / Duration: 60 min       [0.6, 0.1, ...]
+```
+
+### how a query works (RAG)
+
+```
+User asks: "why was my energy low last week?"
+        ↓
+Question is embedded → vector [0.2, 0.5, ...]
+        ↓
+pgvector finds the 5 closest vectors (cosine similarity)
+returns: journal entry (mood 2), meal log (pizza, high carbs), skipped workout
+        ↓
+Those records are sent to Claude as context
+        ↓
+Claude reads your actual data and answers:
+"On April 1st you logged mood 2 and skipped your workout.
+ The night before you had a high-carb dinner which may
+ have affected your energy the next morning."
+```
+
+This is RAG (Retrieval Augmented Generation) — Claude is grounded in your real data, not guessing.
+
+### system architecture
+
+```
+LiveView Chat UI (/insights)
+        ↓
+InsightWorkflow (plain Elixir) — fixed steps, no LLM routing
+        ↓
+QueryJournal / QueryNutrition / QueryWorkouts — similarity search
+        ↓
+Embeddings.Repository — pgvector <=> cosine distance, top-5 results
+        ↓
+PostgreSQL + pgvector — embeddings table with ivfflat index
+        ↓
+Claude (Anthropic) — generates answer grounded in retrieved data
+```
+
+### why Jido is not used right now
+
+The insight feature is a **fixed-step workflow**, not an LLM-controlled agent. Every question goes through the same sequence:
+
+1. Embed the question
+2. Search journals for relevant entries
+3. Search nutrition logs for relevant meals
+4. Search workouts for relevant sessions
+5. Send all retrieved chunks to Claude with the question
+6. Return Claude's answer
+
+Because the steps never change and the LLM doesn't need to decide *what to query next*, there's no benefit to Jido. Adding it would mean learning a new framework and wiring Action modules for zero real gain.
+
+**Workflow vs agent — the distinction that matters:**
+
+| | Workflow | Agent |
+|---|---|---|
+| Who controls flow | Code | LLM |
+| Steps | Fixed, always the same | Dynamic, LLM picks tools |
+| Use case | Structured RAG query | Multi-turn, proactive coaching |
+| Complexity | Low | High |
+
+The PRINCIPLES.md rule: *"Start every feature as a workflow. Upgrade to agent only if the LLM needs to decide what to query next."*
+
+**When Jido would make sense:**
+- The LLM needs to decide dynamically whether to look at habits vs nutrition vs workouts based on the question
+- Multi-turn conversations where context from previous turns changes what to query
+- Proactive coaching — agent wakes up, checks data, decides what insight to surface without being asked
+
+These are Phase 4+ concerns. For now, a plain Elixir workflow is the right call.
+
+### questions this enables
+
+- "Why did my energy drop last week?" — journals + nutrition
+- "What do I eat on my best training days?" — meals + workouts
+- "Which habits correlate with my best moods?" — habits + journals
+- "Am I making progress on strength?" — workouts over time
+- "What's my typical Monday diet?" — meal logs
+
+### components
+
+| Component | Purpose | Status |
+|---|---|---|
+| pgvector extension + embeddings table | Vector storage in Postgres | Done |
+| EmbedJob (Oban worker) | Async embedding pipeline | Done |
+| Hooks in journal / meal log / workout | Auto-embed on create/update | Done |
+| OpenAI text-embedding-3-small | Embedding model (see choice rationale below) | Done |
+| InsightWorkflow (plain Elixir) | Fixed-step RAG: embed → search → Claude | Planned |
+| Chat UI (/insights) | Natural language interface | Planned |
+
+### embedding model: text-embedding-3-small (OpenAI)
+
+We use `text-embedding-3-small` over other options for the following reasons:
+
+- **Battle-tested** — the most widely used model in production RAG systems, well documented with a stable API
+- **Right size** — 1536 dimensions is the sweet spot: more expressive than 768-dim open-source models, without the cost of 3072-dim large variants
+- **Cost** — $0.02 per 1M tokens. At personal-app scale this rounds to fractions of a cent per month
+- **Speed** — faster than `text-embedding-3-large` with minimal quality drop for short personal logs
+
+**Switching models later:** changing the model invalidates all existing embeddings — vector spaces from different models are incompatible. If you switch, you must re-embed all records by running a backfill task. Do not mix vectors from different models in the same table.
+
+Requires `OPENAI_API_KEY` set in the environment.
+
+### why each piece exists
+
+| Piece | Why |
+|---|---|
+| Oban job | Embedding is slow (~200ms) — run async so the user isn't waiting |
+| pgvector | Postgres extension — no separate vector DB needed |
+| ivfflat index | Makes similarity search fast as data grows |
+| content column | Stores original text so Claude can read it without joining back |
+| source_type + source_id | Traces back to the original record |
+| InsightWorkflow | Fixed steps: embed question → search all domains → Claude answers |
+| RAG | Grounds Claude in real data — prevents hallucination |
 
 ## key commands
 

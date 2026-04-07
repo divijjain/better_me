@@ -35,10 +35,10 @@
     <%!-- Bottom nav (only shown when logged in) --%>
     <%= if @current_scope do %>
       <nav class="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 bg-white">
-        <div class="mx-auto flex max-w-xl items-center justify-around px-2 py-2">
+        <div class="flex overflow-x-auto scrollbar-hide px-2 py-1 justify-center">
           <.link
             navigate={~p"/habits"}
-            class="flex flex-col items-center gap-0.5 px-2 py-1 text-xs font-medium text-gray-500 hover:text-indigo-600"
+            class="flex flex-shrink-0 flex-col items-center gap-0.5 px-4 py-1.5 text-xs font-medium text-gray-500 hover:text-indigo-600"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +58,7 @@
           </.link>
           <.link
             navigate={~p"/todos"}
-            class="flex flex-col items-center gap-0.5 px-2 py-1 text-xs font-medium text-gray-500 hover:text-indigo-600"
+            class="flex flex-shrink-0 flex-col items-center gap-0.5 px-4 py-1.5 text-xs font-medium text-gray-500 hover:text-indigo-600"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +78,7 @@
           </.link>
           <.link
             navigate={~p"/health"}
-            class="flex flex-col items-center gap-0.5 px-2 py-1 text-xs font-medium text-gray-500 hover:text-indigo-600"
+            class="flex flex-shrink-0 flex-col items-center gap-0.5 px-4 py-1.5 text-xs font-medium text-gray-500 hover:text-indigo-600"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +98,7 @@
           </.link>
           <.link
             navigate={~p"/workouts"}
-            class="flex flex-col items-center gap-0.5 px-2 py-1 text-xs font-medium text-gray-500 hover:text-indigo-600"
+            class="flex flex-shrink-0 flex-col items-center gap-0.5 px-4 py-1.5 text-xs font-medium text-gray-500 hover:text-indigo-600"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +118,7 @@
           </.link>
           <.link
             navigate={~p"/nutrition"}
-            class="flex flex-col items-center gap-0.5 px-2 py-1 text-xs font-medium text-gray-500 hover:text-indigo-600"
+            class="flex flex-shrink-0 flex-col items-center gap-0.5 px-4 py-1.5 text-xs font-medium text-gray-500 hover:text-indigo-600"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -138,7 +138,7 @@
           </.link>
           <.link
             navigate={~p"/recipes"}
-            class="flex flex-col items-center gap-0.5 px-2 py-1 text-xs font-medium text-gray-500 hover:text-indigo-600"
+            class="flex flex-shrink-0 flex-col items-center gap-0.5 px-4 py-1.5 text-xs font-medium text-gray-500 hover:text-indigo-600"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -155,6 +155,26 @@
               />
             </svg>
             Recipes
+          </.link>
+          <.link
+            navigate={~p"/journal"}
+            class="flex flex-shrink-0 flex-col items-center gap-0.5 px-4 py-1.5 text-xs font-medium text-gray-500 hover:text-indigo-600"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+              />
+            </svg>
+            Journal
           </.link>
         </div>
       </nav>
