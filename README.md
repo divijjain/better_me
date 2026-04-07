@@ -85,7 +85,8 @@ Most health and productivity apps do one thing. better_me is a single place that
 | Database | PostgreSQL + Ecto |
 | Background jobs | Oban |
 | AI / vector search | pgvector (Phase 3) |
-| LLM | Anthropic / OpenAI via req_llm (Phase 3) |
+| Embedding model | OpenAI `text-embedding-3-small` (Phase 3) |
+| Chat model | Anthropic `claude-haiku-4-5-20251001` (Phase 3) |
 | Frontend (Phase 1–2) | Phoenix LiveView — runs in mobile browser |
 | Frontend (Phase 3+) | React Native + Expo — native features |
 
@@ -299,21 +300,51 @@ These are Phase 4+ concerns. For now, a plain Elixir workflow is the right call.
 | EmbedJob (Oban worker) | Async embedding pipeline | Done |
 | Hooks in journal / meal log / workout | Auto-embed on create/update | Done |
 | OpenAI text-embedding-3-small | Embedding model (see choice rationale below) | Done |
-| InsightWorkflow (plain Elixir) | Fixed-step RAG: embed → search → Claude | Planned |
-| Chat UI (/insights) | Natural language interface | Planned |
+| InsightWorkflow (plain Elixir) | Fixed-step RAG: embed → search → Claude | Done |
+| Chat UI (/insights) | Natural language interface | Done |
 
-### embedding model: text-embedding-3-small (OpenAI)
+### models used
 
-We use `text-embedding-3-small` over other options for the following reasons:
+#### embedding model — `text-embedding-3-small` (OpenAI)
 
-- **Battle-tested** — the most widely used model in production RAG systems, well documented with a stable API
-- **Right size** — 1536 dimensions is the sweet spot: more expressive than 768-dim open-source models, without the cost of 3072-dim large variants
-- **Cost** — $0.02 per 1M tokens. At personal-app scale this rounds to fractions of a cent per month
+Converts text (journal entries, meal logs, workouts, and questions) into 1536-dimensional vectors stored in pgvector.
+
+| Property | Detail |
+|---|---|
+| Provider | OpenAI |
+| Model | `text-embedding-3-small` |
+| Dimensions | 1536 |
+| Cost | $0.02 / 1M tokens (~fractions of a cent/month at personal scale) |
+| Key | `OPENAI_API_KEY` |
+
+Why this model:
+- **Battle-tested** — most widely used embedding model in production RAG systems
+- **Right size** — 1536 dims is the sweet spot between quality and cost
 - **Speed** — faster than `text-embedding-3-large` with minimal quality drop for short personal logs
 
-**Switching models later:** changing the model invalidates all existing embeddings — vector spaces from different models are incompatible. If you switch, you must re-embed all records by running a backfill task. Do not mix vectors from different models in the same table.
+**Switching models:** changing the embedding model invalidates all existing vectors — vector spaces from different models are incompatible. If you switch, run a backfill to re-embed all records. Never mix vectors from different models in the same table.
 
-Set `OPENAI_API_KEY` in your `.env` file (see `.env.example`).
+#### chat model — `claude-haiku-4-5-20251001` (Anthropic)
+
+Reads the retrieved chunks and generates a grounded answer to the user's question.
+
+| Property | Detail |
+|---|---|
+| Provider | Anthropic |
+| Model | `claude-haiku-4-5-20251001` |
+| Input cost | $0.80 / 1M tokens |
+| Output cost | $4.00 / 1M tokens |
+| Per query (est.) | ~$0.0005 (500 tokens in, 200 out) |
+| Key | `ANTHROPIC_API_KEY` |
+
+Why Haiku over Sonnet/Opus:
+- Personal-use queries are simple retrieval + summarisation — Haiku handles them well
+- ~10x cheaper than Sonnet for identical RAG tasks
+- Fast response time for a chat-like UI
+
+Upgrade to `claude-sonnet-4-6` in `lib/better_me/anthropic/chat.ex` if answer quality needs improvement.
+
+Set both keys in your `.env` file (see `.env.example`).
 
 ### why each piece exists
 

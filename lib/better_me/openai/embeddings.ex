@@ -44,7 +44,8 @@ defmodule BetterMe.OpenAI.Embeddings do
 
       case Req.post(@openai_url,
              json: body,
-             headers: [{"Authorization", "Bearer #{api_key}"}]
+             headers: [{"Authorization", "Bearer #{api_key}"}],
+             receive_timeout: 30_000
            ) do
         {:ok, %{status: 200, body: %{"data" => [%{"embedding" => vector} | _]}}} ->
           {:ok, Pgvector.new(vector)}
