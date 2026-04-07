@@ -20,6 +20,9 @@ if System.get_env("PHX_SERVER") do
   config :better_me, BetterMeWeb.Endpoint, server: true
 end
 
+config :better_me, :anthropic, api_key: System.get_env("ANTHROPIC_API_KEY")
+config :better_me, :openai, api_key: System.get_env("OPENAI_API_KEY")
+
 config :better_me, BetterMeWeb.Endpoint,
   http: [port: String.to_integer(System.get_env("PORT", "4000"))]
 

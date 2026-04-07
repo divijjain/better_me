@@ -30,7 +30,7 @@ defmodule BetterMe.Embeddings.Jobs.EmbedJob do
 
           {:error, :missing_api_key} ->
             # Don't retry if key isn't configured — discard cleanly
-            {:discard, "ANTHROPIC_API_KEY not set"}
+            {:discard, "OPENAI_API_KEY not set"}
 
           {:error, reason} ->
             {:error, reason}

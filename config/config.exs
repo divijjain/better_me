@@ -77,9 +77,7 @@ config :better_me, Oban,
   repo: BetterMe.Repo,
   queues: [embeddings: 2]
 
-config :better_me, :anthropic, api_key: System.get_env("ANTHROPIC_API_KEY")
-
-config :better_me, :openai, api_key: System.get_env("OPENAI_API_KEY")
+config :better_me, BetterMe.Repo, types: BetterMe.PostgrexTypes
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

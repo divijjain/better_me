@@ -35,3 +35,8 @@ better_me-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Environment variables — copy .env.example and fill in your keys
+.env
+.env.local
+.envrc
+

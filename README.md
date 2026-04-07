@@ -92,13 +92,23 @@ Most health and productivity apps do one thing. better_me is a single place that
 ## getting started
 
 ```bash
-mix setup         # install deps, create DB, run migrations, seed
-mix phx.server    # start the server at http://localhost:4000
+cp .env.example .env   # copy env template, then fill in API keys
+mix setup              # install deps, create DB, run migrations, seed
+mix phx.server         # start the server at http://localhost:4000
 ```
 
 Seed credentials:
 - `divij@better.me` / `betterme2026!`
 - `test@better.me` / `betterme2026!`
+
+### environment variables
+
+| Variable | Required | Purpose |
+|---|---|---|
+| `OPENAI_API_KEY` | Phase 3 only | Embedding model (`text-embedding-3-small`) |
+| `ANTHROPIC_API_KEY` | Phase 3 only | Claude for insight answers |
+
+Phases 1 and 2 work without any API keys. Keys are only needed once you use the AI insights feature.
 
 ## development
 
@@ -303,7 +313,7 @@ We use `text-embedding-3-small` over other options for the following reasons:
 
 **Switching models later:** changing the model invalidates all existing embeddings — vector spaces from different models are incompatible. If you switch, you must re-embed all records by running a backfill task. Do not mix vectors from different models in the same table.
 
-Requires `OPENAI_API_KEY` set in the environment.
+Set `OPENAI_API_KEY` in your `.env` file (see `.env.example`).
 
 ### why each piece exists
 
