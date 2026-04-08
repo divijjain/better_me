@@ -20,9 +20,9 @@ ingredients = [
   %{name: "Cod",                  category: :seafood, calories_per_100g: 82.0,  protein_per_100g: 18.0, carbs_per_100g: 0.0,  fat_per_100g: 0.7,  fiber_per_100g: 0.0, sugar_per_100g: 0.0, glycemic_index: nil, sodium_mg_per_100g: 54.0,  is_vegetarian: false},
   %{name: "Tilapia",              category: :seafood, calories_per_100g: 96.0,  protein_per_100g: 20.0, carbs_per_100g: 0.0,  fat_per_100g: 1.7,  fiber_per_100g: 0.0, sugar_per_100g: 0.0, glycemic_index: nil, sodium_mg_per_100g: 52.0,  is_vegetarian: false},
 
-  # --- Eggs & Dairy --- (vegetarian)
-  %{name: "Whole Egg",            category: :protein, calories_per_100g: 155.0, protein_per_100g: 13.0, carbs_per_100g: 1.1,  fat_per_100g: 11.0, fiber_per_100g: 0.0, sugar_per_100g: 1.1, glycemic_index: nil, sodium_mg_per_100g: 124.0, is_vegetarian: true},
-  %{name: "Egg White",            category: :protein, calories_per_100g: 52.0,  protein_per_100g: 11.0, carbs_per_100g: 0.7,  fat_per_100g: 0.2,  fiber_per_100g: 0.0, sugar_per_100g: 0.7, glycemic_index: nil, sodium_mg_per_100g: 166.0, is_vegetarian: true},
+  # --- Eggs (non-vegetarian) & Dairy ---
+  %{name: "Whole Egg",            category: :protein, calories_per_100g: 155.0, protein_per_100g: 13.0, carbs_per_100g: 1.1,  fat_per_100g: 11.0, fiber_per_100g: 0.0, sugar_per_100g: 1.1, glycemic_index: nil, sodium_mg_per_100g: 124.0, is_vegetarian: false},
+  %{name: "Egg White",            category: :protein, calories_per_100g: 52.0,  protein_per_100g: 11.0, carbs_per_100g: 0.7,  fat_per_100g: 0.2,  fiber_per_100g: 0.0, sugar_per_100g: 0.7, glycemic_index: nil, sodium_mg_per_100g: 166.0, is_vegetarian: false},
   %{name: "Greek Yogurt (plain)", category: :dairy,   calories_per_100g: 59.0,  protein_per_100g: 10.0, carbs_per_100g: 3.6,  fat_per_100g: 0.4,  fiber_per_100g: 0.0, sugar_per_100g: 3.2, glycemic_index: 11,  sodium_mg_per_100g: 36.0,  is_vegetarian: true},
   %{name: "Cottage Cheese",       category: :dairy,   calories_per_100g: 98.0,  protein_per_100g: 11.0, carbs_per_100g: 3.4,  fat_per_100g: 4.3,  fiber_per_100g: 0.0, sugar_per_100g: 2.7, glycemic_index: 10,  sodium_mg_per_100g: 364.0, is_vegetarian: true},
   %{name: "Whole Milk",           category: :dairy,   calories_per_100g: 61.0,  protein_per_100g: 3.2,  carbs_per_100g: 4.8,  fat_per_100g: 3.3,  fiber_per_100g: 0.0, sugar_per_100g: 5.1, glycemic_index: 31,  sodium_mg_per_100g: 44.0,  is_vegetarian: true},
