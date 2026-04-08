@@ -2,11 +2,11 @@
 # Read this at the start of every new conversation instead of exploring the codebase.
 
 ## current state
-Phase 2 — In progress.
+Phase 3 — In progress.
 Phase 1 complete: Habits, Todos, Body Metrics, Gym tracking.
-Phase 2 partial: Ingredients + Recipes CRUD done. Nutrition daily log LiveView in progress.
-User Profiles (TDEE/macro targets) built — schema, TDEE calc, LiveView all done.
-Next: wire macro targets into the nutrition daily view, Go microservice (optional).
+Phase 2 complete: Ingredients + Recipes CRUD, Meal Logs, Nutrition daily view, User Profiles (TDEE/macro targets).
+Phase 3 partial: Journal entries done. pgvector + EmbedJob pipeline done. InsightWorkflow (RAG) done. Analytics dashboard done.
+Next: Google OAuth, invite-only/whitelist mechanism for friends & family rollout.
 
 ## fitness data sync (future — Phase 2)
 Apple Health: no server API, data is on-device only.
@@ -20,12 +20,18 @@ Both platforms feed the same Phoenix workout/body_metrics endpoints — no speci
 - Todos: CRUD, priority (low/medium/high), category, due date, repeat, pending/done filter, one-tap complete
 - Body Metrics: CRUD, weight + body fat %, unique per user per day
 - Gym tracking: workouts + exercises + exercise_sets + routine_templates, PR detection
-- Ingredients: CRUD, macros per 100g, category + brand fields
+- Ingredients: CRUD, macros per 100g, category + brand fields, veg/non-veg filter, category filter, side-by-side comparison panel
 - Recipes: CRUD, tag support, recipe_ingredients join table with quantity_grams
 - Meal Logs: log recipe + servings + meal_type per day
-- Nutrition daily view: in progress — daily macro totals vs targets
+- Nutrition daily view: daily macro totals vs TDEE targets, progress bars
 - User Profiles: height/weight/age/gender/activity level, macro split %, TDEE calc (Mifflin-St Jeor)
-- Bottom nav bar: Habits / Todos / Health / Gym tabs (fixed, mobile-first)
+- Journal entries: CRUD, mood (1–5), tags
+- pgvector embeddings: EmbedJob (Oban) embeds journal entries + meal logs via OpenAI text-embedding-3-small
+- InsightWorkflow: RAG pipeline — embed question → similarity search (journals, nutrition, workouts) → Claude Haiku answers
+- Insights chat UI: /insights, streaming-style message thread
+- Analytics dashboard: /analytics — CSS bar charts, weight trend, workout frequency/types, calories, mood, habit completion
+- Landing page + restyled auth pages (plain Tailwind, "Better Me" branding)
+- Bottom nav bar: all tabs (fixed, mobile-first)
 - UI components extracted to `ui_components.ex`
 - Credo configured and passing (`mix credo --strict`)
 
@@ -108,7 +114,16 @@ seeds.exs                            # divij@better.me / betterme2026!
 Email: divij@better.me / Password: betterme2026!
 Email: test@better.me  / Password: betterme2026!
 
-## phase 2 remaining
-- Finish nutrition daily view: wire macro targets from profile into progress bars
+## phase 3 remaining
+- Google OAuth (ueberauth_google or direct OAuth2 via req)
+- Invite-only / whitelist mechanism for friends & family rollout
+- Phone number / OTP auth (lower priority)
 - Go microservice: POST /calculate-tdee (optional — TDEE already done in Elixir)
-- Push notifications via Expo Push API (Phase 2+)
+
+## non-obvious decisions made this session
+- Eggs (Whole Egg, Egg White) are non-vegetarian — seed file updated, DB patched
+- Ingredient comparison panel sits above bottom nav (bottom: 56px, z-[60]) — panel is outside page_container to avoid clipping
+- API keys loaded in runtime.exs (not config.exs) so they're read at startup, not compile time
+- pgvector 0.3.x requires BetterMe.PostgrexTypes module + `types:` config key in config.exs
+- Analytics has no domain — queries live in each owning domain's repository.ex (PRINCIPLES.md enforcement)
+- InsightWorkflow is a plain Elixir module (no Jido) — fixed steps: embed → search → Claude

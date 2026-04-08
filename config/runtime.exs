@@ -23,6 +23,10 @@ end
 config :better_me, :anthropic, api_key: System.get_env("ANTHROPIC_API_KEY")
 config :better_me, :openai, api_key: System.get_env("OPENAI_API_KEY")
 
+config :better_me, :google,
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+
 config :better_me, BetterMeWeb.Endpoint,
   http: [port: String.to_integer(System.get_env("PORT", "4000"))]
 

@@ -8,6 +8,8 @@ defmodule BetterMe.Accounts.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :utc_datetime
     field :authenticated_at, :utc_datetime, virtual: true
+    field :provider, :string
+    field :provider_uid, :string
 
     timestamps(type: :utc_datetime)
   end
@@ -134,5 +136,21 @@ defmodule BetterMe.Accounts.User do
   def valid_password?(_, _) do
     Bcrypt.no_user_verify()
     false
+  end
+
+  @doc """
+  Changeset for creating or linking an OAuth user.
+  Email is confirmed immediately since Google has already verified it.
+  """
+  def oauth_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:email, :provider, :provider_uid])
+    |> validate_required([:email, :provider, :provider_uid])
+    |> validate_format(:email, ~r/^[^@,;\s]+@[^@,;\s]+$/)
+    |> validate_length(:email, max: 160)
+    |> unsafe_validate_unique(:email, BetterMe.Repo)
+    |> unique_constraint(:email)
+    |> unique_constraint([:provider, :provider_uid])
+    |> put_change(:confirmed_at, DateTime.utc_now(:second))
   end
 end

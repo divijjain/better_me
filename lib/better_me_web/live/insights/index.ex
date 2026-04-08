@@ -3,39 +3,57 @@ defmodule BetterMeWeb.InsightsLive.Index do
 
   alias BetterMe.Insights.InsightWorkflow
 
+  # Max AI queries per user per day
+  @daily_limit 20
+
   @impl true
   def mount(_params, _session, socket) do
+    user_id = socket.assigns.current_scope.user.id
+
     {:ok,
      socket
      |> assign(:page_title, "Insights")
      |> assign(:messages, [])
      |> assign(:loading, false)
-     |> assign(:question, "")}
+     |> assign(:question, "")
+     |> assign(:queries_today, queries_today(user_id))
+     |> assign(:daily_limit, @daily_limit)}
   end
 
   @impl true
   def handle_event("ask", %{"question" => question}, socket) do
     question = String.trim(question)
+    user_id = socket.assigns.current_scope.user.id
 
-    if question == "" do
-      {:noreply, socket}
-    else
-      user_id = socket.assigns.current_scope.user.id
+    cond do
+      question == "" ->
+        {:noreply, socket}
 
-      messages = socket.assigns.messages ++ [%{role: :user, text: question}]
+      socket.assigns.queries_today >= @daily_limit ->
+        {:noreply,
+         put_flash(
+           socket,
+           :error,
+           "Daily limit of #{@daily_limit} questions reached. Try again tomorrow."
+         )}
 
-      send(self(), {:run_insight, user_id, question})
+      true ->
+        messages = socket.assigns.messages ++ [%{role: :user, text: question}]
+        send(self(), {:run_insight, user_id, question})
 
-      {:noreply,
-       socket
-       |> assign(:messages, messages)
-       |> assign(:loading, true)
-       |> assign(:question, "")}
+        {:noreply,
+         socket
+         |> assign(:messages, messages)
+         |> assign(:loading, true)
+         |> assign(:question, "")
+         |> assign(:queries_today, socket.assigns.queries_today + 1)}
     end
   end
 
   @impl true
   def handle_info({:run_insight, user_id, question}, socket) do
+    increment_queries(user_id)
+
     message =
       case InsightWorkflow.run(user_id, question) do
         {:ok, answer} -> %{role: :assistant, text: answer}
@@ -52,7 +70,16 @@ defmodule BetterMeWeb.InsightsLive.Index do
   def render(assigns) do
     ~H"""
     <div class="max-w-2xl mx-auto px-4 py-6 flex flex-col h-[calc(100vh-8rem)]">
-      <h1 class="text-xl font-bold text-gray-900 mb-4">Insights</h1>
+      <div class="flex items-center justify-between mb-4">
+        <h1 class="text-xl font-bold text-gray-900">Insights</h1>
+        <span class={[
+          "text-xs font-medium px-2 py-1 rounded-full",
+          @queries_today >= @daily_limit && "bg-red-100 text-red-600",
+          @queries_today < @daily_limit && "bg-gray-100 text-gray-500"
+        ]}>
+          {@queries_today} / {@daily_limit} today
+        </span>
+      </div>
 
       <%!-- Message thread --%>
       <div
@@ -114,5 +141,32 @@ defmodule BetterMeWeb.InsightsLive.Index do
       </form>
     </div>
     """
+  end
+
+  defp queries_today(user_id) do
+    key = "insight:#{user_id}:#{Date.utc_today()}"
+    period = 24 * 60 * 60 * 1_000
+
+    case PlugAttack.Storage.Ets.increment(
+           BetterMeWeb.Plugs.RateLimit.Storage,
+           key,
+           period,
+           0
+         ) do
+      {count, _} -> max(count - 1, 0)
+      _ -> 0
+    end
+  end
+
+  defp increment_queries(user_id) do
+    key = "insight:#{user_id}:#{Date.utc_today()}"
+    period = 24 * 60 * 60 * 1_000
+
+    PlugAttack.Storage.Ets.increment(
+      BetterMeWeb.Plugs.RateLimit.Storage,
+      key,
+      period,
+      1
+    )
   end
 end

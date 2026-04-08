@@ -11,6 +11,7 @@ defmodule BetterMeWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_scope_for_user
+    plug BetterMeWeb.Plugs.RateLimit
   end
 
   pipeline :api do
@@ -106,8 +107,14 @@ defmodule BetterMeWeb.Router do
     pipe_through [:browser]
 
     get "/users/log-in", UserSessionController, :new
-    get "/users/log-in/:token", UserSessionController, :confirm
     post "/users/log-in", UserSessionController, :create
     delete "/users/log-out", UserSessionController, :delete
+  end
+
+  scope "/auth", BetterMeWeb do
+    pipe_through [:browser]
+
+    get "/google", GoogleOAuthController, :request
+    get "/google/callback", GoogleOAuthController, :callback
   end
 end

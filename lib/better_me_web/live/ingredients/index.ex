@@ -276,10 +276,7 @@ defmodule BetterMeWeb.IngredientsLive.Index do
         max_val = Enum.max(all_vals, fn -> 1 end)
         pct = if max_val > 0, do: round(val / max_val * 100), else: 0
 
-        best_val =
-          if m.goal == :high,
-            do: Enum.max(all_vals, fn -> nil end),
-            else: Enum.min(all_vals, fn -> nil end)
+        best_val = best_val(all_vals, m.goal)
 
         is_best = val == best_val and length(all) > 1 and Enum.any?(all_vals, &(&1 > 0))
         display = if is_nil(raw), do: "—", else: "#{val}#{m.unit}"
@@ -348,6 +345,9 @@ defmodule BetterMeWeb.IngredientsLive.Index do
     </div>
     """
   end
+
+  defp best_val(vals, :high), do: Enum.max(vals, fn -> nil end)
+  defp best_val(vals, :low), do: Enum.min(vals, fn -> nil end)
 
   defp comparing?(ingredient, comparing) do
     Enum.any?(comparing, &(&1.id == ingredient.id))

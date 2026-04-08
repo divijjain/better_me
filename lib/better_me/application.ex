@@ -13,6 +13,7 @@ defmodule BetterMe.Application do
       {DNSCluster, query: Application.get_env(:better_me, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: BetterMe.PubSub},
       {Oban, Application.fetch_env!(:better_me, Oban)},
+      {PlugAttack.Storage.Ets, name: BetterMeWeb.Plugs.RateLimit.Storage, clean_period: 60_000},
       BetterMeWeb.Endpoint
     ]
 
