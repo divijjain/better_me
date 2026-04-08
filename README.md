@@ -37,7 +37,7 @@ Most health and productivity apps do one thing. better_me is a single place that
 - Food database with macros per 100g: calories, protein, carbs, fat, fiber, sugar, glycemic index, sodium
 - Vegetarian / non-vegetarian flag
 - Categorised (protein, vegetable, fruit, grain, dairy, legume, seafood, etc.) and brand-aware
-- 76 ingredients pre-seeded across fruits, vegetables, proteins, grains, dairy, and legumes
+- 98 ingredients pre-seeded across fruits, vegetables, proteins, grains, dairy, legumes, millets, and pulses
 - Collapsible category groups with search and color-coded macro display
 
 **Recipes**
@@ -58,18 +58,31 @@ Most health and productivity apps do one thing. better_me is a single place that
 - Configure macro split (protein %, carbs %, fat auto-derived)
 - Daily targets shown as progress bars on the nutrition log
 
-### phase 3 — AI insights (in progress)
+### phase 3 — AI insights (complete)
 
-- Journal entries — daily mood, free-form notes, tags ✓
-- pgvector embedding pipeline — embeds journal, workouts, and nutrition into a searchable vector store ✓
-- Insight workflow — embed question → similarity search → Claude answers
-- Natural language queries: "why did my energy drop last week?"
-- Oban background jobs for weekly digests and streak alerts
+**Journal**
+- Daily mood (1–5 emoji picker), free-form notes, tags
+- Full CRUD with date-locked entries (one per day)
 
-### phase 4 — analytics (planned)
+**Embedding pipeline**
+- Oban background job embeds journal entries, meal logs, and workouts into pgvector on create/update
+- OpenAI `text-embedding-3-small` — 1536-dim vectors, stored in Postgres alongside original text
+- Cosine similarity search via ivfflat index
 
-- Cross-domain dashboards — correlate sleep, training, nutrition, and habit consistency
-- Trend charts and personal bests over time
+**Insight chat**
+- Natural language interface at `/insights`
+- Fixed-step RAG workflow: embed question → similarity search across all domains → Claude answers
+- Grounded in real personal data — no hallucination
+
+### phase 4 — analytics (complete)
+
+**CSS bar charts — no JS charting library**
+- Body weight trend — last 30 days
+- Workout frequency — sessions per week over 8 weeks
+- Workout type breakdown — last 30 days
+- Daily calorie totals — last 14 days
+- Average mood per week — from journal entries
+- Habit completion rates — % per habit over 30 days
 
 ### phase 5 — native integrations (planned)
 
@@ -153,6 +166,11 @@ lib/
     workouts/         schema/, actions/, repository.ex
     nutrition/        schema/, actions/, repository.ex, macros.ex
     profiles/         schema/, repository.ex, tdee.ex
+    journals/         schema/, actions/, repository.ex
+    embeddings/       schema/, jobs/, repository.ex
+    insights/         insight_workflow.ex
+    anthropic/        chat.ex
+    openai/           embeddings.ex
     accounts/         phx.gen.auth generated
   better_me_web/
     live/
@@ -164,6 +182,9 @@ lib/
       recipes/        index.ex  show.ex  form.ex
       ingredients/    index.ex  form.ex
       profile/        index.ex
+      journal/        index.ex  form.ex
+      insights/       index.ex
+      analytics/      index.ex
     components/
       core_components.ex    # Phoenix primitives
       ui_components.ex      # app-specific components
@@ -175,9 +196,10 @@ priv/repo/
     users.exs
     habits.exs
     routine_template.exs
-    ingredients.exs          # fruits & vegetables (35 items)
-    ingredients_proteins.exs # meat, seafood, eggs, dairy, plant proteins (23 items)
-    ingredients_grains.exs   # grains, pasta, bread (18 items)
+    ingredients.exs                  # fruits & vegetables (35 items)
+    ingredients_proteins.exs         # meat, seafood, eggs, dairy, plant proteins (23 items)
+    ingredients_grains.exs           # grains, pasta, bread (18 items)
+    ingredients_millets_pulses.exs   # millets & Indian pulses/dals (22 items)
 ```
 
 ## build phases
@@ -186,8 +208,8 @@ priv/repo/
 |---|---|---|
 | 1 | Habits, todos, body metrics, gym tracking | complete |
 | 2 | Nutrition — ingredients, recipes, meal logs, user profile | complete |
-| 3 | AI insights — journal, RAG, insight workflow | in progress |
-| 4 | Analytics dashboards | planned |
+| 3 | AI insights — journal, RAG, insight workflow, chat UI | complete |
+| 4 | Analytics dashboards — body weight, workouts, calories, mood, habits | complete |
 | 5 | Native integrations — Apple Health, Google Fit | planned |
 
 ## AI architecture
@@ -201,7 +223,7 @@ User writes journal entry
         ↓
 Saved to DB → EmbedJob enqueued (Oban, async)
         ↓
-EmbedJob fetches text → calls Ollama locally → gets vector [0.1, 0.4, ...]
+EmbedJob fetches text → calls OpenAI text-embedding-3-small → gets vector [0.1, 0.4, ...]
         ↓
 Upserted into embeddings table
 ```
