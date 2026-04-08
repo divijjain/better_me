@@ -72,6 +72,49 @@ alias BetterMe.Habits.Habit
 %Habit{} |> Habit.changeset(attrs) |> Repo.insert()
 ```
 
+### cross-cutting queries belong in the owning domain
+
+A query that aggregates data from one domain belongs in *that domain's* repository —
+not in a new cross-cutting module that imports schemas from multiple domains.
+
+**Bad — a new domain imports schemas from 5 other domains:**
+```elixir
+defmodule BetterMe.Analytics.Repository do
+  alias BetterMe.Habits.Habit            # ❌ foreign schema
+  alias BetterMe.Health.Schema.BodyMetric # ❌ foreign schema
+  alias BetterMe.Journals.Schema.JournalEntry # ❌ foreign schema
+  ...
+
+  def mood_trend(user_id, weeks), do: Repo.all(from j in JournalEntry, ...)
+end
+```
+
+**Good — each query lives in its own domain's repository:**
+```elixir
+# lib/better_me/journals/repository.ex — JournalEntry stays inside Journals
+def mood_trend(user_id, weeks \\ 8) do
+  Repo.all(from j in JournalEntry, ...)
+end
+
+# lib/better_me/habits/repository.ex — Habit stays inside Habits
+def completion_rates(user_id, days \\ 30) do
+  Repo.all(from h in Habit, ...)
+end
+```
+
+Then expose via the context and call directly from the LiveView:
+```elixir
+# lib/better_me/journals.ex
+defdelegate mood_trend(user_id, weeks \\ 8), to: Repository
+
+# LiveView calls each context directly — no analytics intermediary needed
+assign(:mood, Journals.mood_trend(user_id))
+assign(:habits, Habits.habit_completion_rates(user_id))
+```
+
+**The test:** if a module needs to `alias` schemas from more than one domain,
+it is in the wrong place. Move the query to each schema's owning domain.
+
 ---
 
 ## 2. three-layer internal structure
@@ -919,6 +962,7 @@ end
 Before merging any new module, verify:
 
 - [ ] Schema is private to its context directory
+- [ ] No module aliases schemas from more than one domain (move the query to the owning domain)
 - [ ] Context functions are scoped to user_id
 - [ ] All functions return {:ok, _} | {:error, _} (no naked returns)
 - [ ] No bare Repo calls outside a context module

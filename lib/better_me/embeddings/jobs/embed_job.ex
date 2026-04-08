@@ -69,10 +69,8 @@ defmodule BetterMe.Embeddings.Jobs.EmbedJob do
   end
 
   defp fetch_content("meal_log", source_id, user_id) do
-    case Nutrition.get_meal_log(source_id, user_id) do
+    case Nutrition.get_meal_log_with_recipe(source_id, user_id) do
       {:ok, log} ->
-        log = BetterMe.Repo.preload(log, :recipe)
-
         content =
           "Date: #{log.date}\nMeal: #{log.meal_type}\nRecipe: #{log.recipe.title}\nServings: #{log.servings}"
 

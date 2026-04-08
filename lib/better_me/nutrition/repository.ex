@@ -138,6 +138,13 @@ defmodule BetterMe.Nutrition.Repository do
     end
   end
 
+  def get_meal_log_with_recipe(id, user_id) do
+    case Repo.get_by(MealLog, id: id, user_id: user_id) do
+      nil -> {:error, :not_found}
+      meal_log -> {:ok, Repo.preload(meal_log, :recipe)}
+    end
+  end
+
   def daily_calories(user_id, days \\ 14) do
     since = Date.add(Date.utc_today(), -days)
 

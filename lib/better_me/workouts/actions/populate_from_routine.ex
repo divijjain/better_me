@@ -18,7 +18,7 @@ defmodule BetterMe.Workouts.Actions.PopulateFromRoutine do
           })
         end)
 
-        :ok
+        {:ok, :populated}
 
       {:error, _} ->
         {:error, :routine_day_not_found}

@@ -75,6 +75,7 @@ defmodule BetterMeWeb.HabitsLive.Index do
   end
 
   defp load_habits(socket, user_id) do
-    assign(socket, habits: Habits.list_habits_with_meta(user_id), current_user_id: user_id)
+    {:ok, habits} = Habits.list_habits_with_meta(user_id)
+    assign(socket, habits: habits, current_user_id: user_id)
   end
 end
