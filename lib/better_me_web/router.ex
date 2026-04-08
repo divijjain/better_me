@@ -98,6 +98,7 @@ defmodule BetterMeWeb.Router do
       live "/journal/:id/edit", JournalLive.Form, :edit
 
       live "/insights", InsightsLive.Index, :index
+      live "/analytics", AnalyticsLive.Index, :index
     end
   end
 

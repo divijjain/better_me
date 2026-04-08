@@ -68,9 +68,8 @@ defmodule BetterMe.Anthropic.Chat do
   defp build_context(chunks) do
     chunks
     |> Enum.with_index(1)
-    |> Enum.map(fn {chunk, i} ->
+    |> Enum.map_join("\n\n", fn {chunk, i} ->
       "[#{i}] (#{chunk.source_type})\n#{chunk.content}"
     end)
-    |> Enum.join("\n\n")
   end
 end

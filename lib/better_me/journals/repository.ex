@@ -53,4 +53,19 @@ defmodule BetterMe.Journals.Repository do
   def change_entry(entry, attrs \\ %{}) do
     JournalEntry.changeset(entry, attrs)
   end
+
+  def mood_trend(user_id, weeks \\ 8) do
+    since = Date.add(Date.utc_today(), -(weeks * 7))
+
+    Repo.all(
+      from j in JournalEntry,
+        where: j.user_id == ^user_id and j.date >= ^since and not is_nil(j.mood),
+        group_by: fragment("date_trunc('week', ?::timestamp)", j.date),
+        order_by: fragment("date_trunc('week', ?::timestamp)", j.date),
+        select: %{
+          week: fragment("date_trunc('week', ?::timestamp)::date", j.date),
+          avg_mood: fragment("round(avg(?)::numeric, 1)", j.mood)
+        }
+    )
+  end
 end

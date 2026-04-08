@@ -24,4 +24,5 @@ defmodule BetterMe.Habits do
   defdelegate recent_logs(habit_id, user_id, days \\ 30), to: RecentLogs, as: :run
   defdelegate logged_today?(habit_id, user_id), to: LoggedToday, as: :run
   defdelegate habit_stats(habit_id, user_id), to: HabitStats, as: :run
+  defdelegate habit_completion_rates(user_id, days \\ 30), to: Repository, as: :completion_rates
 end

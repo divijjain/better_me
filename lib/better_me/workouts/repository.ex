@@ -261,4 +261,31 @@ defmodule BetterMe.Workouts.Repository do
     |> ExerciseSet.update_changeset(%{is_pr: true})
     |> Repo.update()
   end
+
+  def workout_frequency(user_id, weeks \\ 8) do
+    since = Date.add(Date.utc_today(), -(weeks * 7))
+
+    Repo.all(
+      from w in Workout,
+        where: w.user_id == ^user_id and w.date >= ^since,
+        group_by: fragment("date_trunc('week', ?::timestamp)", w.date),
+        order_by: fragment("date_trunc('week', ?::timestamp)", w.date),
+        select: %{
+          week: fragment("date_trunc('week', ?::timestamp)::date", w.date),
+          count: count(w.id)
+        }
+    )
+  end
+
+  def workout_by_type(user_id, days \\ 30) do
+    since = Date.add(Date.utc_today(), -days)
+
+    Repo.all(
+      from w in Workout,
+        where: w.user_id == ^user_id and w.date >= ^since,
+        group_by: w.type,
+        order_by: [desc: count(w.id)],
+        select: %{type: w.type, count: count(w.id)}
+    )
+  end
 end

@@ -137,4 +137,31 @@ defmodule BetterMe.Nutrition.Repository do
       meal_log -> {:ok, meal_log}
     end
   end
+
+  def daily_calories(user_id, days \\ 14) do
+    since = Date.add(Date.utc_today(), -days)
+
+    Repo.all(
+      from ml in MealLog,
+        join: ri in RecipeIngredient,
+        on: ri.recipe_id == ml.recipe_id,
+        join: ing in Ingredient,
+        on: ing.id == ri.ingredient_id,
+        where: ml.user_id == ^user_id and ml.date >= ^since,
+        group_by: ml.date,
+        order_by: [asc: ml.date],
+        select: %{
+          date: ml.date,
+          calories:
+            sum(
+              fragment(
+                "? * ? / 100.0 * ?",
+                ing.calories_per_100g,
+                ri.quantity_grams,
+                ml.servings
+              )
+            )
+        }
+    )
+  end
 end

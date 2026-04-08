@@ -12,4 +12,5 @@ defmodule BetterMe.Journals do
   defdelegate create_entry(user_id, attrs), to: CreateEntry, as: :run
   defdelegate update_entry(entry, attrs), to: UpdateEntry, as: :run
   defdelegate delete_entry(entry), to: DeleteEntry, as: :run
+  defdelegate mood_trend(user_id, weeks \\ 8), to: Repository
 end

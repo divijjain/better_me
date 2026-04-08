@@ -28,9 +28,8 @@ defmodule BetterMe.Insights.InsightWorkflow do
   """
   def run(user_id, question) when is_integer(user_id) and is_binary(question) do
     with {:ok, query_vector} <- EmbeddingsAPI.embed(question),
-         chunks <- retrieve(user_id, query_vector),
-         {:ok, answer} <- Chat.ask(question, chunks) do
-      {:ok, answer}
+         chunks <- retrieve(user_id, query_vector) do
+      Chat.ask(question, chunks)
     end
   end
 

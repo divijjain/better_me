@@ -49,4 +49,15 @@ defmodule BetterMe.Health.Repository do
   def change_metric(metric, attrs \\ %{}) do
     BodyMetric.update_changeset(metric, attrs)
   end
+
+  def weight_trend(user_id, days \\ 30) do
+    since = Date.add(Date.utc_today(), -days)
+
+    Repo.all(
+      from m in BodyMetric,
+        where: m.user_id == ^user_id and m.date >= ^since and not is_nil(m.weight),
+        order_by: [asc: m.date],
+        select: %{date: m.date, weight: m.weight}
+    )
+  end
 end

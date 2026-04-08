@@ -47,4 +47,6 @@ defmodule BetterMe.Workouts do
   defdelegate delete_exercise_set(set), to: Repository
   defdelegate log_set(user_id, exercise, attrs), to: LogSet, as: :run
   defdelegate populate_from_routine(workout, day_id), to: PopulateFromRoutine, as: :run
+  defdelegate workout_frequency(user_id, weeks \\ 8), to: Repository
+  defdelegate workout_by_type(user_id, days \\ 30), to: Repository
 end

@@ -117,4 +117,22 @@ defmodule BetterMe.Habits.Repository do
     |> Repo.all()
     |> MapSet.new()
   end
+
+  def completion_rates(user_id, days \\ 30) do
+    since = Date.add(Date.utc_today(), -days)
+
+    Repo.all(
+      from h in Habit,
+        left_join: hl in HabitLog,
+        on: hl.habit_id == h.id and hl.date >= ^since,
+        where: h.user_id == ^user_id,
+        group_by: [h.id, h.name],
+        order_by: [desc: fragment("count(?)", hl.id)],
+        select: %{
+          name: h.name,
+          logged: count(hl.id),
+          rate: fragment("round(count(?)::numeric / ? * 100)", hl.id, ^days)
+        }
+    )
+  end
 end

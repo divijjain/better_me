@@ -37,4 +37,5 @@ defmodule BetterMe.Nutrition do
   defdelegate log_meal_for_user(user_id, attrs), to: Actions.LogMeal, as: :run
   defdelegate daily_summary(user_id, date), to: Actions.DailySummary, as: :run
   defdelegate meal_type_order(), to: Actions.DailySummary
+  defdelegate daily_calories(user_id, days \\ 14), to: Repository
 end

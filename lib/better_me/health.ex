@@ -9,4 +9,5 @@ defmodule BetterMe.Health do
   defdelegate update_metric(metric, attrs), to: Repository
   defdelegate delete_metric(metric), to: Repository
   defdelegate change_metric(metric, attrs \\ %{}), to: Repository
+  defdelegate weight_trend(user_id, days \\ 30), to: Repository
 end
