@@ -48,12 +48,12 @@ defmodule BetterMeWeb.Router do
 
   ## Authentication routes
 
-  scope "/", BetterMeWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
-
-    get "/users/register", UserRegistrationController, :new
-    post "/users/register", UserRegistrationController, :create
-  end
+  # Registration disabled — sign in via Google OAuth only
+  # scope "/", BetterMeWeb do
+  #   pipe_through [:browser, :redirect_if_user_is_authenticated]
+  #   get "/users/register", UserRegistrationController, :new
+  #   post "/users/register", UserRegistrationController, :create
+  # end
 
   scope "/", BetterMeWeb do
     pipe_through [:browser, :require_authenticated_user]

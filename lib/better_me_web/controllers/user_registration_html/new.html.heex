@@ -9,7 +9,7 @@
     </div>
 
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-      <.form :let={f} for={@changeset} action={~p"/users/register"}>
+      <.form :let={f} for={@changeset} action={~p"/users/log-in"}>
         <div class="space-y-4">
           <.input
             field={f[:email]}
