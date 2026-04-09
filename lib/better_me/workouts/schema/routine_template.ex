@@ -18,7 +18,7 @@ defmodule BetterMe.Workouts.Schema.RoutineTemplate do
   def changeset(template, attrs) do
     template
     |> cast(attrs, [:name, :is_active, :user_id])
-    |> validate_required([:name, :user_id])
+    |> validate_required([:name])
     |> validate_length(:name, min: 1, max: 100)
   end
 end

@@ -86,8 +86,8 @@ defmodule BetterMe.Embeddings.Jobs.EmbedJob do
       {:ok, workout} ->
         parts = [
           "Date: #{workout.date}",
-          "Type: #{workout.workout_type}",
-          "Duration: #{workout.duration_minutes} min"
+          "Type: #{workout.type}",
+          "Duration: #{workout.duration} min"
         ]
 
         parts = if workout.notes, do: parts ++ ["Notes: #{workout.notes}"], else: parts

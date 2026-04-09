@@ -17,7 +17,9 @@ defmodule BetterMeWeb.WorkoutsLive.Form do
        user_id: user_id,
        templates: templates,
        routine_days: [],
-       selected_template_id: nil
+       selected_template_id: nil,
+       selected_day_id: nil,
+       preview_exercises: []
      )
      |> assign_form(changeset)}
   end
@@ -73,12 +75,16 @@ defmodule BetterMeWeb.WorkoutsLive.Form do
 
           <div :if={@routine_days != []}>
             <label class="block text-sm font-medium text-gray-700 mb-1">Day</label>
-            <.input
-              field={@form[:routine_day_id]}
-              type="select"
-              options={Enum.map(@routine_days, &{&1.name, &1.id})}
-              prompt="Select a day"
-            />
+            <select
+              phx-change="select_day"
+              name="day_id"
+              class="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            >
+              <option value="">— Select a day —</option>
+              <%= for d <- @routine_days do %>
+                <option value={d.id} selected={@selected_day_id == d.id}>{d.name}</option>
+              <% end %>
+            </select>
           </div>
         <% end %>
 
@@ -103,7 +109,13 @@ defmodule BetterMeWeb.WorkoutsLive.Form do
   end
 
   def handle_event("select_template", %{"template_id" => ""}, socket) do
-    {:noreply, assign(socket, selected_template_id: nil, routine_days: [])}
+    {:noreply,
+     assign(socket,
+       selected_template_id: nil,
+       routine_days: [],
+       selected_day_id: nil,
+       preview_exercises: []
+     )}
   end
 
   def handle_event("select_template", %{"template_id" => template_id}, socket) do
@@ -112,11 +124,39 @@ defmodule BetterMeWeb.WorkoutsLive.Form do
 
     case Workouts.get_routine_template_with_days(id, user_id) do
       {:ok, template} ->
-        {:noreply, assign(socket, selected_template_id: id, routine_days: template.days)}
+        {:noreply,
+         assign(socket,
+           selected_template_id: id,
+           routine_days: template.days,
+           selected_day_id: nil,
+           preview_exercises: []
+         )}
 
       {:error, _} ->
-        {:noreply, assign(socket, selected_template_id: nil, routine_days: [])}
+        {:noreply,
+         assign(socket,
+           selected_template_id: nil,
+           routine_days: [],
+           selected_day_id: nil,
+           preview_exercises: []
+         )}
     end
+  end
+
+  def handle_event("select_day", %{"day_id" => ""}, socket) do
+    {:noreply, assign(socket, selected_day_id: nil, preview_exercises: [])}
+  end
+
+  def handle_event("select_day", %{"day_id" => day_id}, socket) do
+    {id, _} = Integer.parse(day_id)
+
+    exercises =
+      case Workouts.get_routine_day_with_exercises(id) do
+        {:ok, day} -> day.routine_exercises
+        _ -> []
+      end
+
+    {:noreply, assign(socket, selected_day_id: id, preview_exercises: exercises)}
   end
 
   def handle_event("validate", %{"workout" => params}, socket) do
@@ -145,30 +185,29 @@ defmodule BetterMeWeb.WorkoutsLive.Form do
   defp create_workout(socket, params) do
     case Workouts.create_workout(socket.assigns.user_id, params) do
       {:ok, workout} ->
-        maybe_populate_from_routine(socket, workout, params)
+        maybe_populate_from_routine(socket, workout)
 
       {:error, changeset} ->
         {:noreply, assign_form(socket, changeset)}
     end
   end
 
-  # If a routine day was selected, pre-populate exercises from the template.
-  defp maybe_populate_from_routine(socket, workout, %{"routine_day_id" => day_id})
-       when day_id not in ["", nil] do
-    {id, _} = Integer.parse(day_id)
-    Workouts.populate_from_routine(workout, id)
+  defp maybe_populate_from_routine(socket, workout) do
+    case socket.assigns.selected_day_id do
+      nil ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Workout created")
+         |> push_navigate(to: ~p"/workouts/#{workout.id}")}
 
-    {:noreply,
-     socket
-     |> put_flash(:info, "Workout created with routine exercises")
-     |> push_navigate(to: ~p"/workouts/#{workout.id}")}
-  end
+      day_id ->
+        Workouts.populate_from_routine(workout, day_id)
 
-  defp maybe_populate_from_routine(socket, workout, _params) do
-    {:noreply,
-     socket
-     |> put_flash(:info, "Workout created")
-     |> push_navigate(to: ~p"/workouts/#{workout.id}")}
+        {:noreply,
+         socket
+         |> put_flash(:info, "Workout created with routine exercises")
+         |> push_navigate(to: ~p"/workouts/#{workout.id}")}
+    end
   end
 
   defp update_workout(socket, params) do

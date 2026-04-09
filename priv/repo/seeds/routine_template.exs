@@ -1,12 +1,5 @@
-alias BetterMe.{Accounts, Repo}
+alias BetterMe.Repo
 alias BetterMe.Workouts.Schema.{RoutineTemplate, RoutineDay, RoutineExercise}
-
-primary_user = Accounts.get_user_by_email("divij@better.me")
-
-unless primary_user do
-  IO.puts("  Skipped routine template — primary user not found")
-  System.halt(0)
-end
 
 min_max_days = [
   %{
@@ -77,10 +70,10 @@ min_max_days = [
 
 IO.puts("\n--- Seeding routine template ---")
 
-case Repo.get_by(RoutineTemplate, name: "Min-Max 5x", user_id: primary_user.id) do
+case Repo.get_by(RoutineTemplate, name: "Min-Max 5x", user_id: nil) do
   nil ->
     {:ok, template} =
-      %RoutineTemplate{user_id: primary_user.id}
+      %RoutineTemplate{}
       |> RoutineTemplate.changeset(%{name: "Min-Max 5x"})
       |> Repo.insert()
 

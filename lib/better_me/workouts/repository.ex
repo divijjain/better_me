@@ -18,7 +18,8 @@ defmodule BetterMe.Workouts.Repository do
 
   def list_routine_templates(user_id) do
     RoutineTemplate
-    |> where(user_id: ^user_id, is_active: true)
+    |> where(is_active: true)
+    |> where([t], is_nil(t.user_id) or t.user_id == ^user_id)
     |> order_by([t], asc: t.name)
     |> Repo.all()
   end
@@ -30,8 +31,8 @@ defmodule BetterMe.Workouts.Repository do
     end
   end
 
-  def get_routine_template_with_days(id, user_id) do
-    case Repo.get_by(RoutineTemplate, id: id, user_id: user_id) do
+  def get_routine_template_with_days(id, _user_id) do
+    case Repo.get(RoutineTemplate, id) do
       nil ->
         {:error, :not_found}
 

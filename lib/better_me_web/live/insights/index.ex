@@ -2,6 +2,8 @@ defmodule BetterMeWeb.InsightsLive.Index do
   use BetterMeWeb, :live_view
 
   alias BetterMe.Insights.InsightWorkflow
+  alias BetterMeWeb.Plugs.RateLimit
+  alias PlugAttack.Storage.Ets, as: PlugAttackEts
 
   # Max AI queries per user per day
   @daily_limit 20
@@ -147,12 +149,7 @@ defmodule BetterMeWeb.InsightsLive.Index do
     key = "insight:#{user_id}:#{Date.utc_today()}"
     period = 24 * 60 * 60 * 1_000
 
-    case PlugAttack.Storage.Ets.increment(
-           BetterMeWeb.Plugs.RateLimit.Storage,
-           key,
-           period,
-           0
-         ) do
+    case PlugAttackEts.increment(RateLimit.Storage, key, period, 0) do
       {count, _} -> max(count - 1, 0)
       _ -> 0
     end
@@ -161,12 +158,6 @@ defmodule BetterMeWeb.InsightsLive.Index do
   defp increment_queries(user_id) do
     key = "insight:#{user_id}:#{Date.utc_today()}"
     period = 24 * 60 * 60 * 1_000
-
-    PlugAttack.Storage.Ets.increment(
-      BetterMeWeb.Plugs.RateLimit.Storage,
-      key,
-      period,
-      1
-    )
+    PlugAttackEts.increment(RateLimit.Storage, key, period, 1)
   end
 end
