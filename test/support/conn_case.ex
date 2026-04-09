@@ -45,7 +45,7 @@ defmodule BetterMeWeb.ConnCase do
   test context.
   """
   def register_and_log_in_user(%{conn: conn} = context) do
-    user = BetterMe.AccountsFixtures.user_fixture()
+    user = BetterMe.Factory.insert(:user)
     scope = BetterMe.Accounts.Scope.for_user(user)
 
     opts =
@@ -71,9 +71,5 @@ defmodule BetterMeWeb.ConnCase do
     |> Plug.Conn.put_session(:user_token, token)
   end
 
-  defp maybe_set_token_authenticated_at(_token, nil), do: nil
-
-  defp maybe_set_token_authenticated_at(token, authenticated_at) do
-    BetterMe.AccountsFixtures.override_token_authenticated_at(token, authenticated_at)
-  end
+  defp maybe_set_token_authenticated_at(_token, _authenticated_at), do: nil
 end

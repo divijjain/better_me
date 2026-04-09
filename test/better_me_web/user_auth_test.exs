@@ -1,11 +1,13 @@
 defmodule BetterMeWeb.UserAuthTest do
   use BetterMeWeb.ConnCase, async: true
 
+  import Ecto.Query
+
   alias BetterMe.Accounts
-  alias BetterMe.Accounts.Scope
+  alias BetterMe.Accounts.{Scope, UserToken}
   alias BetterMeWeb.UserAuth
 
-  import BetterMe.AccountsFixtures
+  import BetterMe.Factory
 
   @remember_me_cookie "_better_me_web_user_remember_me"
   @remember_me_cookie_max_age 60 * 60 * 24 * 14
@@ -16,14 +18,14 @@ defmodule BetterMeWeb.UserAuthTest do
       |> Map.replace!(:secret_key_base, BetterMeWeb.Endpoint.config(:secret_key_base))
       |> init_test_session(%{})
 
-    %{user: %{user_fixture() | authenticated_at: DateTime.utc_now(:second)}, conn: conn}
+    %{user: %{insert(:user) | authenticated_at: DateTime.utc_now(:second)}, conn: conn}
   end
 
   describe "log_in_user/3" do
     test "stores the user token in the session", %{conn: conn, user: user} do
       conn = UserAuth.log_in_user(conn, user)
       assert token = get_session(conn, :user_token)
-      assert redirected_to(conn) == ~p"/"
+      assert redirected_to(conn) == ~p"/habits"
       assert Accounts.get_user_by_session_token(token)
     end
 
@@ -46,7 +48,7 @@ defmodule BetterMeWeb.UserAuthTest do
       conn: conn,
       user: user
     } do
-      other_user = user_fixture()
+      other_user = insert(:user)
 
       conn =
         conn
@@ -165,7 +167,11 @@ defmodule BetterMeWeb.UserAuthTest do
       token = logged_in_conn.cookies[@remember_me_cookie]
       %{value: signed_token} = logged_in_conn.resp_cookies[@remember_me_cookie]
 
-      offset_user_token(token, -10, :day)
+      BetterMe.Repo.update_all(
+        from(t in UserToken, where: t.token == ^token),
+        set: [inserted_at: DateTime.add(DateTime.utc_now(:second), -10, :day)]
+      )
+
       {user, _} = Accounts.get_user_by_session_token(token)
 
       conn =
@@ -229,7 +235,7 @@ defmodule BetterMeWeb.UserAuthTest do
         |> UserAuth.redirect_if_user_is_authenticated([])
 
       assert conn.halted
-      assert redirected_to(conn) == ~p"/"
+      assert redirected_to(conn) == ~p"/habits"
     end
 
     test "does not redirect if user is not authenticated", %{conn: conn} do

@@ -1,10 +1,7 @@
 defmodule BetterMe.AccountsFixtures do
   @moduledoc """
-  This module defines test helpers for creating
-  entities via the `BetterMe.Accounts` context.
+  Test helpers for creating entities via the Accounts context.
   """
-
-  import Ecto.Query
 
   alias BetterMe.Accounts
   alias BetterMe.Accounts.Scope
@@ -12,41 +9,26 @@ defmodule BetterMe.AccountsFixtures do
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
   def valid_user_password, do: "hello world!"
 
-  def valid_user_attributes(attrs \\ %{}) do
-    Enum.into(attrs, %{
-      email: unique_user_email()
-    })
-  end
-
-  def unconfirmed_user_fixture(attrs \\ %{}) do
-    {:ok, user} =
-      attrs
-      |> valid_user_attributes()
-      |> Accounts.register_user()
-
-    user
-  end
-
   def user_fixture(attrs \\ %{}) do
-    user = unconfirmed_user_fixture(attrs)
+    email = Map.get(attrs, :email, unique_user_email())
+    password = Map.get(attrs, :password, valid_user_password())
 
-    token =
-      extract_user_token(fn url ->
-        Accounts.deliver_login_instructions(user, url)
-      end)
-
-    {:ok, {user, _expired_tokens}} =
-      Accounts.login_user_by_magic_link(token)
-
+    {:ok, user} = Accounts.register_user(%{email: email, password: password})
     user
   end
 
-  def user_scope_fixture do
-    user = user_fixture()
-    user_scope_fixture(user)
+  def oauth_user_fixture(attrs \\ []) do
+    attrs = Enum.into(attrs, %{})
+    email = Map.get(attrs, :email, unique_user_email())
+    provider = Map.get(attrs, :provider, "google")
+    provider_uid = Map.get(attrs, :provider_uid, "uid_#{System.unique_integer()}")
+
+    {:ok, user} = Accounts.find_or_create_by_oauth(provider, provider_uid, email)
+    user
   end
 
-  def user_scope_fixture(user) do
+  def user_scope_fixture(user \\ nil) do
+    user = user || user_fixture()
     Scope.for_user(user)
   end
 
@@ -55,35 +37,5 @@ defmodule BetterMe.AccountsFixtures do
       Accounts.update_user_password(user, %{password: valid_user_password()})
 
     user
-  end
-
-  def extract_user_token(fun) do
-    {:ok, captured_email} = fun.(&"[TOKEN]#{&1}[TOKEN]")
-    [_, token | _] = String.split(captured_email.text_body, "[TOKEN]")
-    token
-  end
-
-  def override_token_authenticated_at(token, authenticated_at) when is_binary(token) do
-    BetterMe.Repo.update_all(
-      from(t in Accounts.UserToken,
-        where: t.token == ^token
-      ),
-      set: [authenticated_at: authenticated_at]
-    )
-  end
-
-  def generate_user_magic_link_token(user) do
-    {encoded_token, user_token} = Accounts.UserToken.build_email_token(user, "login")
-    BetterMe.Repo.insert!(user_token)
-    {encoded_token, user_token.token}
-  end
-
-  def offset_user_token(token, amount_to_add, unit) do
-    dt = DateTime.add(DateTime.utc_now(:second), amount_to_add, unit)
-
-    BetterMe.Repo.update_all(
-      from(ut in Accounts.UserToken, where: ut.token == ^token),
-      set: [inserted_at: dt, authenticated_at: dt]
-    )
   end
 end
