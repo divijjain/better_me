@@ -47,17 +47,19 @@ defmodule BetterMeWeb.HabitsLive.Show do
       <div class="rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm mb-6">
         <h2 class="text-sm font-semibold text-gray-700 mb-4">Last 30 days</h2>
         <div class="grid grid-cols-10 gap-1.5">
-          <%= for day <- last_30_days() do %>
-            <div class={[
+          <div
+            :for={day <- last_30_days()}
+            :key={day}
+            class={[
               "h-9 w-9 rounded-md flex items-center justify-center text-xs font-medium",
               if(MapSet.member?(@stats.calendar_dates, day),
                 do: "bg-indigo-500 text-white",
                 else: "bg-gray-100 text-gray-400"
               )
-            ]}>
-              {day.day}
-            </div>
-          <% end %>
+            ]}
+          >
+            {day.day}
+          </div>
         </div>
         <div class="mt-3 flex items-center gap-2 text-xs text-gray-400">
           <div class="h-3 w-3 rounded-sm bg-gray-100" /> Not done
@@ -66,22 +68,20 @@ defmodule BetterMeWeb.HabitsLive.Show do
       </div>
 
       <%!-- Log today button --%>
+      <% logged_today = MapSet.member?(@stats.calendar_dates, Date.utc_today()) %>
       <button
         phx-click="log_today"
-        disabled={MapSet.member?(@stats.calendar_dates, Date.utc_today())}
+        disabled={logged_today}
         class={[
           "w-full rounded-xl py-3 text-sm font-semibold transition",
-          if(MapSet.member?(@stats.calendar_dates, Date.utc_today()),
+          if(logged_today,
             do: "bg-indigo-100 text-indigo-400 cursor-not-allowed",
             else: "bg-indigo-600 text-white hover:bg-indigo-500"
           )
         ]}
       >
-        <%= if MapSet.member?(@stats.calendar_dates, Date.utc_today()) do %>
-          Logged today ✓
-        <% else %>
-          Log for today
-        <% end %>
+        <span :if={logged_today}>Logged today ✓</span>
+        <span :if={!logged_today}>Log for today</span>
       </button>
     </.page_container>
     """

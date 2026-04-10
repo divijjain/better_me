@@ -84,42 +84,33 @@ defmodule BetterMeWeb.InsightsLive.Index do
       </div>
 
       <%!-- Message thread --%>
-      <div
-        id="messages"
-        class="flex-1 overflow-y-auto space-y-4 mb-4"
-      >
-        <%= if @messages == [] do %>
-          <div class="text-center text-gray-400 text-sm mt-16">
-            <p class="text-4xl mb-3">🤔</p>
-            <p>Ask anything about your data.</p>
-            <p class="mt-1">e.g. "Why was my energy low last week?"</p>
-          </div>
-        <% end %>
+      <div id="messages" class="flex-1 overflow-y-auto space-y-4 mb-4">
+        <div :if={@messages == []} class="text-center text-gray-400 text-sm mt-16">
+          <p class="text-4xl mb-3">🤔</p>
+          <p>Ask anything about your data.</p>
+          <p class="mt-1">e.g. "Why was my energy low last week?"</p>
+        </div>
 
-        <%= for {msg, i} <- Enum.with_index(@messages) do %>
-          <div
-            id={"msg-#{i}"}
-            class={[
-              "rounded-2xl px-4 py-3 text-sm leading-relaxed max-w-[85%]",
-              msg.role == :user && "ml-auto bg-indigo-600 text-white",
-              msg.role == :assistant && "bg-white border border-gray-200 text-gray-800 shadow-sm",
-              msg.role == :error && "bg-red-50 border border-red-200 text-red-700"
-            ]}
-          >
-            <%= if msg.role == :error do %>
-              <span class="font-medium">Error: </span>
-            <% end %>
-            {msg.text}
-          </div>
-        <% end %>
+        <div
+          :for={{msg, i} <- Enum.with_index(@messages)}
+          :key={i}
+          id={"msg-#{i}"}
+          class={[
+            "rounded-2xl px-4 py-3 text-sm leading-relaxed max-w-[85%]",
+            msg.role == :user && "ml-auto bg-indigo-600 text-white",
+            msg.role == :assistant && "bg-white border border-gray-200 text-gray-800 shadow-sm",
+            msg.role == :error && "bg-red-50 border border-red-200 text-red-700"
+          ]}
+        >
+          <span :if={msg.role == :error} class="font-medium">Error: </span>
+          {msg.text}
+        </div>
 
-        <%= if @loading do %>
-          <div id="loading" class="flex items-center gap-2 text-gray-400 text-sm">
-            <span class="animate-pulse">●</span>
-            <span class="animate-pulse delay-75">●</span>
-            <span class="animate-pulse delay-150">●</span>
-          </div>
-        <% end %>
+        <div :if={@loading} id="loading" class="flex items-center gap-2 text-gray-400 text-sm">
+          <span class="animate-pulse">●</span>
+          <span class="animate-pulse delay-75">●</span>
+          <span class="animate-pulse delay-150">●</span>
+        </div>
       </div>
 
       <%!-- Input --%>

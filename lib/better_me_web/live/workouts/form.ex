@@ -67,9 +67,14 @@ defmodule BetterMeWeb.WorkoutsLive.Form do
               class="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             >
               <option value="">— No routine —</option>
-              <%= for t <- @templates do %>
-                <option value={t.id} selected={@selected_template_id == t.id}>{t.name}</option>
-              <% end %>
+              <option
+                :for={t <- @templates}
+                :key={t.id}
+                value={t.id}
+                selected={@selected_template_id == t.id}
+              >
+                {t.name}
+              </option>
             </select>
           </div>
 
@@ -81,9 +86,14 @@ defmodule BetterMeWeb.WorkoutsLive.Form do
               class="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             >
               <option value="">— Select a day —</option>
-              <%= for d <- @routine_days do %>
-                <option value={d.id} selected={@selected_day_id == d.id}>{d.name}</option>
-              <% end %>
+              <option
+                :for={d <- @routine_days}
+                :key={d.id}
+                value={d.id}
+                selected={@selected_day_id == d.id}
+              >
+                {d.name}
+              </option>
             </select>
           </div>
         <% end %>

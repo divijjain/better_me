@@ -40,23 +40,13 @@ defmodule BetterMeWeb.RecipesLive.Show do
       </div>
 
       <%!-- Macro summary --%>
-      <div class="mb-6 grid grid-cols-4 gap-2 rounded-lg border border-gray-200 bg-white p-4 text-center shadow-sm">
-        <div>
-          <p class="text-lg font-bold text-gray-900">{Float.round(@macros.calories, 1)}</p>
-          <p class="text-xs text-gray-400">kcal</p>
-        </div>
-        <div>
-          <p class="text-lg font-bold text-gray-900">{Float.round(@macros.protein, 1)}g</p>
-          <p class="text-xs text-gray-400">protein</p>
-        </div>
-        <div>
-          <p class="text-lg font-bold text-gray-900">{Float.round(@macros.carbs, 1)}g</p>
-          <p class="text-xs text-gray-400">carbs</p>
-        </div>
-        <div>
-          <p class="text-lg font-bold text-gray-900">{Float.round(@macros.fat, 1)}g</p>
-          <p class="text-xs text-gray-400">fat</p>
-        </div>
+      <div class="mb-6">
+        <.macro_grid
+          calories={@macros.calories}
+          protein={@macros.protein}
+          carbs={@macros.carbs}
+          fat={@macros.fat}
+        />
       </div>
 
       <%!-- Ingredients list --%>
@@ -99,13 +89,15 @@ defmodule BetterMeWeb.RecipesLive.Show do
               class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             >
               <option value="">Select…</option>
-              <%= for {category, ingredients} <- @grouped_ingredients do %>
-                <optgroup label={category |> to_string() |> String.capitalize()}>
-                  <option :for={ing <- ingredients} :key={ing.id} value={ing.id}>
-                    {if ing.brand, do: "#{ing.name} (#{ing.brand})", else: ing.name}
-                  </option>
-                </optgroup>
-              <% end %>
+              <optgroup
+                :for={{category, ingredients} <- @grouped_ingredients}
+                :key={category}
+                label={category |> to_string() |> String.capitalize()}
+              >
+                <option :for={ing <- ingredients} :key={ing.id} value={ing.id}>
+                  {if ing.brand, do: "#{ing.name} (#{ing.brand})", else: ing.name}
+                </option>
+              </optgroup>
             </select>
           </div>
           <div class="w-24">

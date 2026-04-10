@@ -36,9 +36,7 @@ defmodule BetterMeWeb.WorkoutsLive.Show do
           </h1>
           <p class="text-sm text-gray-400 capitalize mt-0.5">
             {@workout.type}
-            <%= if @workout.duration do %>
-              · {@workout.duration} min
-            <% end %>
+            <span :if={@workout.duration}>· {@workout.duration} min</span>
           </p>
         </div>
         <.edit_link path={~p"/workouts/#{@workout.id}/edit"} />
@@ -91,69 +89,68 @@ defmodule BetterMeWeb.WorkoutsLive.Show do
 
           <%!-- Sets --%>
           <div class="px-4 py-3">
-            <%= if exercise.exercise_sets == [] do %>
-              <p class="text-xs text-gray-400 mb-3">No sets logged yet.</p>
-            <% else %>
-              <div class="mb-3 space-y-2">
-                <%!-- Set header row --%>
-                <div class="grid grid-cols-[2rem_1fr_1fr_2rem] gap-2 text-xs font-medium text-gray-400 px-1">
-                  <span>Set</span>
-                  <span>Weight (kg)</span>
-                  <span>Reps</span>
-                  <span></span>
-                </div>
-
-                <%!-- Logged sets --%>
-                <div
-                  :for={set <- exercise.exercise_sets}
-                  :key={set.id}
-                  class={[
-                    "grid grid-cols-[2rem_1fr_1fr_2rem] gap-2 items-center rounded-md px-1 py-1.5 text-sm",
-                    set.completed && "bg-green-50",
-                    !set.completed && "bg-gray-50"
-                  ]}
-                >
-                  <span class="font-medium text-gray-500">{set.set_number}</span>
-
-                  <.form
-                    for={@set_forms[set.id]}
-                    phx-change="update_set"
-                    phx-value-set-id={set.id}
-                    id={"set-form-#{set.id}"}
-                    class="contents"
-                  >
-                    <input
-                      type="number"
-                      name="set[weight]"
-                      value={set.weight}
-                      step="0.5"
-                      min="0"
-                      placeholder="—"
-                      class="w-full rounded border border-gray-200 px-2 py-1 text-sm focus:border-indigo-400 focus:outline-none"
-                      phx-debounce="500"
-                    />
-                    <input
-                      type="number"
-                      name="set[reps]"
-                      value={set.reps}
-                      min="1"
-                      placeholder="—"
-                      class="w-full rounded border border-gray-200 px-2 py-1 text-sm focus:border-indigo-400 focus:outline-none"
-                      phx-debounce="500"
-                    />
-                  </.form>
-
-                  <button
-                    phx-click="delete_set"
-                    phx-value-set-id={set.id}
-                    phx-value-exercise-id={exercise.id}
-                    class="text-gray-300 hover:text-red-400 transition"
-                  >
-                    <.icon name="hero-x-mark" class="h-3.5 w-3.5" />
-                  </button>
-                </div>
+            <p :if={exercise.exercise_sets == []} class="text-xs text-gray-400 mb-3">
+              No sets logged yet.
+            </p>
+            <div :if={exercise.exercise_sets != []} class="mb-3 space-y-2">
+              <%!-- Set header row --%>
+              <div class="grid grid-cols-[2rem_1fr_1fr_2rem] gap-2 text-xs font-medium text-gray-400 px-1">
+                <span>Set</span>
+                <span>Weight (kg)</span>
+                <span>Reps</span>
+                <span></span>
               </div>
-            <% end %>
+
+              <%!-- Logged sets --%>
+              <div
+                :for={set <- exercise.exercise_sets}
+                :key={set.id}
+                class={[
+                  "grid grid-cols-[2rem_1fr_1fr_2rem] gap-2 items-center rounded-md px-1 py-1.5 text-sm",
+                  set.completed && "bg-green-50",
+                  !set.completed && "bg-gray-50"
+                ]}
+              >
+                <span class="font-medium text-gray-500">{set.set_number}</span>
+
+                <.form
+                  for={@set_forms[set.id]}
+                  phx-change="update_set"
+                  phx-value-set-id={set.id}
+                  id={"set-form-#{set.id}"}
+                  class="contents"
+                >
+                  <input
+                    type="number"
+                    name="set[weight]"
+                    value={set.weight}
+                    step="0.5"
+                    min="0"
+                    placeholder="—"
+                    class="w-full rounded border border-gray-200 px-2 py-1 text-sm focus:border-indigo-400 focus:outline-none"
+                    phx-debounce="500"
+                  />
+                  <input
+                    type="number"
+                    name="set[reps]"
+                    value={set.reps}
+                    min="1"
+                    placeholder="—"
+                    class="w-full rounded border border-gray-200 px-2 py-1 text-sm focus:border-indigo-400 focus:outline-none"
+                    phx-debounce="500"
+                  />
+                </.form>
+
+                <button
+                  phx-click="delete_set"
+                  phx-value-set-id={set.id}
+                  phx-value-exercise-id={exercise.id}
+                  class="text-gray-300 hover:text-red-400 transition"
+                >
+                  <.icon name="hero-x-mark" class="h-3.5 w-3.5" />
+                </button>
+              </div>
+            </div>
 
             <%!-- Add set button --%>
             <button

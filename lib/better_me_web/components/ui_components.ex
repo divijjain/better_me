@@ -170,6 +170,68 @@ defmodule BetterMeWeb.UIComponents do
   end
 
   @doc """
+  Veg / non-veg badge pill.
+
+  ## Examples
+
+      <.veg_badge is_vegetarian={ingredient.is_vegetarian} />
+  """
+  attr :is_vegetarian, :boolean, required: true
+
+  def veg_badge(assigns) do
+    ~H"""
+    <span
+      :if={@is_vegetarian}
+      class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700"
+    >
+      veg
+    </span>
+    <span
+      :if={!@is_vegetarian}
+      class="rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-700"
+    >
+      non-veg
+    </span>
+    """
+  end
+
+  @doc """
+  4-column macro summary grid (calories, protein, carbs, fat).
+  Used on recipe show and nutrition index (no-targets view).
+
+  ## Examples
+
+      <.macro_grid calories={312.0} protein={28.5} carbs={18.0} fat={10.2} />
+  """
+  attr :calories, :float, required: true
+  attr :protein, :float, required: true
+  attr :carbs, :float, required: true
+  attr :fat, :float, required: true
+
+  def macro_grid(assigns) do
+    ~H"""
+    <div class="grid grid-cols-4 gap-2 rounded-lg border border-gray-200 bg-white p-4 text-center shadow-sm">
+      <div>
+        <p class="text-lg font-bold text-gray-900">{round(@calories)}</p>
+        <p class="text-xs text-gray-400">kcal</p>
+      </div>
+      <div>
+        <p class="text-lg font-bold text-gray-900">{Float.round(@protein, 1)}g</p>
+        <p class="text-xs text-gray-400">protein</p>
+      </div>
+      <div>
+        <p class="text-lg font-bold text-gray-900">{Float.round(@carbs, 1)}g</p>
+        <p class="text-xs text-gray-400">carbs</p>
+      </div>
+      <div>
+        <p class="text-lg font-bold text-gray-900">{Float.round(@fat, 1)}g</p>
+        <p class="text-xs text-gray-400">fat</p>
+      </div>
+    </div>
+    """
+  end
+
+  @doc """
   Standard page wrapper — constrains width and adds padding.
   Use as the outermost div on every page.
 

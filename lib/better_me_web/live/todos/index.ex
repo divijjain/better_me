@@ -86,9 +86,7 @@ defmodule BetterMeWeb.TodosLive.Index do
             </p>
             <p class="text-xs text-gray-400 capitalize">
               {todo.category}
-              <%= if todo.due_date do %>
-                · due {Calendar.strftime(todo.due_date, "%b %-d")}
-              <% end %>
+              <span :if={todo.due_date}>· due {Calendar.strftime(todo.due_date, "%b %-d")}</span>
             </p>
           </div>
 

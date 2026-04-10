@@ -32,9 +32,7 @@ defmodule BetterMeWeb.WorkoutsLive.Index do
             </p>
             <p class="text-xs text-gray-400 capitalize mt-0.5">
               {if workout.routine_day, do: workout.routine_day.name, else: workout.type}
-              <%= if workout.duration do %>
-                · {workout.duration} min
-              <% end %>
+              <span :if={workout.duration}>· {workout.duration} min</span>
             </p>
           </div>
           <div class="relative flex items-center gap-3">

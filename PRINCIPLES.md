@@ -12,7 +12,7 @@ Each domain is a self-contained context. Nothing outside the context
 touches its schemas directly. All access goes through the context module.
 
 ### rules
-- One context per domain: Habits, Todos, Workouts, Health, Nutrition, Journal
+- One context per domain: Habits, Todos, Workouts, Health, Nutrition, Journals, Embeddings, Insights
 - Contexts are the public API. Schemas are private implementation detail.
 - No cross-context schema imports. If Nutrition needs user data, it calls
   Accounts.get_user/1, not %Accounts.User{} directly.
@@ -156,8 +156,8 @@ lib/better_me/
   habits.ex               # public API — defdelegate only
 ```
 
-Note: action modules here are plain Elixir modules, not Jido Actions. Jido Actions
-(Phase 3) are a separate concept — they wrap context functions for LLM agent use.
+Note: action modules here are plain Elixir modules. No Jido — insight feature uses a plain
+Elixir workflow (InsightWorkflow) with fixed steps. See CLAUDE.md rules.
 
 ### good — public API is a pure index
 ```elixir
@@ -945,6 +945,9 @@ end
 | `<.form_actions>` | Submit / Cancel / Delete button row |
 | `<.empty_state>` | Centered message when a list is empty |
 | `<.edit_link>` | Pencil icon link used in list rows |
+| `<.macro_grid>` | 4-column calories/protein/carbs/fat summary |
+| `<.veg_badge>` | Veg / non-veg pill badge |
+| `<.nutrition_tabs>` | Recipes / Ingredients tab bar |
 
 ### Tailwind mobile-first layout rules
 - `max-w-xl mx-auto` on every page wrapper — constrains width so desktop
@@ -954,6 +957,96 @@ end
 - Fixed bottom nav uses `fixed bottom-0 left-0 right-0 z-50` — always visible
 - Don't use `container` from Tailwind — it adds breakpoint-specific max-widths
   that conflict with the single `max-w-xl` constraint
+
+---
+
+## 11. HEEx template patterns
+
+### principle
+Use attribute-style HEEx syntax everywhere. Never use `<%= %>` for conditionals
+or loops — only for local variable bindings where the value cannot be an assign.
+
+### rules
+
+**Always use `:if`, `:for`, `:key` — never `<%= if %>` / `<%= for %>`**
+```heex
+<%!-- good --%>
+<div :if={@loading}>...</div>
+<div :for={item <- @items} :key={item.id}>...</div>
+<span :if={todo.due_date}>· due {Calendar.strftime(todo.due_date, "%b %-d")}</span>
+
+<%!-- bad --%>
+<%= if @loading do %><div>...</div><% end %>
+<%= for item <- @items do %><div>{item.name}</div><% end %>
+```
+
+**`:key` is required on every `:for` loop**
+LiveView uses it to track DOM nodes and avoid unnecessary re-renders.
+Use `item.id` when available; use the value itself for scalar lists (atoms, strings, integers).
+```heex
+<div :for={day <- last_30_days()} :key={day}>...</div>
+<span :for={tag <- entry.tags} :key={tag}>#{tag}</span>
+<option :for={t <- @templates} :key={t.id} value={t.id}>{t.name}</option>
+```
+
+**Extract repeated expressions as local bindings — not duplicated inline**
+```heex
+<%!-- good — computed once --%>
+<% logged_today = MapSet.member?(@stats.calendar_dates, Date.utc_today()) %>
+<button disabled={logged_today} class={[if(logged_today, do: "...", else: "...")]}>
+  <span :if={logged_today}>Logged today ✓</span>
+  <span :if={!logged_today}>Log for today</span>
+</button>
+
+<%!-- bad — same expression repeated 3 times --%>
+<button disabled={MapSet.member?(@stats.calendar_dates, Date.utc_today())}
+        class={[if(MapSet.member?(@stats.calendar_dates, Date.utc_today()), ...)]}>
+  <%= if MapSet.member?(@stats.calendar_dates, Date.utc_today()) do %>...
+```
+
+**Local `<% var = expr %>` bindings — when to use vs assigns**
+
+| Source of value | Where to compute |
+|---|---|
+| DB / context data known at mount | `assign` in `mount` or `handle_params` |
+| Derived from form state (changes on validate) | `<% var = %>` local binding in template |
+| Same expression used 3+ times in template | `assign` — pre-compute it |
+| One-off, template-local, not reused | `<% var = %>` local binding |
+
+```heex
+<%!-- form-derived — local binding is correct --%>
+<% current_mood = to_string(Phoenix.HTML.Form.input_value(@form, :mood)) %>
+
+<%!-- DB-derived — should be an assign, not a local binding --%>
+<%!-- BAD: <% user = Accounts.get_user!(@user_id) %> --%>
+```
+
+**Inline conditionals on optional fields — use `:if` on a `<span>`**
+```heex
+<%!-- good --%>
+<p class="text-xs text-gray-400">
+  {workout.type}
+  <span :if={workout.duration}>· {workout.duration} min</span>
+</p>
+
+<%!-- bad --%>
+<p class="text-xs text-gray-400">
+  {workout.type}
+  <%= if workout.duration do %>· {workout.duration} min<% end %>
+</p>
+```
+
+**`:if` on components vs HTML tags**
+`:if` and `:for` work on plain HTML tags only. For Phoenix components, use a wrapping `<div :if>` or compute the condition before rendering.
+```heex
+<%!-- good — :if on an HTML tag --%>
+<div :if={@targets}>
+  <.macro_grid calories={@targets.calories} ... />
+</div>
+
+<%!-- also good — :if directly supported on function components --%>
+<.macro_grid :if={!@targets} calories={@totals.calories} ... />
+```
 
 ---
 
@@ -971,6 +1064,8 @@ Before merging any new module, verify:
 - [ ] LiveView handle_event delegates to context within 5 lines
 - [ ] At least one test for create, one for a failure case
 - [ ] Repeated HTML extracted to ui_components.ex, not duplicated
-- [ ] Every `:for` loop has `:key={item.id}`
+- [ ] Every `:for` loop has `:key={item.id}` (or `:key={value}` for scalars)
+- [ ] No `<%= if %>` or `<%= for %>` — use `:if` / `:for` attribute syntax
+- [ ] Repeated inline expressions extracted as `<% var = %>` or assign
 - [ ] No daisyUI classes on form elements (input, btn, select, fieldset)
 - [ ] `attr` declarations present on every function component

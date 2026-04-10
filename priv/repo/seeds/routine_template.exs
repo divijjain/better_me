@@ -70,7 +70,9 @@ min_max_days = [
 
 IO.puts("\n--- Seeding routine template ---")
 
-case Repo.get_by(RoutineTemplate, name: "Min-Max 5x", user_id: nil) do
+import Ecto.Query
+
+case Repo.one(from t in RoutineTemplate, where: t.name == "Min-Max 5x" and is_nil(t.user_id)) do
   nil ->
     {:ok, template} =
       %RoutineTemplate{}

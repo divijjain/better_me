@@ -2,11 +2,12 @@
 # Read this at the start of every new conversation instead of exploring the codebase.
 
 ## current state
-Phase 3 — In progress.
-Phase 1 complete: Habits, Todos, Body Metrics, Gym tracking.
-Phase 2 complete: Ingredients + Recipes CRUD, Meal Logs, Nutrition daily view, User Profiles (TDEE/macro targets).
-Phase 3 partial: Journal entries done. pgvector + EmbedJob pipeline done. InsightWorkflow (RAG) done. Analytics dashboard done.
-Next: Google OAuth, invite-only/whitelist mechanism for friends & family rollout.
+Phases 1–4 complete. Phase 5 (native integrations) not started.
+- Phase 1 complete: Habits, Todos, Body Metrics, Gym tracking.
+- Phase 2 complete: Ingredients, Recipes, Meal Logs, Nutrition daily view, User Profiles (TDEE/macro targets).
+- Phase 3 complete: Journal entries, pgvector + EmbedJob pipeline, InsightWorkflow (RAG), Insights chat UI.
+- Phase 4 complete: Analytics dashboard (CSS bar charts — weight, workouts, calories, mood, habits).
+Next: Phase 5 — React Native + Expo, Apple Health / Android Health Connect. Or deploy and use.
 
 ## fitness data sync (future — Phase 2)
 Apple Health: no server API, data is on-device only.
@@ -15,7 +16,7 @@ Google Fit: has OAuth2 REST API, can sync server-side via Oban job, or via react
 Both platforms feed the same Phoenix workout/body_metrics endpoints — no special handling needed in Phoenix.
 
 ## what is built and working
-- Auth: magic link + password login via phx.gen.auth (plain integer IDs everywhere)
+- Auth: Google OAuth via phx.gen.auth (email-password login removed; plain integer IDs everywhere)
 - Habits: CRUD, streak calculation, 30-day calendar, one-tap log, show page with stats
 - Todos: CRUD, priority (low/medium/high), category, due date, repeat, pending/done filter, one-tap complete
 - Body Metrics: CRUD, weight + body fat %, unique per user per day
@@ -26,10 +27,11 @@ Both platforms feed the same Phoenix workout/body_metrics endpoints — no speci
 - Nutrition daily view: daily macro totals vs TDEE targets, progress bars
 - User Profiles: height/weight/age/gender/activity level, macro split %, TDEE calc (Mifflin-St Jeor)
 - Journal entries: CRUD, mood (1–5), tags
-- pgvector embeddings: EmbedJob (Oban) embeds journal entries + meal logs via OpenAI text-embedding-3-small
+- pgvector embeddings: EmbedJob (Oban) embeds journal entries + meal logs + workouts via OpenAI text-embedding-3-small
 - InsightWorkflow: RAG pipeline — embed question → similarity search (journals, nutrition, workouts) → Claude Haiku answers
 - Insights chat UI: /insights, streaming-style message thread
 - Analytics dashboard: /analytics — CSS bar charts, weight trend, workout frequency/types, calories, mood, habit completion
+- Deployment: Fly.io (app: better-me, region: bom, 2 machines 1GB; db: bme-postgres 512MB 5GB volume)
 - Landing page + restyled auth pages (plain Tailwind, "Better Me" branding)
 - Bottom nav bar: all tabs (fixed, mobile-first)
 - UI components extracted to `ui_components.ex`
@@ -55,7 +57,15 @@ lib/better_me/
     repository.ex                    # upsert profile by user_id
     schema/user_profile.ex           # height, weight, age, gender, activity_level,
                                      # protein_pct, carbs_pct (fat derived as remainder)
-  accounts.ex / accounts/            # phx.gen.auth + register_user
+  journals.ex / journals/            # journal entries — mood (1–5), free-form notes, tags
+  embeddings.ex / embeddings/        # pgvector embeddings table + EmbedJob (Oban)
+    jobs/embed_job.ex                # embeds journal/meal/workout text via OpenAI
+    repository.ex                    # similarity_search/3 — cosine distance via ivfflat
+  insights/                          # InsightWorkflow — fixed-step RAG (no Jido)
+    insight_workflow.ex              # embed → search journals/nutrition/workouts → Claude
+  anthropic/chat.ex                  # Claude Haiku API wrapper (req_llm)
+  openai/embeddings.ex               # OpenAI text-embedding-3-small wrapper (req_llm)
+  accounts.ex / accounts/            # phx.gen.auth + Google OAuth
 
 lib/better_me_web/
   router.ex                          # all routes in live_session :authenticated
@@ -70,8 +80,11 @@ lib/better_me_web/
     workouts/index.ex show.ex form.ex
     ingredients/index.ex form.ex
     recipes/index.ex show.ex form.ex
-    nutrition/index.ex               # daily macro log (in progress)
+    nutrition/index.ex               # daily macro log
     profile/index.ex                 # user profile + macro targets form
+    journal/index.ex form.ex         # mood + notes + tags, one per day
+    insights/index.ex                # RAG chat UI at /insights
+    analytics/index.ex               # CSS bar charts — weight, workouts, calories, mood, habits
 
 priv/repo/migrations/
   20260402105243_create_users_auth_tables.exs
@@ -90,7 +103,17 @@ priv/repo/migrations/
   20260403110003_create_meal_logs.exs
   20260403120000_add_category_and_brand_to_ingredients.exs
   20260405100000_create_user_profiles.exs
-seeds.exs                            # divij@better.me / betterme2026!
+  20260406100000_add_fiber_and_sugar_to_ingredients.exs
+  20260406110000_add_glycemic_index_to_ingredients.exs
+  20260406120000_add_sodium_to_ingredients.exs
+  20260406130000_add_is_vegetarian_to_ingredients.exs
+  20260406170028_add_oban_jobs_table.exs
+  20260406200000_create_journal_entries.exs
+  20260406300000_enable_pgvector.exs
+  20260406300001_create_embeddings.exs
+  20260408100000_add_oauth_to_users.exs
+  20260409073658_make_routine_template_user_optional.exs
+seeds.exs                            # divij@better.me (Google OAuth — no password)
 ```
 
 ## architecture rules (summary — full detail in PRINCIPLES.md)
@@ -114,11 +137,10 @@ seeds.exs                            # divij@better.me / betterme2026!
 Email: divij@better.me / Password: betterme2026!
 Email: test@better.me  / Password: betterme2026!
 
-## phase 3 remaining
-- Google OAuth (ueberauth_google or direct OAuth2 via req)
-- Invite-only / whitelist mechanism for friends & family rollout
-- Phone number / OTP auth (lower priority)
-- Go microservice: POST /calculate-tdee (optional — TDEE already done in Elixir)
+## phase 5 (next)
+- React Native + Expo app for native device features
+- Apple Health (HealthKit via react-native-health) — POST weight/workouts to Phoenix API
+- Android Health Connect — replacement for deprecated Google Fit, SDK-only via Expo
 
 ## non-obvious decisions made this session
 - Eggs (Whole Egg, Egg White) are non-vegetarian — seed file updated, DB patched
@@ -127,3 +149,5 @@ Email: test@better.me  / Password: betterme2026!
 - pgvector 0.3.x requires BetterMe.PostgrexTypes module + `types:` config key in config.exs
 - Analytics has no domain — queries live in each owning domain's repository.ex (PRINCIPLES.md enforcement)
 - InsightWorkflow is a plain Elixir module (no Jido) — fixed steps: embed → search → Claude
+- Deployed on Fly.io: app `better-me` (bom, 2×1GB), db `bme-postgres` (bom, 512MB, 5GB). See FLY_DEPLOYMENT.md.
+- CI/CD: GitHub Actions → fly deploy on push to main (FLY_API_TOKEN in GitHub Secrets)

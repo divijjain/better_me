@@ -157,18 +157,7 @@ defmodule BetterMeWeb.IngredientsLive.Index do
                     <span :if={ingredient.brand} class="text-xs text-gray-400">
                       ({ingredient.brand})
                     </span>
-                    <span
-                      :if={ingredient.is_vegetarian}
-                      class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700"
-                    >
-                      veg
-                    </span>
-                    <span
-                      :if={!ingredient.is_vegetarian}
-                      class="rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-700"
-                    >
-                      non-veg
-                    </span>
+                    <.veg_badge is_vegetarian={ingredient.is_vegetarian} />
                   </div>
                   <div class="mt-1.5">
                     <p class="text-xs text-gray-400 mb-1">per 100g</p>
@@ -208,8 +197,7 @@ defmodule BetterMeWeb.IngredientsLive.Index do
     <%!-- Comparison panel — outside page_container so fixed positioning works --%>
     <div
       :if={@comparing != []}
-      class="fixed left-0 right-0 z-[60] bg-white border-t-2 border-indigo-100 shadow-2xl"
-      style="bottom: 56px;"
+      class="fixed bottom-14 left-0 right-0 z-[60] bg-white border-t-2 border-indigo-100 shadow-2xl"
     >
       <div class="max-w-2xl mx-auto px-4 pt-3 pb-4">
         <%!-- Header --%>
@@ -298,17 +286,8 @@ defmodule BetterMeWeb.IngredientsLive.Index do
 
       <%!-- Name --%>
       <p class="text-xs font-bold text-gray-800 pr-4 mb-0.5 leading-tight">{@ing.name}</p>
-      <span
-        :if={@ing.is_vegetarian}
-        class="inline-block rounded-full bg-green-100 px-1.5 py-0.5 text-xs font-medium text-green-700 mb-2"
-      >
-        veg
-      </span>
-      <span
-        :if={!@ing.is_vegetarian}
-        class="inline-block rounded-full bg-red-100 px-1.5 py-0.5 text-xs font-medium text-red-700 mb-2"
-      >
-        non-veg
+      <span class="inline-block mb-2">
+        <.veg_badge is_vegetarian={@ing.is_vegetarian} />
       </span>
 
       <%!-- Macro bars --%>

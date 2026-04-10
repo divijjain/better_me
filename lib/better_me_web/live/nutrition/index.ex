@@ -56,24 +56,13 @@ defmodule BetterMeWeb.NutritionLive.Index do
           unit="kcal"
           color="bg-indigo-500"
         />
-        <div :if={!@targets} class="grid grid-cols-4 gap-2 text-center">
-          <div>
-            <p class="text-lg font-bold text-gray-900">{round(@summary.totals.calories)}</p>
-            <p class="text-xs text-gray-400">kcal</p>
-          </div>
-          <div>
-            <p class="text-lg font-bold text-gray-900">{Float.round(@summary.totals.protein, 1)}g</p>
-            <p class="text-xs text-gray-400">protein</p>
-          </div>
-          <div>
-            <p class="text-lg font-bold text-gray-900">{Float.round(@summary.totals.carbs, 1)}g</p>
-            <p class="text-xs text-gray-400">carbs</p>
-          </div>
-          <div>
-            <p class="text-lg font-bold text-gray-900">{Float.round(@summary.totals.fat, 1)}g</p>
-            <p class="text-xs text-gray-400">fat</p>
-          </div>
-        </div>
+        <.macro_grid
+          :if={!@targets}
+          calories={@summary.totals.calories}
+          protein={@summary.totals.protein}
+          carbs={@summary.totals.carbs}
+          fat={@summary.totals.fat}
+        />
         <.macro_row
           :if={@targets}
           label="Protein"

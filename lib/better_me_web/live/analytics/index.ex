@@ -128,21 +128,16 @@ defmodule BetterMeWeb.AnalyticsLive.Index do
           <p class="text-sm text-gray-400">No habits yet.</p>
         <% else %>
           <div class="space-y-3">
-            <%= for h <- @habits do %>
-              <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span class="text-gray-700 font-medium">{h.name}</span>
-                  <span class="text-gray-500">{h.logged} days · {h.rate}%</span>
-                </div>
-                <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
-                  <div
-                    class="h-full bg-indigo-400 rounded-full"
-                    style={"width: #{min(h.rate, 100)}%"}
-                  >
-                  </div>
+            <div :for={h <- @habits} :key={h.name}>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-700 font-medium">{h.name}</span>
+                <span class="text-gray-500">{h.logged} days · {h.rate}%</span>
+              </div>
+              <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div class="h-full bg-indigo-400 rounded-full" style={"width: #{min(h.rate, 100)}%"}>
                 </div>
               </div>
-            <% end %>
+            </div>
           </div>
         <% end %>
       </section>
@@ -174,22 +169,20 @@ defmodule BetterMeWeb.AnalyticsLive.Index do
 
     ~H"""
     <div class="space-y-1.5">
-      <%= for row <- @data do %>
+      <div :for={row <- @data} :key={@label_fn.(row)} class="flex items-center gap-2">
         <% raw_val = Map.get(row, @value_key) %>
         <% val = to_float(raw_val) %>
         <% pct = if @max_val > 0, do: min(val / @max_val * 100, 100), else: 0 %>
-        <div class="flex items-center gap-2">
-          <span class="w-16 text-xs text-gray-400 text-right shrink-0">
-            {@label_fn.(row)}
-          </span>
-          <div class="flex-1 h-5 bg-gray-100 rounded overflow-hidden">
-            <div class={["h-full rounded", @color]} style={"width: #{pct}%"}></div>
-          </div>
-          <span class="w-20 text-xs text-gray-500 shrink-0">
-            {format_val(raw_val)}{@unit}
-          </span>
+        <span class="w-16 text-xs text-gray-400 text-right shrink-0">
+          {@label_fn.(row)}
+        </span>
+        <div class="flex-1 h-5 bg-gray-100 rounded overflow-hidden">
+          <div class={["h-full rounded", @color]} style={"width: #{pct}%"}></div>
         </div>
-      <% end %>
+        <span class="w-20 text-xs text-gray-500 shrink-0">
+          {format_val(raw_val)}{@unit}
+        </span>
+      </div>
     </div>
     """
   end

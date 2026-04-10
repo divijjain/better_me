@@ -37,12 +37,14 @@ defmodule BetterMeWeb.JournalLive.Form do
           <label class="block text-sm font-medium text-gray-700 mb-1">
             Mood <span class="text-gray-400 font-normal">(optional)</span>
           </label>
+          <% current_mood = to_string(Phoenix.HTML.Form.input_value(@form, :mood)) %>
           <div class="flex gap-3">
             <label
               :for={mood <- [1, 2, 3, 4, 5]}
+              :key={mood}
               class={[
                 "flex flex-1 cursor-pointer items-center justify-center rounded-lg border py-2 text-xl transition",
-                if(to_string(mood) == to_string(Phoenix.HTML.Form.input_value(@form, :mood)),
+                if(to_string(mood) == current_mood,
                   do: "border-indigo-400 bg-indigo-50",
                   else: "border-gray-200 bg-white hover:bg-gray-50"
                 )
@@ -52,7 +54,7 @@ defmodule BetterMeWeb.JournalLive.Form do
                 type="radio"
                 name="journal_entry[mood]"
                 value={mood}
-                checked={to_string(mood) == to_string(Phoenix.HTML.Form.input_value(@form, :mood))}
+                checked={to_string(mood) == current_mood}
                 class="sr-only"
               />
               {mood_emoji(mood)}

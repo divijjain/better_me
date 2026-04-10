@@ -36,6 +36,7 @@ defmodule BetterMeWeb.JournalLive.Index do
               <div :if={entry.tags != []} class="mt-2 flex flex-wrap gap-1">
                 <span
                   :for={tag <- entry.tags}
+                  :key={tag}
                   class="rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-600"
                 >
                   #{tag}

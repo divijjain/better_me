@@ -111,18 +111,18 @@ mix setup              # install deps, create DB, run migrations, seed
 mix phx.server         # start the server at http://localhost:4000
 ```
 
-Seed credentials:
-- `divij@better.me` / `betterme2026!`
-- `test@better.me` / `betterme2026!`
+Auth: Google OAuth — no password login. Sign in with your Google account.
 
 ### environment variables
 
 | Variable | Required | Purpose |
 |---|---|---|
-| `OPENAI_API_KEY` | Phase 3 only | Embedding model (`text-embedding-3-small`) |
-| `ANTHROPIC_API_KEY` | Phase 3 only | Claude for insight answers |
-
-Phases 1 and 2 work without any API keys. Keys are only needed once you use the AI insights feature.
+| `OPENAI_API_KEY` | Phase 3+ | Embedding model (`text-embedding-3-small`) |
+| `ANTHROPIC_API_KEY` | Phase 3+ | Claude Haiku for insight answers |
+| `GOOGLE_CLIENT_ID` | Auth | Google OAuth client ID |
+| `GOOGLE_CLIENT_SECRET` | Auth | Google OAuth client secret |
+| `SECRET_KEY_BASE` | Always | Phoenix secret key base |
+| `DATABASE_URL` | Production | Postgres connection string (set by Fly) |
 
 ## development
 
@@ -167,11 +167,12 @@ lib/
     nutrition/        schema/, actions/, repository.ex, macros.ex
     profiles/         schema/, repository.ex, tdee.ex
     journals/         schema/, actions/, repository.ex
+    journals/         schema/, actions/, repository.ex
     embeddings/       schema/, jobs/, repository.ex
     insights/         insight_workflow.ex
     anthropic/        chat.ex
     openai/           embeddings.ex
-    accounts/         phx.gen.auth generated
+    accounts/         phx.gen.auth + Google OAuth
   better_me_web/
     live/
       habits/         index.ex  show.ex  form.ex
@@ -210,7 +211,7 @@ priv/repo/
 | 2 | Nutrition — ingredients, recipes, meal logs, user profile | complete |
 | 3 | AI insights — journal, RAG, insight workflow, chat UI | complete |
 | 4 | Analytics dashboards — body weight, workouts, calories, mood, habits | complete |
-| 5 | Native integrations — Apple Health, Google Fit | planned |
+| 5 | Native integrations — Apple Health, Android Health Connect | planned |
 
 ## AI architecture
 

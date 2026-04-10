@@ -31,10 +31,12 @@ users → todos, habits (+ habit_logs), workouts (+ exercises + exercise_sets + 
 5. Native integrations — React Native + Expo, Apple Health (HealthKit via react-native-health), Android Health Connect (replaces deprecated Google Fit, SDK-only via Expo)
 
 ## current phase
-Phase 3 — In progress.
+Phases 1–4 complete. Phase 5 next.
 - Phase 1 complete: Habits, Todos, Body Metrics, Gym tracking.
 - Phase 2 complete: Ingredients, Recipes, Meal logs, User Profiles (TDEE/macro targets).
-- Phase 3 started: Journal entries done. pgvector + EmbedJob pipeline done. InsightWorkflow next.
+- Phase 3 complete: Journal entries, pgvector + EmbedJob, InsightWorkflow (RAG), Insights chat UI.
+- Phase 4 complete: Analytics dashboard (CSS bar charts — weight, workouts, calories, mood, habits).
+- Deployed: Fly.io (bom region). CI/CD via GitHub Actions. See FLY_DEPLOYMENT.md.
 
 ## rules
 - No Jido. Insight feature is a plain Elixir workflow — code controls the steps.
