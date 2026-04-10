@@ -71,7 +71,9 @@ defmodule BetterMe.MixProject do
       {:bandit, "~> 1.5"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:plug_attack, "~> 0.4"},
-      {:ex_machina, "~> 2.8", only: :test}
+      {:ex_machina, "~> 2.8", only: :test},
+      {:hackney, "~> 1.8"},
+      {:sentry, "~> 10.2.0"}
     ]
   end
 

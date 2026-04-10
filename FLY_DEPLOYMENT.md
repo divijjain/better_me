@@ -5,7 +5,7 @@
 - URL: `better-me.fly.dev`
 - Region: `bom` (Mumbai)
 - 2 machines, shared 1 vCPU, 1024 MB RAM each
-- Auto-stop/start enabled (`min_machines_running = 0`) — scales to zero when idle
+- Always-on: `min_machines_running = 1` — one machine always running, no cold starts
 - Release command: `/app/bin/migrate` (auto-runs Ecto migrations on deploy)
 - Deployed via multi-stage Dockerfile (Elixir 1.19.5 / OTP 28.3.1 / Debian trixie)
 - Entrypoint: `/app/bin/server`
