@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": 1775207366305,
+  "timestamp": 1775796091012,
   "workspaceRoot": "/Users/divij/projects/better_me",
   "registries": {
     "components": {
@@ -259,233 +259,26 @@
           "/Users/divij/projects/better_me/lib/better_me_web/components/core_components.ex",
           [
             {
-              "name": "flash",
+              "name": "icon",
               "moduleName": "BetterMeWeb.CoreComponents",
               "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/core_components.ex",
-              "line": 50,
+              "line": 442,
               "attributes": [
-                {
-                  "name": "id",
-                  "type": "string",
-                  "rawType": ":string",
-                  "required": false,
-                  "doc": "the optional id of flash container"
-                },
-                {
-                  "name": "flash",
-                  "type": "map",
-                  "rawType": ":map",
-                  "required": false,
-                  "default": "%{}",
-                  "doc": "the map of flash messages to display"
-                },
-                {
-                  "name": "title",
-                  "type": "string",
-                  "rawType": ":string",
-                  "required": false,
-                  "default": "nil"
-                },
-                {
-                  "name": "kind",
-                  "type": "atom",
-                  "rawType": ":atom",
-                  "required": false,
-                  "values": [
-                    "info",
-                    "error"
-                  ],
-                  "doc": "used for styling and flash lookup"
-                },
-                {
-                  "name": "rest",
-                  "type": "global",
-                  "rawType": ":global",
-                  "required": false,
-                  "doc": "the arbitrary HTML attributes to add to the flash container"
-                }
-              ],
-              "slots": [
-                {
-                  "name": "inner_block",
-                  "required": false,
-                  "attributes": [],
-                  "doc": "the optional inner block that renders the flash message"
-                }
-              ]
-            },
-            {
-              "name": "button",
-              "moduleName": "BetterMeWeb.CoreComponents",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/core_components.ex",
-              "line": 96,
-              "attributes": [
-                {
-                  "name": "rest",
-                  "type": "global",
-                  "rawType": ":global",
-                  "required": false
-                },
                 {
                   "name": "class",
                   "type": "any",
-                  "rawType": ":any",
-                  "required": false
+                  "required": false,
+                  "default": "\"size-4\"",
+                  "rawType": "any"
                 },
                 {
-                  "name": "variant",
+                  "name": "name",
                   "type": "string",
-                  "rawType": ":string",
-                  "required": false
-                }
-              ],
-              "slots": [
-                {
-                  "name": "inner_block",
                   "required": true,
-                  "attributes": []
-                }
-              ]
-            },
-            {
-              "name": "input",
-              "moduleName": "BetterMeWeb.CoreComponents",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/core_components.ex",
-              "line": 195,
-              "attributes": [
-                {
-                  "name": "options",
-                  "type": "list",
-                  "rawType": ":list",
-                  "required": false,
-                  "doc": "the options to pass to Phoenix.HTML.Form.options_for_select/2"
-                },
-                {
-                  "name": "multiple",
-                  "type": "boolean",
-                  "rawType": ":boolean",
-                  "required": false,
-                  "default": "false",
-                  "doc": "the multiple flag for select inputs"
-                },
-                {
-                  "name": "class",
-                  "type": "any",
-                  "rawType": ":any",
-                  "required": false,
-                  "default": "nil",
-                  "doc": "the input class to use over defaults"
-                },
-                {
-                  "name": "error_class",
-                  "type": "any",
-                  "rawType": ":any",
-                  "required": false,
-                  "default": "nil",
-                  "doc": "the input error class to use over defaults"
-                },
-                {
-                  "name": "rest",
-                  "type": "global",
-                  "rawType": ":global",
-                  "required": false
+                  "rawType": "string"
                 }
               ],
               "slots": []
-            },
-            {
-              "name": "error",
-              "moduleName": "BetterMeWeb.CoreComponents",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/core_components.ex",
-              "line": 299,
-              "attributes": [],
-              "slots": []
-            },
-            {
-              "name": "header",
-              "moduleName": "BetterMeWeb.CoreComponents",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/core_components.ex",
-              "line": 315,
-              "attributes": [],
-              "slots": [
-                {
-                  "name": "inner_block",
-                  "required": true,
-                  "attributes": []
-                },
-                {
-                  "name": "subtitle",
-                  "required": false,
-                  "attributes": []
-                },
-                {
-                  "name": "actions",
-                  "required": false,
-                  "attributes": []
-                }
-              ]
-            },
-            {
-              "name": "table",
-              "moduleName": "BetterMeWeb.CoreComponents",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/core_components.ex",
-              "line": 356,
-              "attributes": [
-                {
-                  "name": "id",
-                  "type": "string",
-                  "rawType": ":string",
-                  "required": true
-                },
-                {
-                  "name": "rows",
-                  "type": "list",
-                  "rawType": ":list",
-                  "required": true
-                },
-                {
-                  "name": "row_id",
-                  "type": "any",
-                  "rawType": ":any",
-                  "required": false,
-                  "default": "nil",
-                  "doc": "the function for generating the row id"
-                },
-                {
-                  "name": "row_click",
-                  "type": "any",
-                  "rawType": ":any",
-                  "required": false,
-                  "default": "nil",
-                  "doc": "the function for handling phx-click on each row"
-                },
-                {
-                  "name": "row_item",
-                  "type": "any",
-                  "rawType": ":any",
-                  "required": false
-                }
-              ],
-              "slots": [
-                {
-                  "name": "col",
-                  "required": true,
-                  "attributes": [
-                    {
-                      "name": "label",
-                      "type": "string",
-                      "rawType": ":string",
-                      "required": false
-                    }
-                  ]
-                },
-                {
-                  "name": "action",
-                  "required": false,
-                  "attributes": [],
-                  "doc": "the slot for showing user actions in the last table column"
-                }
-              ]
             },
             {
               "name": "list",
@@ -499,9 +292,12 @@
                   "required": true,
                   "attributes": [
                     {
+                      "default": null,
+                      "line": 405,
                       "name": "title",
                       "type": "string",
-                      "rawType": ":string",
+                      "values": null,
+                      "doc": null,
                       "required": true
                     }
                   ]
@@ -509,50 +305,227 @@
               ]
             },
             {
-              "name": "icon",
+              "name": "table",
               "moduleName": "BetterMeWeb.CoreComponents",
               "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/core_components.ex",
-              "line": 442,
+              "line": 356,
               "attributes": [
                 {
-                  "name": "name",
+                  "name": "row_item",
+                  "type": "any",
+                  "required": false,
+                  "default": "{:&, [line: 347, column: 14], [{:/, [line: 347, column: 32], [{{:., [line: 347, column: 23], [{:__aliases__, [last: [line: 347, column: 15], line: 347, column: 15], [:Function]}, :identity]}, [no_parens: true, line: 347, column: 24], []}, 1]}]}",
+                  "doc": "the function for mapping each row before calling the :col and :action slots",
+                  "rawType": "any"
+                },
+                {
+                  "name": "row_click",
+                  "type": "any",
+                  "required": false,
+                  "default": "nil",
+                  "doc": "the function for handling phx-click on each row",
+                  "rawType": "any"
+                },
+                {
+                  "name": "row_id",
+                  "type": "any",
+                  "required": false,
+                  "default": "nil",
+                  "doc": "the function for generating the row id",
+                  "rawType": "any"
+                },
+                {
+                  "name": "rows",
+                  "type": "list",
+                  "required": true,
+                  "rawType": "list"
+                },
+                {
+                  "name": "id",
                   "type": "string",
-                  "rawType": ":string",
-                  "required": true
+                  "required": true,
+                  "rawType": "string"
+                }
+              ],
+              "slots": [
+                {
+                  "name": "action",
+                  "required": false,
+                  "doc": "the slot for showing user actions in the last table column",
+                  "attributes": []
+                },
+                {
+                  "name": "col",
+                  "required": true,
+                  "attributes": [
+                    {
+                      "default": null,
+                      "line": 351,
+                      "name": "label",
+                      "type": "string",
+                      "values": null,
+                      "doc": null,
+                      "required": false
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "header",
+              "moduleName": "BetterMeWeb.CoreComponents",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/core_components.ex",
+              "line": 315,
+              "attributes": [],
+              "slots": [
+                {
+                  "name": "actions",
+                  "required": false,
+                  "attributes": []
+                },
+                {
+                  "name": "subtitle",
+                  "required": false,
+                  "attributes": []
+                },
+                {
+                  "name": "inner_block",
+                  "required": true,
+                  "attributes": []
+                }
+              ]
+            },
+            {
+              "name": "input",
+              "moduleName": "BetterMeWeb.CoreComponents",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/core_components.ex",
+              "line": 184,
+              "attributes": [
+                {
+                  "name": "rest",
+                  "type": "global",
+                  "required": false,
+                  "rawType": "global"
+                },
+                {
+                  "name": "error_class",
+                  "type": "any",
+                  "required": false,
+                  "default": "nil",
+                  "doc": "the input error class to use over defaults",
+                  "rawType": "any"
                 },
                 {
                   "name": "class",
                   "type": "any",
-                  "rawType": ":any",
                   "required": false,
-                  "default": "\"size-4\""
+                  "default": "nil",
+                  "doc": "the input class to use over defaults",
+                  "rawType": "any"
+                },
+                {
+                  "name": "multiple",
+                  "type": "boolean",
+                  "required": false,
+                  "default": "false",
+                  "doc": "the multiple flag for select inputs",
+                  "rawType": "boolean"
+                },
+                {
+                  "name": "options",
+                  "type": "list",
+                  "required": false,
+                  "doc": "the options to pass to Phoenix.HTML.Form.options_for_select/2",
+                  "rawType": "list"
+                },
+                {
+                  "name": "prompt",
+                  "type": "string",
+                  "required": false,
+                  "default": "nil",
+                  "doc": "the prompt for select inputs",
+                  "rawType": "string"
+                },
+                {
+                  "name": "checked",
+                  "type": "boolean",
+                  "required": false,
+                  "doc": "the checked flag for checkbox inputs",
+                  "rawType": "boolean"
+                },
+                {
+                  "name": "errors",
+                  "type": "list",
+                  "required": false,
+                  "default": "[]",
+                  "rawType": "list"
+                },
+                {
+                  "name": "field",
+                  "type": "{:__aliases__, [last: [line: 169, column: 29], line: 169, column: 16], [:Phoenix, :HTML, :FormField]}",
+                  "required": false,
+                  "doc": "a form field struct retrieved from the form, for example: @form[:email]",
+                  "rawType": "{:__aliases__, [last: [line: 169, column: 29], line: 169, column: 16], [:Phoenix, :HTML, :FormField]}"
+                },
+                {
+                  "name": "type",
+                  "type": "string",
+                  "required": false,
+                  "default": "\"text\"",
+                  "rawType": "string"
+                },
+                {
+                  "name": "value",
+                  "type": "any",
+                  "required": false,
+                  "rawType": "any"
+                },
+                {
+                  "name": "label",
+                  "type": "string",
+                  "required": false,
+                  "default": "nil",
+                  "rawType": "string"
+                },
+                {
+                  "name": "name",
+                  "type": "any",
+                  "required": false,
+                  "rawType": "any"
+                },
+                {
+                  "name": "id",
+                  "type": "any",
+                  "required": false,
+                  "default": "nil",
+                  "rawType": "any"
                 }
               ],
               "slots": []
-            }
-          ]
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me_web/components/layouts.ex",
-          [
+            },
             {
-              "name": "app",
-              "moduleName": "BetterMeWeb.Layouts",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/layouts.ex",
-              "line": 36,
+              "name": "button",
+              "moduleName": "BetterMeWeb.CoreComponents",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/core_components.ex",
+              "line": 96,
               "attributes": [
                 {
-                  "name": "flash",
-                  "type": "map",
-                  "rawType": ":map",
-                  "required": true,
-                  "doc": "the map of flash messages"
+                  "name": "variant",
+                  "type": "string",
+                  "required": false,
+                  "rawType": "string"
                 },
                 {
-                  "name": "current_scope",
-                  "type": "map",
-                  "rawType": ":map",
-                  "required": false
+                  "name": "class",
+                  "type": "any",
+                  "required": false,
+                  "rawType": "any"
+                },
+                {
+                  "name": "rest",
+                  "type": "global",
+                  "required": false,
+                  "rawType": "global"
                 }
               ],
               "slots": [
@@ -564,29 +537,66 @@
               ]
             },
             {
-              "name": "flash_group",
-              "moduleName": "BetterMeWeb.Layouts",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/layouts.ex",
-              "line": 85,
+              "name": "flash",
+              "moduleName": "BetterMeWeb.CoreComponents",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/core_components.ex",
+              "line": 50,
               "attributes": [
+                {
+                  "name": "rest",
+                  "type": "global",
+                  "required": false,
+                  "doc": "the arbitrary HTML attributes to add to the flash container",
+                  "rawType": "global"
+                },
+                {
+                  "name": "kind",
+                  "type": "atom",
+                  "required": false,
+                  "values": [
+                    "info",
+                    "error"
+                  ],
+                  "doc": "used for styling and flash lookup",
+                  "rawType": "atom"
+                },
+                {
+                  "name": "title",
+                  "type": "string",
+                  "required": false,
+                  "default": "nil",
+                  "rawType": "string"
+                },
                 {
                   "name": "flash",
                   "type": "map",
-                  "rawType": ":map",
-                  "required": true,
-                  "doc": "the map of flash messages"
+                  "required": false,
+                  "default": "{:%{}, [closing: [line: 43, column: 33], line: 43, column: 31], []}",
+                  "doc": "the map of flash messages to display",
+                  "rawType": "map"
                 },
                 {
                   "name": "id",
                   "type": "string",
-                  "rawType": ":string",
                   "required": false,
-                  "default": "\"flash-group\"",
-                  "doc": "the optional id of flash container"
+                  "doc": "the optional id of flash container",
+                  "rawType": "string"
                 }
               ],
-              "slots": []
-            },
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": false,
+                  "doc": "the optional inner block that renders the flash message",
+                  "attributes": []
+                }
+              ]
+            }
+          ]
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/components/layouts.ex",
+          [
             {
               "name": "theme_toggle",
               "moduleName": "BetterMeWeb.Layouts",
@@ -594,6 +604,60 @@
               "line": 123,
               "attributes": [],
               "slots": []
+            },
+            {
+              "name": "flash_group",
+              "moduleName": "BetterMeWeb.Layouts",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/layouts.ex",
+              "line": 85,
+              "attributes": [
+                {
+                  "name": "id",
+                  "type": "string",
+                  "required": false,
+                  "default": "\"flash-group\"",
+                  "doc": "the optional id of flash container",
+                  "rawType": "string"
+                },
+                {
+                  "name": "flash",
+                  "type": "map",
+                  "required": true,
+                  "doc": "the map of flash messages",
+                  "rawType": "map"
+                }
+              ],
+              "slots": []
+            },
+            {
+              "name": "app",
+              "moduleName": "BetterMeWeb.Layouts",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/layouts.ex",
+              "line": 36,
+              "attributes": [
+                {
+                  "name": "current_scope",
+                  "type": "map",
+                  "required": false,
+                  "default": "nil",
+                  "doc": "the current [scope](https://hexdocs.pm/phoenix/scopes.html)",
+                  "rawType": "map"
+                },
+                {
+                  "name": "flash",
+                  "type": "map",
+                  "required": true,
+                  "doc": "the map of flash messages",
+                  "rawType": "map"
+                }
+              ],
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": true,
+                  "attributes": []
+                }
+              ]
             }
           ]
         ],
@@ -601,101 +665,34 @@
           "/Users/divij/projects/better_me/lib/better_me_web/components/ui_components.ex",
           [
             {
-              "name": "page_header",
+              "name": "page_container",
               "moduleName": "BetterMeWeb.UIComponents",
               "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/ui_components.ex",
-              "line": 19,
-              "attributes": [
+              "line": 184,
+              "attributes": [],
+              "slots": [
                 {
-                  "name": "title",
-                  "type": "string",
-                  "rawType": ":string",
-                  "required": true
-                },
-                {
-                  "name": "new_path",
-                  "type": "string",
-                  "rawType": ":string",
-                  "required": false,
-                  "default": "nil"
-                },
-                {
-                  "name": "new_label",
-                  "type": "string",
-                  "rawType": ":string",
-                  "required": false,
-                  "default": "\"New\""
+                  "name": "inner_block",
+                  "required": true,
+                  "attributes": []
                 }
-              ],
-              "slots": []
+              ]
             },
             {
-              "name": "form_header",
+              "name": "nutrition_tabs",
               "moduleName": "BetterMeWeb.UIComponents",
               "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/ui_components.ex",
-              "line": 45,
+              "line": 141,
               "attributes": [
                 {
-                  "name": "title",
-                  "type": "string",
-                  "rawType": ":string",
-                  "required": true
-                },
-                {
-                  "name": "back_path",
-                  "type": "string",
-                  "rawType": ":string",
-                  "required": true
-                }
-              ],
-              "slots": []
-            },
-            {
-              "name": "empty_state",
-              "moduleName": "BetterMeWeb.UIComponents",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/ui_components.ex",
-              "line": 65,
-              "attributes": [
-                {
-                  "name": "message",
-                  "type": "string",
-                  "rawType": ":string",
-                  "required": true
-                }
-              ],
-              "slots": []
-            },
-            {
-              "name": "form_actions",
-              "moduleName": "BetterMeWeb.UIComponents",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/ui_components.ex",
-              "line": 86,
-              "attributes": [
-                {
-                  "name": "action",
+                  "name": "active",
                   "type": "atom",
-                  "rawType": ":atom",
-                  "required": true
-                },
-                {
-                  "name": "cancel_path",
-                  "type": "string",
-                  "rawType": ":string",
-                  "required": true
-                },
-                {
-                  "name": "on_delete",
-                  "type": "string",
-                  "rawType": ":string",
-                  "required": false,
-                  "default": "nil"
-                },
-                {
-                  "name": "submit_label",
-                  "type": "string",
-                  "rawType": ":string",
-                  "required": false,
-                  "default": "nil"
+                  "required": true,
+                  "values": [
+                    "recipes",
+                    "ingredients"
+                  ],
+                  "rawType": "atom"
                 }
               ],
               "slots": []
@@ -709,25 +706,111 @@
                 {
                   "name": "path",
                   "type": "string",
-                  "rawType": ":string",
-                  "required": true
+                  "required": true,
+                  "rawType": "string"
                 }
               ],
               "slots": []
             },
             {
-              "name": "page_container",
+              "name": "form_actions",
               "moduleName": "BetterMeWeb.UIComponents",
               "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/ui_components.ex",
-              "line": 143,
-              "attributes": [],
-              "slots": [
+              "line": 86,
+              "attributes": [
                 {
-                  "name": "inner_block",
+                  "name": "submit_label",
+                  "type": "string",
+                  "required": false,
+                  "default": "nil",
+                  "rawType": "string"
+                },
+                {
+                  "name": "on_delete",
+                  "type": "string",
+                  "required": false,
+                  "default": "nil",
+                  "rawType": "string"
+                },
+                {
+                  "name": "cancel_path",
+                  "type": "string",
                   "required": true,
-                  "attributes": []
+                  "rawType": "string"
+                },
+                {
+                  "name": "action",
+                  "type": "atom",
+                  "required": true,
+                  "rawType": "atom"
                 }
-              ]
+              ],
+              "slots": []
+            },
+            {
+              "name": "empty_state",
+              "moduleName": "BetterMeWeb.UIComponents",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/ui_components.ex",
+              "line": 65,
+              "attributes": [
+                {
+                  "name": "message",
+                  "type": "string",
+                  "required": true,
+                  "rawType": "string"
+                }
+              ],
+              "slots": []
+            },
+            {
+              "name": "form_header",
+              "moduleName": "BetterMeWeb.UIComponents",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/ui_components.ex",
+              "line": 45,
+              "attributes": [
+                {
+                  "name": "back_path",
+                  "type": "string",
+                  "required": true,
+                  "rawType": "string"
+                },
+                {
+                  "name": "title",
+                  "type": "string",
+                  "required": true,
+                  "rawType": "string"
+                }
+              ],
+              "slots": []
+            },
+            {
+              "name": "page_header",
+              "moduleName": "BetterMeWeb.UIComponents",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/components/ui_components.ex",
+              "line": 19,
+              "attributes": [
+                {
+                  "name": "new_label",
+                  "type": "string",
+                  "required": false,
+                  "default": "\"New\"",
+                  "rawType": "string"
+                },
+                {
+                  "name": "new_path",
+                  "type": "string",
+                  "required": false,
+                  "default": "nil",
+                  "rawType": "string"
+                },
+                {
+                  "name": "title",
+                  "type": "string",
+                  "required": true,
+                  "rawType": "string"
+                }
+              ],
+              "slots": []
             }
           ]
         ],
@@ -750,125 +833,17 @@
         [
           "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_settings_html.ex",
           []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/repository.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/priv/repo/migrations/20260403100003_add_substitutions_to_routine_exercises.exs",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/actions/add_exercise.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/priv/repo/migrations/20260403100002_create_exercise_sets.exs",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise_set.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/priv/repo/migrations/20260403032129_create_workouts.exs",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/priv/repo/seeds.exs",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/priv/repo/migrations/20260403032130_create_exercises.exs",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/actions/log_set.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_exercise.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex",
-          [
-            {
-              "name": "render",
-              "moduleName": "BetterMeWeb.WorkoutsLive.Form",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex",
-              "line": 27,
-              "attributes": [],
-              "slots": []
-            }
-          ]
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/actions/detect_pr.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_day.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/priv/repo/migrations/20260403100001_add_routine_day_to_workouts.exs",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/priv/repo/migrations/20260403100000_create_routine_templates.exs",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/index.ex",
-          [
-            {
-              "name": "render",
-              "moduleName": "BetterMeWeb.WorkoutsLive.Index",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/index.ex",
-              "line": 15,
-              "attributes": [],
-              "slots": []
-            }
-          ]
         ]
       ],
       "fileHashes": {
         "/Users/divij/projects/better_me/lib/better_me_web/components/core_components.ex": "14ef18db808df2930268a2d23489d855053974bc",
         "/Users/divij/projects/better_me/lib/better_me_web/components/layouts.ex": "6b61aeed3630fb1bb6fa01683fd756bd27122141",
-        "/Users/divij/projects/better_me/lib/better_me_web/components/ui_components.ex": "0dd517c362e8837ce9ab95284978aba24b4c1f21",
+        "/Users/divij/projects/better_me/lib/better_me_web/components/ui_components.ex": "943090f5c943ad6627a38fe51e6ba99cad9f5d24",
         "/Users/divij/projects/better_me/lib/better_me_web/controllers/error_html.ex": "ed098e2885449a7e056b800a887916049710789b",
         "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html.ex": "4347c8dc912449cd8ceebd6cd71bddaffae03388",
         "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html.ex": "7788c497a459fbb5feb603a2df50706b4d1d3b52",
-        "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_html.ex": "22430cf25a6bc10b0d5764d53647d477b8a303a0",
-        "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_settings_html.ex": "bc18bb8e622a71364e0ce514d0785d23e43c45d6",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/repository.ex": "c2552821058982a217a56b48070e16be0b78d894",
-        "/Users/divij/projects/better_me/priv/repo/migrations/20260403100003_add_substitutions_to_routine_exercises.exs": "e7ad272ccb072f137e6618e0679de5648f02c0e4",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/actions/add_exercise.ex": "eaeac4f889099ff4bc9518ae3927250231c6cfda",
-        "/Users/divij/projects/better_me/priv/repo/migrations/20260403100002_create_exercise_sets.exs": "d01410ec6b6a683403d59ef430c8b878a015e0d2",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise.ex": "473b4f7a4d3e8753d97561d690734720fe1604da",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise_set.ex": "57b3184f22687e94087db35b3babeb300aed79af",
-        "/Users/divij/projects/better_me/priv/repo/migrations/20260403032129_create_workouts.exs": "d0859e547fa794cfdcba8e2fb7cb3e504c383707",
-        "/Users/divij/projects/better_me/priv/repo/seeds.exs": "bc63f7172c2b6ee7b845cf75bf3190e631843363",
-        "/Users/divij/projects/better_me/priv/repo/migrations/20260403032130_create_exercises.exs": "d6c6f58c73d83e8d8a24dd1f8441b6c5dc3d0501",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/actions/log_set.ex": "20fda4a7808b1805ae407e0d78fe8ecd44d98f65",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_exercise.ex": "d69675da235d5b538160565942036c963d10ec4c",
-        "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex": "694db6f887e7673583ef967ed61bd4e1a10358a2",
-        "/Users/divij/projects/better_me/lib/better_me/workouts.ex": "ac11b805346ca81a9d2e35836a2e11a164639a54",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/actions/detect_pr.ex": "14741804ecba175205535d191fdac35707012d51",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_day.ex": "316b46f6a3913b0fbbfd22036b18b13fd6e81fb0",
-        "/Users/divij/projects/better_me/priv/repo/migrations/20260403100001_add_routine_day_to_workouts.exs": "b1d866f16f5b7849e5a88d21c87d71fa4cf271e2",
-        "/Users/divij/projects/better_me/priv/repo/migrations/20260403100000_create_routine_templates.exs": "e583a9a66fe346c9540312a40e7eae7b3a0bb782",
-        "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/index.ex": "fb03cc60b00a7c0bea52f4f3300ccc472d3d0ada"
+        "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_html.ex": "188ba65f679aa749a50da88504a4fb85e580766c",
+        "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_settings_html.ex": "bc18bb8e622a71364e0ce514d0785d23e43c45d6"
       },
       "workspaceRoot": "/Users/divij/projects/better_me"
     },
@@ -899,6 +874,14 @@
               {
                 "name": "authenticated_at",
                 "type": "utc_datetime"
+              },
+              {
+                "name": "provider",
+                "type": "string"
+              },
+              {
+                "name": "provider_uid",
+                "type": "string"
               },
               {
                 "name": "inserted_at",
@@ -970,48 +953,31 @@
             ],
             "aliases": {},
             "filePath": "/Users/divij/projects/better_me/lib/better_me/accounts/user_token.ex",
-            "line": 15
+            "line": 12
           }
         ],
         [
-          "BetterMe.Workouts.Schema.Exercise",
+          "BetterMe.Embeddings.Schema.Embedding",
           {
-            "moduleName": "BetterMe.Workouts.Schema.Exercise",
-            "tableName": "exercises",
+            "moduleName": "BetterMe.Embeddings.Schema.Embedding",
+            "tableName": "embeddings",
             "fields": [
               {
-                "name": "name",
+                "name": "source_type",
                 "type": "string"
               },
               {
-                "name": "sets",
+                "name": "source_id",
                 "type": "integer"
               },
               {
-                "name": "reps",
-                "type": "integer"
+                "name": "content",
+                "type": "string"
               },
               {
-                "name": "weight",
-                "type": "float"
-              },
-              {
-                "name": "rpe",
-                "type": "integer"
-              },
-              {
-                "name": "is_pr",
-                "type": "boolean"
-              },
-              {
-                "name": "workout",
+                "name": "user",
                 "type": "assoc",
-                "elixirType": "BetterMe.Workouts.Schema.Workout"
-              },
-              {
-                "name": "exercise_sets",
-                "type": "list",
-                "elixirType": "BetterMe.Workouts.Schema.ExerciseSet"
+                "elixirType": "BetterMe.Accounts.User"
               },
               {
                 "name": "inserted_at",
@@ -1029,196 +995,14 @@
             "associations": {},
             "associationsDetailed": [
               {
-                "fieldName": "workout",
-                "targetModule": "BetterMe.Workouts.Schema.Workout",
-                "type": "belongs_to"
-              },
-              {
-                "fieldName": "exercise_sets",
-                "targetModule": "BetterMe.Workouts.Schema.ExerciseSet",
-                "type": "has_many"
-              }
-            ],
-            "aliases": {},
-            "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise.ex",
-            "line": 5
-          }
-        ],
-        [
-          "BetterMe.Workouts.Schema.RoutineExercise",
-          {
-            "moduleName": "BetterMe.Workouts.Schema.RoutineExercise",
-            "tableName": "routine_exercises",
-            "fields": [
-              {
-                "name": "name",
-                "type": "string"
-              },
-              {
-                "name": "working_sets",
-                "type": "integer"
-              },
-              {
-                "name": "rep_range",
-                "type": "string"
-              },
-              {
-                "name": "notes",
-                "type": "string"
-              },
-              {
-                "name": "position",
-                "type": "integer"
-              },
-              {
-                "name": "substitution_1",
-                "type": "string"
-              },
-              {
-                "name": "substitution_2",
-                "type": "string"
-              },
-              {
-                "name": "routine_day",
-                "type": "assoc",
-                "elixirType": "BetterMe.Workouts.Schema.RoutineDay"
-              },
-              {
-                "name": "inserted_at",
-                "type": "naive_datetime"
-              },
-              {
-                "name": "updated_at",
-                "type": "naive_datetime"
-              },
-              {
-                "name": "id",
-                "type": "id"
-              }
-            ],
-            "associations": {},
-            "associationsDetailed": [
-              {
-                "fieldName": "routine_day",
-                "targetModule": "BetterMe.Workouts.Schema.RoutineDay",
+                "fieldName": "user",
+                "targetModule": "BetterMe.Accounts.User",
                 "type": "belongs_to"
               }
             ],
             "aliases": {},
-            "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_exercise.ex",
-            "line": 5
-          }
-        ],
-        [
-          "BetterMe.Workouts.Schema.RoutineDay",
-          {
-            "moduleName": "BetterMe.Workouts.Schema.RoutineDay",
-            "tableName": "routine_days",
-            "fields": [
-              {
-                "name": "name",
-                "type": "string"
-              },
-              {
-                "name": "position",
-                "type": "integer"
-              },
-              {
-                "name": "routine_template",
-                "type": "assoc",
-                "elixirType": "BetterMe.Workouts.Schema.RoutineTemplate"
-              },
-              {
-                "name": "routine_exercises",
-                "type": "list",
-                "elixirType": "BetterMe.Workouts.Schema.RoutineExercise"
-              },
-              {
-                "name": "inserted_at",
-                "type": "naive_datetime"
-              },
-              {
-                "name": "updated_at",
-                "type": "naive_datetime"
-              },
-              {
-                "name": "id",
-                "type": "id"
-              }
-            ],
-            "associations": {},
-            "associationsDetailed": [
-              {
-                "fieldName": "routine_template",
-                "targetModule": "BetterMe.Workouts.Schema.RoutineTemplate",
-                "type": "belongs_to"
-              },
-              {
-                "fieldName": "routine_exercises",
-                "targetModule": "BetterMe.Workouts.Schema.RoutineExercise",
-                "type": "has_many"
-              }
-            ],
-            "aliases": {},
-            "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_day.ex",
-            "line": 5
-          }
-        ],
-        [
-          "BetterMe.Workouts.Schema.ExerciseSet",
-          {
-            "moduleName": "BetterMe.Workouts.Schema.ExerciseSet",
-            "tableName": "exercise_sets",
-            "fields": [
-              {
-                "name": "set_number",
-                "type": "integer"
-              },
-              {
-                "name": "weight",
-                "type": "float"
-              },
-              {
-                "name": "reps",
-                "type": "integer"
-              },
-              {
-                "name": "is_pr",
-                "type": "boolean"
-              },
-              {
-                "name": "completed",
-                "type": "boolean"
-              },
-              {
-                "name": "exercise",
-                "type": "assoc",
-                "elixirType": "BetterMe.Workouts.Schema.Exercise"
-              },
-              {
-                "name": "inserted_at",
-                "type": "naive_datetime"
-              },
-              {
-                "name": "updated_at",
-                "type": "naive_datetime"
-              },
-              {
-                "name": "id",
-                "type": "id"
-              }
-            ],
-            "associations": {},
-            "associationsDetailed": [
-              {
-                "fieldName": "exercise",
-                "targetModule": "BetterMe.Workouts.Schema.Exercise",
-                "type": "belongs_to"
-              }
-            ],
-            "aliases": {},
-            "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise_set.ex",
-            "line": 5
+            "filePath": "/Users/divij/projects/better_me/lib/better_me/embeddings/schema/embedding.ex",
+            "line": 8
           }
         ],
         [
@@ -1379,6 +1163,350 @@
           }
         ],
         [
+          "BetterMe.Journals.Schema.JournalEntry",
+          {
+            "moduleName": "BetterMe.Journals.Schema.JournalEntry",
+            "tableName": "journal_entries",
+            "fields": [
+              {
+                "name": "date",
+                "type": "date"
+              },
+              {
+                "name": "body",
+                "type": "string"
+              },
+              {
+                "name": "mood",
+                "type": "integer"
+              },
+              {
+                "name": "user",
+                "type": "assoc",
+                "elixirType": "BetterMe.Accounts.User"
+              },
+              {
+                "name": "inserted_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "updated_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "id",
+                "type": "id"
+              }
+            ],
+            "associations": {},
+            "associationsDetailed": [
+              {
+                "fieldName": "user",
+                "targetModule": "BetterMe.Accounts.User",
+                "type": "belongs_to"
+              }
+            ],
+            "aliases": {},
+            "filePath": "/Users/divij/projects/better_me/lib/better_me/journals/schema/journal_entry.ex",
+            "line": 5
+          }
+        ],
+        [
+          "BetterMe.Nutrition.Schema.Ingredient",
+          {
+            "moduleName": "BetterMe.Nutrition.Schema.Ingredient",
+            "tableName": "ingredients",
+            "fields": [
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "name": "brand",
+                "type": "string"
+              },
+              {
+                "name": "calories_per_100g",
+                "type": "float"
+              },
+              {
+                "name": "protein_per_100g",
+                "type": "float"
+              },
+              {
+                "name": "carbs_per_100g",
+                "type": "float"
+              },
+              {
+                "name": "fat_per_100g",
+                "type": "float"
+              },
+              {
+                "name": "fiber_per_100g",
+                "type": "float"
+              },
+              {
+                "name": "sugar_per_100g",
+                "type": "float"
+              },
+              {
+                "name": "glycemic_index",
+                "type": "integer"
+              },
+              {
+                "name": "sodium_mg_per_100g",
+                "type": "float"
+              },
+              {
+                "name": "is_vegetarian",
+                "type": "boolean"
+              },
+              {
+                "name": "recipe_ingredients",
+                "type": "list",
+                "elixirType": "BetterMe.Nutrition.Schema.RecipeIngredient"
+              },
+              {
+                "name": "inserted_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "updated_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "id",
+                "type": "id"
+              }
+            ],
+            "associations": {},
+            "associationsDetailed": [
+              {
+                "fieldName": "recipe_ingredients",
+                "targetModule": "BetterMe.Nutrition.Schema.RecipeIngredient",
+                "type": "has_many"
+              }
+            ],
+            "aliases": {},
+            "filePath": "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/ingredient.ex",
+            "line": 21
+          }
+        ],
+        [
+          "BetterMe.Nutrition.Schema.MealLog",
+          {
+            "moduleName": "BetterMe.Nutrition.Schema.MealLog",
+            "tableName": "meal_logs",
+            "fields": [
+              {
+                "name": "date",
+                "type": "date"
+              },
+              {
+                "name": "servings",
+                "type": "float"
+              },
+              {
+                "name": "recipe",
+                "type": "assoc",
+                "elixirType": "BetterMe.Nutrition.Schema.Recipe"
+              },
+              {
+                "name": "user",
+                "type": "assoc",
+                "elixirType": "BetterMe.Accounts.User"
+              },
+              {
+                "name": "inserted_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "updated_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "id",
+                "type": "id"
+              }
+            ],
+            "associations": {},
+            "associationsDetailed": [
+              {
+                "fieldName": "recipe",
+                "targetModule": "BetterMe.Nutrition.Schema.Recipe",
+                "type": "belongs_to"
+              },
+              {
+                "fieldName": "user",
+                "targetModule": "BetterMe.Accounts.User",
+                "type": "belongs_to"
+              }
+            ],
+            "aliases": {},
+            "filePath": "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/meal_log.ex",
+            "line": 5
+          }
+        ],
+        [
+          "BetterMe.Nutrition.Schema.Recipe",
+          {
+            "moduleName": "BetterMe.Nutrition.Schema.Recipe",
+            "tableName": "recipes",
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "user",
+                "type": "assoc",
+                "elixirType": "BetterMe.Accounts.User"
+              },
+              {
+                "name": "recipe_ingredients",
+                "type": "list",
+                "elixirType": "BetterMe.Nutrition.Schema.RecipeIngredient"
+              },
+              {
+                "name": "inserted_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "updated_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "id",
+                "type": "id"
+              }
+            ],
+            "associations": {},
+            "associationsDetailed": [
+              {
+                "fieldName": "user",
+                "targetModule": "BetterMe.Accounts.User",
+                "type": "belongs_to"
+              },
+              {
+                "fieldName": "recipe_ingredients",
+                "targetModule": "BetterMe.Nutrition.Schema.RecipeIngredient",
+                "type": "has_many"
+              }
+            ],
+            "aliases": {},
+            "filePath": "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/recipe.ex",
+            "line": 5
+          }
+        ],
+        [
+          "BetterMe.Nutrition.Schema.RecipeIngredient",
+          {
+            "moduleName": "BetterMe.Nutrition.Schema.RecipeIngredient",
+            "tableName": "recipe_ingredients",
+            "fields": [
+              {
+                "name": "quantity_grams",
+                "type": "float"
+              },
+              {
+                "name": "recipe",
+                "type": "assoc",
+                "elixirType": "BetterMe.Nutrition.Schema.Recipe"
+              },
+              {
+                "name": "ingredient",
+                "type": "assoc",
+                "elixirType": "BetterMe.Nutrition.Schema.Ingredient"
+              },
+              {
+                "name": "inserted_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "updated_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "id",
+                "type": "id"
+              }
+            ],
+            "associations": {},
+            "associationsDetailed": [
+              {
+                "fieldName": "recipe",
+                "targetModule": "BetterMe.Nutrition.Schema.Recipe",
+                "type": "belongs_to"
+              },
+              {
+                "fieldName": "ingredient",
+                "targetModule": "BetterMe.Nutrition.Schema.Ingredient",
+                "type": "belongs_to"
+              }
+            ],
+            "aliases": {},
+            "filePath": "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/recipe_ingredient.ex",
+            "line": 5
+          }
+        ],
+        [
+          "BetterMe.Profiles.Schema.UserProfile",
+          {
+            "moduleName": "BetterMe.Profiles.Schema.UserProfile",
+            "tableName": "user_profiles",
+            "fields": [
+              {
+                "name": "age",
+                "type": "integer"
+              },
+              {
+                "name": "weight_kg",
+                "type": "float"
+              },
+              {
+                "name": "height_cm",
+                "type": "float"
+              },
+              {
+                "name": "protein_pct",
+                "type": "integer"
+              },
+              {
+                "name": "carbs_pct",
+                "type": "integer"
+              },
+              {
+                "name": "user",
+                "type": "assoc",
+                "elixirType": "BetterMe.Accounts.User"
+              },
+              {
+                "name": "inserted_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "updated_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "id",
+                "type": "id"
+              }
+            ],
+            "associations": {},
+            "associationsDetailed": [
+              {
+                "fieldName": "user",
+                "targetModule": "BetterMe.Accounts.User",
+                "type": "belongs_to"
+              }
+            ],
+            "aliases": {},
+            "filePath": "/Users/divij/projects/better_me/lib/better_me/profiles/schema/user_profile.ex",
+            "line": 11
+          }
+        ],
+        [
           "BetterMe.Todos.Schema.Todo",
           {
             "moduleName": "BetterMe.Todos.Schema.Todo",
@@ -1424,6 +1552,254 @@
             ],
             "aliases": {},
             "filePath": "/Users/divij/projects/better_me/lib/better_me/todos/schema/todo.ex",
+            "line": 5
+          }
+        ],
+        [
+          "BetterMe.Workouts.Schema.Exercise",
+          {
+            "moduleName": "BetterMe.Workouts.Schema.Exercise",
+            "tableName": "exercises",
+            "fields": [
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "name": "sets",
+                "type": "integer"
+              },
+              {
+                "name": "reps",
+                "type": "integer"
+              },
+              {
+                "name": "weight",
+                "type": "float"
+              },
+              {
+                "name": "rpe",
+                "type": "integer"
+              },
+              {
+                "name": "is_pr",
+                "type": "boolean"
+              },
+              {
+                "name": "workout",
+                "type": "assoc",
+                "elixirType": "BetterMe.Workouts.Schema.Workout"
+              },
+              {
+                "name": "exercise_sets",
+                "type": "list",
+                "elixirType": "BetterMe.Workouts.Schema.ExerciseSet"
+              },
+              {
+                "name": "inserted_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "updated_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "id",
+                "type": "id"
+              }
+            ],
+            "associations": {},
+            "associationsDetailed": [
+              {
+                "fieldName": "workout",
+                "targetModule": "BetterMe.Workouts.Schema.Workout",
+                "type": "belongs_to"
+              },
+              {
+                "fieldName": "exercise_sets",
+                "targetModule": "BetterMe.Workouts.Schema.ExerciseSet",
+                "type": "has_many"
+              }
+            ],
+            "aliases": {},
+            "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise.ex",
+            "line": 5
+          }
+        ],
+        [
+          "BetterMe.Workouts.Schema.ExerciseSet",
+          {
+            "moduleName": "BetterMe.Workouts.Schema.ExerciseSet",
+            "tableName": "exercise_sets",
+            "fields": [
+              {
+                "name": "set_number",
+                "type": "integer"
+              },
+              {
+                "name": "weight",
+                "type": "float"
+              },
+              {
+                "name": "reps",
+                "type": "integer"
+              },
+              {
+                "name": "is_pr",
+                "type": "boolean"
+              },
+              {
+                "name": "completed",
+                "type": "boolean"
+              },
+              {
+                "name": "exercise",
+                "type": "assoc",
+                "elixirType": "BetterMe.Workouts.Schema.Exercise"
+              },
+              {
+                "name": "inserted_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "updated_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "id",
+                "type": "id"
+              }
+            ],
+            "associations": {},
+            "associationsDetailed": [
+              {
+                "fieldName": "exercise",
+                "targetModule": "BetterMe.Workouts.Schema.Exercise",
+                "type": "belongs_to"
+              }
+            ],
+            "aliases": {},
+            "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise_set.ex",
+            "line": 5
+          }
+        ],
+        [
+          "BetterMe.Workouts.Schema.RoutineDay",
+          {
+            "moduleName": "BetterMe.Workouts.Schema.RoutineDay",
+            "tableName": "routine_days",
+            "fields": [
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "name": "position",
+                "type": "integer"
+              },
+              {
+                "name": "routine_template",
+                "type": "assoc",
+                "elixirType": "BetterMe.Workouts.Schema.RoutineTemplate"
+              },
+              {
+                "name": "routine_exercises",
+                "type": "list",
+                "elixirType": "BetterMe.Workouts.Schema.RoutineExercise"
+              },
+              {
+                "name": "inserted_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "updated_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "id",
+                "type": "id"
+              }
+            ],
+            "associations": {},
+            "associationsDetailed": [
+              {
+                "fieldName": "routine_template",
+                "targetModule": "BetterMe.Workouts.Schema.RoutineTemplate",
+                "type": "belongs_to"
+              },
+              {
+                "fieldName": "routine_exercises",
+                "targetModule": "BetterMe.Workouts.Schema.RoutineExercise",
+                "type": "has_many"
+              }
+            ],
+            "aliases": {},
+            "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_day.ex",
+            "line": 5
+          }
+        ],
+        [
+          "BetterMe.Workouts.Schema.RoutineExercise",
+          {
+            "moduleName": "BetterMe.Workouts.Schema.RoutineExercise",
+            "tableName": "routine_exercises",
+            "fields": [
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "name": "working_sets",
+                "type": "integer"
+              },
+              {
+                "name": "rep_range",
+                "type": "string"
+              },
+              {
+                "name": "notes",
+                "type": "string"
+              },
+              {
+                "name": "position",
+                "type": "integer"
+              },
+              {
+                "name": "substitution_1",
+                "type": "string"
+              },
+              {
+                "name": "substitution_2",
+                "type": "string"
+              },
+              {
+                "name": "routine_day",
+                "type": "assoc",
+                "elixirType": "BetterMe.Workouts.Schema.RoutineDay"
+              },
+              {
+                "name": "inserted_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "updated_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "id",
+                "type": "id"
+              }
+            ],
+            "associations": {},
+            "associationsDetailed": [
+              {
+                "fieldName": "routine_day",
+                "targetModule": "BetterMe.Workouts.Schema.RoutineDay",
+                "type": "belongs_to"
+              }
+            ],
+            "aliases": {},
+            "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_exercise.ex",
             "line": 5
           }
         ],
@@ -1581,6 +1957,14 @@
                   "type": "utc_datetime"
                 },
                 {
+                  "name": "provider",
+                  "type": "string"
+                },
+                {
+                  "name": "provider_uid",
+                  "type": "string"
+                },
+                {
                   "name": "inserted_at",
                   "type": "naive_datetime"
                 },
@@ -1597,146 +1981,6 @@
               "associationsDetailed": [],
               "aliases": {},
               "filePath": "/Users/divij/projects/better_me/lib/better_me/accounts/user.ex",
-              "line": 5
-            }
-          ]
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise.ex",
-          [
-            {
-              "moduleName": "BetterMe.Workouts.Schema.Exercise",
-              "tableName": "exercises",
-              "fields": [
-                {
-                  "name": "name",
-                  "type": "string"
-                },
-                {
-                  "name": "sets",
-                  "type": "integer"
-                },
-                {
-                  "name": "reps",
-                  "type": "integer"
-                },
-                {
-                  "name": "weight",
-                  "type": "float"
-                },
-                {
-                  "name": "rpe",
-                  "type": "integer"
-                },
-                {
-                  "name": "is_pr",
-                  "type": "boolean"
-                },
-                {
-                  "name": "workout",
-                  "type": "assoc",
-                  "elixirType": "BetterMe.Workouts.Schema.Workout"
-                },
-                {
-                  "name": "exercise_sets",
-                  "type": "list",
-                  "elixirType": "BetterMe.Workouts.Schema.ExerciseSet"
-                },
-                {
-                  "name": "inserted_at",
-                  "type": "naive_datetime"
-                },
-                {
-                  "name": "updated_at",
-                  "type": "naive_datetime"
-                },
-                {
-                  "name": "id",
-                  "type": "id"
-                }
-              ],
-              "associations": {},
-              "associationsDetailed": [
-                {
-                  "fieldName": "workout",
-                  "targetModule": "BetterMe.Workouts.Schema.Workout",
-                  "type": "belongs_to"
-                },
-                {
-                  "fieldName": "exercise_sets",
-                  "targetModule": "BetterMe.Workouts.Schema.ExerciseSet",
-                  "type": "has_many"
-                }
-              ],
-              "aliases": {},
-              "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise.ex",
-              "line": 5
-            }
-          ]
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_exercise.ex",
-          [
-            {
-              "moduleName": "BetterMe.Workouts.Schema.RoutineExercise",
-              "tableName": "routine_exercises",
-              "fields": [
-                {
-                  "name": "name",
-                  "type": "string"
-                },
-                {
-                  "name": "working_sets",
-                  "type": "integer"
-                },
-                {
-                  "name": "rep_range",
-                  "type": "string"
-                },
-                {
-                  "name": "notes",
-                  "type": "string"
-                },
-                {
-                  "name": "position",
-                  "type": "integer"
-                },
-                {
-                  "name": "substitution_1",
-                  "type": "string"
-                },
-                {
-                  "name": "substitution_2",
-                  "type": "string"
-                },
-                {
-                  "name": "routine_day",
-                  "type": "assoc",
-                  "elixirType": "BetterMe.Workouts.Schema.RoutineDay"
-                },
-                {
-                  "name": "inserted_at",
-                  "type": "naive_datetime"
-                },
-                {
-                  "name": "updated_at",
-                  "type": "naive_datetime"
-                },
-                {
-                  "name": "id",
-                  "type": "id"
-                }
-              ],
-              "associations": {},
-              "associationsDetailed": [
-                {
-                  "fieldName": "routine_day",
-                  "targetModule": "BetterMe.Workouts.Schema.RoutineDay",
-                  "type": "belongs_to"
-                }
-              ],
-              "aliases": {},
-              "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_exercise.ex",
               "line": 5
             }
           ]
@@ -1792,93 +2036,33 @@
               ],
               "aliases": {},
               "filePath": "/Users/divij/projects/better_me/lib/better_me/accounts/user_token.ex",
-              "line": 15
+              "line": 12
             }
           ]
         ],
         [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise_set.ex",
+          "/Users/divij/projects/better_me/lib/better_me/embeddings/schema/embedding.ex",
           [
             {
-              "moduleName": "BetterMe.Workouts.Schema.ExerciseSet",
-              "tableName": "exercise_sets",
+              "moduleName": "BetterMe.Embeddings.Schema.Embedding",
+              "tableName": "embeddings",
               "fields": [
                 {
-                  "name": "set_number",
-                  "type": "integer"
-                },
-                {
-                  "name": "weight",
-                  "type": "float"
-                },
-                {
-                  "name": "reps",
-                  "type": "integer"
-                },
-                {
-                  "name": "is_pr",
-                  "type": "boolean"
-                },
-                {
-                  "name": "completed",
-                  "type": "boolean"
-                },
-                {
-                  "name": "exercise",
-                  "type": "assoc",
-                  "elixirType": "BetterMe.Workouts.Schema.Exercise"
-                },
-                {
-                  "name": "inserted_at",
-                  "type": "naive_datetime"
-                },
-                {
-                  "name": "updated_at",
-                  "type": "naive_datetime"
-                },
-                {
-                  "name": "id",
-                  "type": "id"
-                }
-              ],
-              "associations": {},
-              "associationsDetailed": [
-                {
-                  "fieldName": "exercise",
-                  "targetModule": "BetterMe.Workouts.Schema.Exercise",
-                  "type": "belongs_to"
-                }
-              ],
-              "aliases": {},
-              "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise_set.ex",
-              "line": 5
-            }
-          ]
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_day.ex",
-          [
-            {
-              "moduleName": "BetterMe.Workouts.Schema.RoutineDay",
-              "tableName": "routine_days",
-              "fields": [
-                {
-                  "name": "name",
+                  "name": "source_type",
                   "type": "string"
                 },
                 {
-                  "name": "position",
+                  "name": "source_id",
                   "type": "integer"
                 },
                 {
-                  "name": "routine_template",
-                  "type": "assoc",
-                  "elixirType": "BetterMe.Workouts.Schema.RoutineTemplate"
+                  "name": "content",
+                  "type": "string"
                 },
                 {
-                  "name": "routine_exercises",
-                  "type": "list",
-                  "elixirType": "BetterMe.Workouts.Schema.RoutineExercise"
+                  "name": "user",
+                  "type": "assoc",
+                  "elixirType": "BetterMe.Accounts.User"
                 },
                 {
                   "name": "inserted_at",
@@ -1896,19 +2080,14 @@
               "associations": {},
               "associationsDetailed": [
                 {
-                  "fieldName": "routine_template",
-                  "targetModule": "BetterMe.Workouts.Schema.RoutineTemplate",
+                  "fieldName": "user",
+                  "targetModule": "BetterMe.Accounts.User",
                   "type": "belongs_to"
-                },
-                {
-                  "fieldName": "routine_exercises",
-                  "targetModule": "BetterMe.Workouts.Schema.RoutineExercise",
-                  "type": "has_many"
                 }
               ],
               "aliases": {},
-              "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_day.ex",
-              "line": 5
+              "filePath": "/Users/divij/projects/better_me/lib/better_me/embeddings/schema/embedding.ex",
+              "line": 8
             }
           ]
         ],
@@ -2076,6 +2255,362 @@
           ]
         ],
         [
+          "/Users/divij/projects/better_me/lib/better_me/journals/schema/journal_entry.ex",
+          [
+            {
+              "moduleName": "BetterMe.Journals.Schema.JournalEntry",
+              "tableName": "journal_entries",
+              "fields": [
+                {
+                  "name": "date",
+                  "type": "date"
+                },
+                {
+                  "name": "body",
+                  "type": "string"
+                },
+                {
+                  "name": "mood",
+                  "type": "integer"
+                },
+                {
+                  "name": "user",
+                  "type": "assoc",
+                  "elixirType": "BetterMe.Accounts.User"
+                },
+                {
+                  "name": "inserted_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "updated_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "id",
+                  "type": "id"
+                }
+              ],
+              "associations": {},
+              "associationsDetailed": [
+                {
+                  "fieldName": "user",
+                  "targetModule": "BetterMe.Accounts.User",
+                  "type": "belongs_to"
+                }
+              ],
+              "aliases": {},
+              "filePath": "/Users/divij/projects/better_me/lib/better_me/journals/schema/journal_entry.ex",
+              "line": 5
+            }
+          ]
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/ingredient.ex",
+          [
+            {
+              "moduleName": "BetterMe.Nutrition.Schema.Ingredient",
+              "tableName": "ingredients",
+              "fields": [
+                {
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "name": "brand",
+                  "type": "string"
+                },
+                {
+                  "name": "calories_per_100g",
+                  "type": "float"
+                },
+                {
+                  "name": "protein_per_100g",
+                  "type": "float"
+                },
+                {
+                  "name": "carbs_per_100g",
+                  "type": "float"
+                },
+                {
+                  "name": "fat_per_100g",
+                  "type": "float"
+                },
+                {
+                  "name": "fiber_per_100g",
+                  "type": "float"
+                },
+                {
+                  "name": "sugar_per_100g",
+                  "type": "float"
+                },
+                {
+                  "name": "glycemic_index",
+                  "type": "integer"
+                },
+                {
+                  "name": "sodium_mg_per_100g",
+                  "type": "float"
+                },
+                {
+                  "name": "is_vegetarian",
+                  "type": "boolean"
+                },
+                {
+                  "name": "recipe_ingredients",
+                  "type": "list",
+                  "elixirType": "BetterMe.Nutrition.Schema.RecipeIngredient"
+                },
+                {
+                  "name": "inserted_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "updated_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "id",
+                  "type": "id"
+                }
+              ],
+              "associations": {},
+              "associationsDetailed": [
+                {
+                  "fieldName": "recipe_ingredients",
+                  "targetModule": "BetterMe.Nutrition.Schema.RecipeIngredient",
+                  "type": "has_many"
+                }
+              ],
+              "aliases": {},
+              "filePath": "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/ingredient.ex",
+              "line": 21
+            }
+          ]
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/meal_log.ex",
+          [
+            {
+              "moduleName": "BetterMe.Nutrition.Schema.MealLog",
+              "tableName": "meal_logs",
+              "fields": [
+                {
+                  "name": "date",
+                  "type": "date"
+                },
+                {
+                  "name": "servings",
+                  "type": "float"
+                },
+                {
+                  "name": "recipe",
+                  "type": "assoc",
+                  "elixirType": "BetterMe.Nutrition.Schema.Recipe"
+                },
+                {
+                  "name": "user",
+                  "type": "assoc",
+                  "elixirType": "BetterMe.Accounts.User"
+                },
+                {
+                  "name": "inserted_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "updated_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "id",
+                  "type": "id"
+                }
+              ],
+              "associations": {},
+              "associationsDetailed": [
+                {
+                  "fieldName": "recipe",
+                  "targetModule": "BetterMe.Nutrition.Schema.Recipe",
+                  "type": "belongs_to"
+                },
+                {
+                  "fieldName": "user",
+                  "targetModule": "BetterMe.Accounts.User",
+                  "type": "belongs_to"
+                }
+              ],
+              "aliases": {},
+              "filePath": "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/meal_log.ex",
+              "line": 5
+            }
+          ]
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/recipe.ex",
+          [
+            {
+              "moduleName": "BetterMe.Nutrition.Schema.Recipe",
+              "tableName": "recipes",
+              "fields": [
+                {
+                  "name": "title",
+                  "type": "string"
+                },
+                {
+                  "name": "user",
+                  "type": "assoc",
+                  "elixirType": "BetterMe.Accounts.User"
+                },
+                {
+                  "name": "recipe_ingredients",
+                  "type": "list",
+                  "elixirType": "BetterMe.Nutrition.Schema.RecipeIngredient"
+                },
+                {
+                  "name": "inserted_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "updated_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "id",
+                  "type": "id"
+                }
+              ],
+              "associations": {},
+              "associationsDetailed": [
+                {
+                  "fieldName": "user",
+                  "targetModule": "BetterMe.Accounts.User",
+                  "type": "belongs_to"
+                },
+                {
+                  "fieldName": "recipe_ingredients",
+                  "targetModule": "BetterMe.Nutrition.Schema.RecipeIngredient",
+                  "type": "has_many"
+                }
+              ],
+              "aliases": {},
+              "filePath": "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/recipe.ex",
+              "line": 5
+            }
+          ]
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/recipe_ingredient.ex",
+          [
+            {
+              "moduleName": "BetterMe.Nutrition.Schema.RecipeIngredient",
+              "tableName": "recipe_ingredients",
+              "fields": [
+                {
+                  "name": "quantity_grams",
+                  "type": "float"
+                },
+                {
+                  "name": "recipe",
+                  "type": "assoc",
+                  "elixirType": "BetterMe.Nutrition.Schema.Recipe"
+                },
+                {
+                  "name": "ingredient",
+                  "type": "assoc",
+                  "elixirType": "BetterMe.Nutrition.Schema.Ingredient"
+                },
+                {
+                  "name": "inserted_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "updated_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "id",
+                  "type": "id"
+                }
+              ],
+              "associations": {},
+              "associationsDetailed": [
+                {
+                  "fieldName": "recipe",
+                  "targetModule": "BetterMe.Nutrition.Schema.Recipe",
+                  "type": "belongs_to"
+                },
+                {
+                  "fieldName": "ingredient",
+                  "targetModule": "BetterMe.Nutrition.Schema.Ingredient",
+                  "type": "belongs_to"
+                }
+              ],
+              "aliases": {},
+              "filePath": "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/recipe_ingredient.ex",
+              "line": 5
+            }
+          ]
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me/profiles/schema/user_profile.ex",
+          [
+            {
+              "moduleName": "BetterMe.Profiles.Schema.UserProfile",
+              "tableName": "user_profiles",
+              "fields": [
+                {
+                  "name": "age",
+                  "type": "integer"
+                },
+                {
+                  "name": "weight_kg",
+                  "type": "float"
+                },
+                {
+                  "name": "height_cm",
+                  "type": "float"
+                },
+                {
+                  "name": "protein_pct",
+                  "type": "integer"
+                },
+                {
+                  "name": "carbs_pct",
+                  "type": "integer"
+                },
+                {
+                  "name": "user",
+                  "type": "assoc",
+                  "elixirType": "BetterMe.Accounts.User"
+                },
+                {
+                  "name": "inserted_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "updated_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "id",
+                  "type": "id"
+                }
+              ],
+              "associations": {},
+              "associationsDetailed": [
+                {
+                  "fieldName": "user",
+                  "targetModule": "BetterMe.Accounts.User",
+                  "type": "belongs_to"
+                }
+              ],
+              "aliases": {},
+              "filePath": "/Users/divij/projects/better_me/lib/better_me/profiles/schema/user_profile.ex",
+              "line": 11
+            }
+          ]
+        ],
+        [
           "/Users/divij/projects/better_me/lib/better_me/todos/schema/todo.ex",
           [
             {
@@ -2122,6 +2657,262 @@
               ],
               "aliases": {},
               "filePath": "/Users/divij/projects/better_me/lib/better_me/todos/schema/todo.ex",
+              "line": 5
+            }
+          ]
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise.ex",
+          [
+            {
+              "moduleName": "BetterMe.Workouts.Schema.Exercise",
+              "tableName": "exercises",
+              "fields": [
+                {
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "name": "sets",
+                  "type": "integer"
+                },
+                {
+                  "name": "reps",
+                  "type": "integer"
+                },
+                {
+                  "name": "weight",
+                  "type": "float"
+                },
+                {
+                  "name": "rpe",
+                  "type": "integer"
+                },
+                {
+                  "name": "is_pr",
+                  "type": "boolean"
+                },
+                {
+                  "name": "workout",
+                  "type": "assoc",
+                  "elixirType": "BetterMe.Workouts.Schema.Workout"
+                },
+                {
+                  "name": "exercise_sets",
+                  "type": "list",
+                  "elixirType": "BetterMe.Workouts.Schema.ExerciseSet"
+                },
+                {
+                  "name": "inserted_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "updated_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "id",
+                  "type": "id"
+                }
+              ],
+              "associations": {},
+              "associationsDetailed": [
+                {
+                  "fieldName": "workout",
+                  "targetModule": "BetterMe.Workouts.Schema.Workout",
+                  "type": "belongs_to"
+                },
+                {
+                  "fieldName": "exercise_sets",
+                  "targetModule": "BetterMe.Workouts.Schema.ExerciseSet",
+                  "type": "has_many"
+                }
+              ],
+              "aliases": {},
+              "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise.ex",
+              "line": 5
+            }
+          ]
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise_set.ex",
+          [
+            {
+              "moduleName": "BetterMe.Workouts.Schema.ExerciseSet",
+              "tableName": "exercise_sets",
+              "fields": [
+                {
+                  "name": "set_number",
+                  "type": "integer"
+                },
+                {
+                  "name": "weight",
+                  "type": "float"
+                },
+                {
+                  "name": "reps",
+                  "type": "integer"
+                },
+                {
+                  "name": "is_pr",
+                  "type": "boolean"
+                },
+                {
+                  "name": "completed",
+                  "type": "boolean"
+                },
+                {
+                  "name": "exercise",
+                  "type": "assoc",
+                  "elixirType": "BetterMe.Workouts.Schema.Exercise"
+                },
+                {
+                  "name": "inserted_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "updated_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "id",
+                  "type": "id"
+                }
+              ],
+              "associations": {},
+              "associationsDetailed": [
+                {
+                  "fieldName": "exercise",
+                  "targetModule": "BetterMe.Workouts.Schema.Exercise",
+                  "type": "belongs_to"
+                }
+              ],
+              "aliases": {},
+              "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise_set.ex",
+              "line": 5
+            }
+          ]
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_day.ex",
+          [
+            {
+              "moduleName": "BetterMe.Workouts.Schema.RoutineDay",
+              "tableName": "routine_days",
+              "fields": [
+                {
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "name": "position",
+                  "type": "integer"
+                },
+                {
+                  "name": "routine_template",
+                  "type": "assoc",
+                  "elixirType": "BetterMe.Workouts.Schema.RoutineTemplate"
+                },
+                {
+                  "name": "routine_exercises",
+                  "type": "list",
+                  "elixirType": "BetterMe.Workouts.Schema.RoutineExercise"
+                },
+                {
+                  "name": "inserted_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "updated_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "id",
+                  "type": "id"
+                }
+              ],
+              "associations": {},
+              "associationsDetailed": [
+                {
+                  "fieldName": "routine_template",
+                  "targetModule": "BetterMe.Workouts.Schema.RoutineTemplate",
+                  "type": "belongs_to"
+                },
+                {
+                  "fieldName": "routine_exercises",
+                  "targetModule": "BetterMe.Workouts.Schema.RoutineExercise",
+                  "type": "has_many"
+                }
+              ],
+              "aliases": {},
+              "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_day.ex",
+              "line": 5
+            }
+          ]
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_exercise.ex",
+          [
+            {
+              "moduleName": "BetterMe.Workouts.Schema.RoutineExercise",
+              "tableName": "routine_exercises",
+              "fields": [
+                {
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "name": "working_sets",
+                  "type": "integer"
+                },
+                {
+                  "name": "rep_range",
+                  "type": "string"
+                },
+                {
+                  "name": "notes",
+                  "type": "string"
+                },
+                {
+                  "name": "position",
+                  "type": "integer"
+                },
+                {
+                  "name": "substitution_1",
+                  "type": "string"
+                },
+                {
+                  "name": "substitution_2",
+                  "type": "string"
+                },
+                {
+                  "name": "routine_day",
+                  "type": "assoc",
+                  "elixirType": "BetterMe.Workouts.Schema.RoutineDay"
+                },
+                {
+                  "name": "inserted_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "updated_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "id",
+                  "type": "id"
+                }
+              ],
+              "associations": {},
+              "associationsDetailed": [
+                {
+                  "fieldName": "routine_day",
+                  "targetModule": "BetterMe.Workouts.Schema.RoutineDay",
+                  "type": "belongs_to"
+                }
+              ],
+              "aliases": {},
+              "filePath": "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_exercise.ex",
               "line": 5
             }
           ]
@@ -2256,171 +3047,64 @@
         ]
       ],
       "fileHashes": {
-        "/Users/divij/projects/better_me/lib/better_me/accounts/user.ex": "8e1afa83de3718a9d42f5a96110e8e34f0dc71c2",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise.ex": "473b4f7a4d3e8753d97561d690734720fe1604da",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_exercise.ex": "d69675da235d5b538160565942036c963d10ec4c",
-        "/Users/divij/projects/better_me/lib/better_me/accounts/user_token.ex": "247ecc0ab75eae261182a90e52d97606b6722acd",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise_set.ex": "57b3184f22687e94087db35b3babeb300aed79af",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_day.ex": "316b46f6a3913b0fbbfd22036b18b13fd6e81fb0",
+        "/Users/divij/projects/better_me/lib/better_me/accounts/user.ex": "d356a1557498d9c1805aa8ae2d67e5499b7d241f",
+        "/Users/divij/projects/better_me/lib/better_me/accounts/user_token.ex": "981f8bb82776457a583145fb61bfb3ee5ae50d13",
+        "/Users/divij/projects/better_me/lib/better_me/embeddings/schema/embedding.ex": "1db710d3c169be640c0e6797e2833a6aac205b4e",
         "/Users/divij/projects/better_me/lib/better_me/habits/schema/habit.ex": "fd5abe3e91c97c9cd5a3c63fb41f8ca6a71c8e0e",
         "/Users/divij/projects/better_me/lib/better_me/habits/schema/habit_log.ex": "78df59a8d4a5f690392fd4aaaf9cc03ecc34ceff",
         "/Users/divij/projects/better_me/lib/better_me/health/schema/body_metric.ex": "ceed2959eb8e2d6cb4bfd7642869ae940da99d63",
+        "/Users/divij/projects/better_me/lib/better_me/journals/schema/journal_entry.ex": "fb5b77f90714d72907a476838767779d426f5f9e",
+        "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/ingredient.ex": "da5fb68921836fc96dba7d5ed349e8460f50b44b",
+        "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/meal_log.ex": "dcba1bd61b19d84658a2523c15f80247bf15af63",
+        "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/recipe.ex": "afe4511f9eaf85c8b5ebde5c9e69d9dc63b97201",
+        "/Users/divij/projects/better_me/lib/better_me/nutrition/schema/recipe_ingredient.ex": "e30ebe16779c9483ea9f57a47fbbab1fb7e29499",
+        "/Users/divij/projects/better_me/lib/better_me/profiles/schema/user_profile.ex": "464834679b3db374828e093463cb474503e21d3a",
         "/Users/divij/projects/better_me/lib/better_me/todos/schema/todo.ex": "0032b10139224a9bbf93ad8ef911cf0d5d6e8fa7",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_template.ex": "eea985a81f025467a0e900d32b0308131da598d9",
+        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise.ex": "473b4f7a4d3e8753d97561d690734720fe1604da",
+        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise_set.ex": "57b3184f22687e94087db35b3babeb300aed79af",
+        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_day.ex": "316b46f6a3913b0fbbfd22036b18b13fd6e81fb0",
+        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_exercise.ex": "d69675da235d5b538160565942036c963d10ec4c",
+        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_template.ex": "244946b146ef17b7e37b4868ffd08e05b72aedaa",
         "/Users/divij/projects/better_me/lib/better_me/workouts/schema/workout.ex": "78b7db574e5ecb89c13ca90e57d835857a1c8e78"
       },
       "workspaceRoot": "/Users/divij/projects/better_me"
     },
     "events": {
-      "events": [
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/repository.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/priv/repo/migrations/20260403100003_add_substitutions_to_routine_exercises.exs",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/actions/add_exercise.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/priv/repo/migrations/20260403100002_create_exercise_sets.exs",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise_set.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/priv/repo/migrations/20260403032129_create_workouts.exs",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/priv/repo/seeds.exs",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/priv/repo/migrations/20260403032130_create_exercises.exs",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/actions/log_set.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_exercise.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex",
-          [
-            {
-              "name": "delete",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex",
-              "moduleName": "BetterMeWeb.WorkoutsLive.Form",
-              "line": 138,
-              "params": "_params",
-              "kind": "handle_event",
-              "nameKind": "string"
-            },
-            {
-              "name": "save",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex",
-              "moduleName": "BetterMeWeb.WorkoutsLive.Form",
-              "line": 131,
-              "params": "%{}",
-              "kind": "handle_event",
-              "nameKind": "string"
-            },
-            {
-              "name": "validate",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex",
-              "moduleName": "BetterMeWeb.WorkoutsLive.Form",
-              "line": 122,
-              "params": "%{}",
-              "kind": "handle_event",
-              "nameKind": "string"
-            },
-            {
-              "name": "select_template",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex",
-              "moduleName": "BetterMeWeb.WorkoutsLive.Form",
-              "line": 109,
-              "params": "%{}",
-              "kind": "handle_event",
-              "nameKind": "string"
-            },
-            {
-              "name": "select_template",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex",
-              "moduleName": "BetterMeWeb.WorkoutsLive.Form",
-              "line": 105,
-              "params": "%{}",
-              "kind": "handle_event",
-              "nameKind": "string"
-            }
-          ]
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/actions/detect_pr.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_day.ex",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/priv/repo/migrations/20260403100001_add_routine_day_to_workouts.exs",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/priv/repo/migrations/20260403100000_create_routine_templates.exs",
-          []
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/index.ex",
-          []
-        ]
-      ],
-      "fileHashes": {
-        "/Users/divij/projects/better_me/lib/better_me/workouts/repository.ex": "c2552821058982a217a56b48070e16be0b78d894",
-        "/Users/divij/projects/better_me/priv/repo/migrations/20260403100003_add_substitutions_to_routine_exercises.exs": "e7ad272ccb072f137e6618e0679de5648f02c0e4",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/actions/add_exercise.ex": "eaeac4f889099ff4bc9518ae3927250231c6cfda",
-        "/Users/divij/projects/better_me/priv/repo/migrations/20260403100002_create_exercise_sets.exs": "d01410ec6b6a683403d59ef430c8b878a015e0d2",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise.ex": "473b4f7a4d3e8753d97561d690734720fe1604da",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/exercise_set.ex": "57b3184f22687e94087db35b3babeb300aed79af",
-        "/Users/divij/projects/better_me/priv/repo/migrations/20260403032129_create_workouts.exs": "d0859e547fa794cfdcba8e2fb7cb3e504c383707",
-        "/Users/divij/projects/better_me/priv/repo/seeds.exs": "bc63f7172c2b6ee7b845cf75bf3190e631843363",
-        "/Users/divij/projects/better_me/priv/repo/migrations/20260403032130_create_exercises.exs": "d6c6f58c73d83e8d8a24dd1f8441b6c5dc3d0501",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/actions/log_set.ex": "20fda4a7808b1805ae407e0d78fe8ecd44d98f65",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_exercise.ex": "d69675da235d5b538160565942036c963d10ec4c",
-        "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex": "694db6f887e7673583ef967ed61bd4e1a10358a2",
-        "/Users/divij/projects/better_me/lib/better_me/workouts.ex": "ac11b805346ca81a9d2e35836a2e11a164639a54",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/actions/detect_pr.ex": "14741804ecba175205535d191fdac35707012d51",
-        "/Users/divij/projects/better_me/lib/better_me/workouts/schema/routine_day.ex": "316b46f6a3913b0fbbfd22036b18b13fd6e81fb0",
-        "/Users/divij/projects/better_me/priv/repo/migrations/20260403100001_add_routine_day_to_workouts.exs": "b1d866f16f5b7849e5a88d21c87d71fa4cf271e2",
-        "/Users/divij/projects/better_me/priv/repo/migrations/20260403100000_create_routine_templates.exs": "e583a9a66fe346c9540312a40e7eae7b3a0bb782",
-        "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/index.ex": "fb03cc60b00a7c0bea52f4f3300ccc472d3d0ada"
-      },
+      "events": [],
+      "fileHashes": {},
       "workspaceRoot": "/Users/divij/projects/better_me"
     },
     "routes": {
       "routes": [
         {
+          "path": "/auth/google/callback",
+          "verb": "GET",
+          "filePath": "/Users/divij/projects/better_me/lib/better_me_web/router.ex",
+          "line": 118,
+          "helperBase": "auth_google_callback",
+          "params": [],
+          "isResource": false,
+          "controller": "GoogleOAuthController",
+          "action": "callback",
+          "scopePath": "/auth"
+        },
+        {
+          "path": "/auth/google",
+          "verb": "GET",
+          "filePath": "/Users/divij/projects/better_me/lib/better_me_web/router.ex",
+          "line": 117,
+          "helperBase": "auth_google",
+          "params": [],
+          "isResource": false,
+          "controller": "GoogleOAuthController",
+          "action": "request",
+          "scopePath": "/auth"
+        },
+        {
           "path": "/users/log-out",
           "verb": "DELETE",
           "filePath": "/Users/divij/projects/better_me/lib/better_me_web/router.ex",
-          "line": 92,
+          "line": 111,
           "helperBase": "users_log_out",
           "params": [],
           "isResource": false,
@@ -2432,7 +3116,7 @@
           "path": "/users/log-in",
           "verb": "POST",
           "filePath": "/Users/divij/projects/better_me/lib/better_me_web/router.ex",
-          "line": 91,
+          "line": 110,
           "helperBase": "users_log_in",
           "params": [],
           "isResource": false,
@@ -2441,24 +3125,10 @@
           "scopePath": "/"
         },
         {
-          "path": "/users/log-in/:token",
-          "verb": "GET",
-          "filePath": "/Users/divij/projects/better_me/lib/better_me_web/router.ex",
-          "line": 90,
-          "helperBase": "users_log_in",
-          "params": [
-            "token"
-          ],
-          "isResource": false,
-          "controller": "UserSessionController",
-          "action": "confirm",
-          "scopePath": "/"
-        },
-        {
           "path": "/users/log-in",
           "verb": "GET",
           "filePath": "/Users/divij/projects/better_me/lib/better_me_web/router.ex",
-          "line": 89,
+          "line": 109,
           "helperBase": "users_log_in",
           "params": [],
           "isResource": false,
@@ -2470,7 +3140,7 @@
           "path": "/users/settings/confirm-email/:token",
           "verb": "GET",
           "filePath": "/Users/divij/projects/better_me/lib/better_me_web/router.ex",
-          "line": 62,
+          "line": 63,
           "helperBase": "users_settings_confirm_email",
           "params": [
             "token"
@@ -2484,7 +3154,7 @@
           "path": "/users/settings",
           "verb": "PUT",
           "filePath": "/Users/divij/projects/better_me/lib/better_me_web/router.ex",
-          "line": 61,
+          "line": 62,
           "helperBase": "users_settings",
           "params": [],
           "isResource": false,
@@ -2496,7 +3166,7 @@
           "path": "/users/settings",
           "verb": "GET",
           "filePath": "/Users/divij/projects/better_me/lib/better_me_web/router.ex",
-          "line": 60,
+          "line": 61,
           "helperBase": "users_settings",
           "params": [],
           "isResource": false,
@@ -2505,34 +3175,10 @@
           "scopePath": "/"
         },
         {
-          "path": "/users/register",
-          "verb": "POST",
-          "filePath": "/Users/divij/projects/better_me/lib/better_me_web/router.ex",
-          "line": 54,
-          "helperBase": "users_register",
-          "params": [],
-          "isResource": false,
-          "controller": "UserRegistrationController",
-          "action": "create",
-          "scopePath": "/"
-        },
-        {
-          "path": "/users/register",
-          "verb": "GET",
-          "filePath": "/Users/divij/projects/better_me/lib/better_me_web/router.ex",
-          "line": 53,
-          "helperBase": "users_register",
-          "params": [],
-          "isResource": false,
-          "controller": "UserRegistrationController",
-          "action": "new",
-          "scopePath": "/"
-        },
-        {
           "path": "/",
           "verb": "GET",
           "filePath": "/Users/divij/projects/better_me/lib/better_me_web/router.ex",
-          "line": 23,
+          "line": 24,
           "helperBase": "root",
           "params": [],
           "isResource": false,
@@ -2542,87 +3188,15 @@
         }
       ],
       "fileHashes": {
-        "/Users/divij/projects/better_me/lib/better_me_web/router.ex": "14632c5fb23f344fa58974fcd1792073abe36bc2"
+        "/Users/divij/projects/better_me/lib/better_me_web/router.ex": "cb0aad609e8494188102fe67d9dcf15b31ccfc5b"
       },
       "workspaceRoot": "/Users/divij/projects/better_me"
     },
     "controllers": {
       "rendersByFile": [
         [
-          "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_controller.ex",
-          [
-            {
-              "controllerModule": "BetterMeWeb.PageController",
-              "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_controller.ex",
-              "action": "home",
-              "templateName": "home",
-              "assigns": [],
-              "assignsWithTypes": [],
-              "line": 5,
-              "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html/home.html.heex"
-            }
-          ]
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_controller.ex",
-          [
-            {
-              "controllerModule": "BetterMeWeb.UserRegistrationController",
-              "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_controller.ex",
-              "action": "new",
-              "templateName": "new",
-              "assigns": [
-                "changeset"
-              ],
-              "assignsWithTypes": [
-                {
-                  "name": "changeset",
-                  "variableName": "changeset"
-                }
-              ],
-              "line": 9,
-              "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html/new.html.heex"
-            },
-            {
-              "controllerModule": "BetterMeWeb.UserRegistrationController",
-              "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_controller.ex",
-              "action": "create",
-              "templateName": "new",
-              "assigns": [
-                "changeset"
-              ],
-              "assignsWithTypes": [
-                {
-                  "name": "changeset",
-                  "variableName": "changeset"
-                }
-              ],
-              "line": 20,
-              "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html/new.html.heex"
-            }
-          ]
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_controller.ex",
-          [
-            {
-              "controllerModule": "BetterMeWeb.UserSessionController",
-              "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_controller.ex",
-              "action": "new",
-              "templateName": "new",
-              "assigns": [
-                "form"
-              ],
-              "assignsWithTypes": [
-                {
-                  "name": "form",
-                  "variableName": "form"
-                }
-              ],
-              "line": 11,
-              "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_html/new.html.heex"
-            }
-          ]
+          "/Users/divij/projects/better_me/lib/better_me_web/controllers/google_oauth_controller.ex",
+          []
         ],
         [
           "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_settings_controller.ex",
@@ -2672,97 +3246,85 @@
               "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_settings_html/edit.html.heex"
             }
           ]
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_controller.ex",
+          [
+            {
+              "controllerModule": "BetterMeWeb.PageController",
+              "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_controller.ex",
+              "action": "home",
+              "templateName": "home",
+              "assigns": [],
+              "assignsWithTypes": [],
+              "line": 8,
+              "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html/home.html.heex"
+            }
+          ]
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_controller.ex",
+          [
+            {
+              "controllerModule": "BetterMeWeb.UserSessionController",
+              "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_controller.ex",
+              "action": "new",
+              "templateName": "new",
+              "assigns": [
+                "form"
+              ],
+              "assignsWithTypes": [
+                {
+                  "name": "form",
+                  "variableName": "form"
+                }
+              ],
+              "line": 11,
+              "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_html/new.html.heex"
+            }
+          ]
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_controller.ex",
+          [
+            {
+              "controllerModule": "BetterMeWeb.UserRegistrationController",
+              "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_controller.ex",
+              "action": "new",
+              "templateName": "new",
+              "assigns": [
+                "changeset"
+              ],
+              "assignsWithTypes": [
+                {
+                  "name": "changeset",
+                  "variableName": "changeset"
+                }
+              ],
+              "line": 9,
+              "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html/new.html.heex"
+            },
+            {
+              "controllerModule": "BetterMeWeb.UserRegistrationController",
+              "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_controller.ex",
+              "action": "create",
+              "templateName": "new",
+              "assigns": [
+                "changeset"
+              ],
+              "assignsWithTypes": [
+                {
+                  "name": "changeset",
+                  "variableName": "changeset"
+                }
+              ],
+              "line": 20,
+              "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html/new.html.heex"
+            }
+          ]
         ]
       ],
       "templateSummaries": [
-        [
-          "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html/home.html.heex",
-          {
-            "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html/home.html.heex",
-            "assignSources": {},
-            "controllers": [
-              {
-                "controllerModule": "BetterMeWeb.PageController",
-                "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_controller.ex",
-                "action": "home",
-                "templateName": "home",
-                "assigns": [],
-                "assignsWithTypes": [],
-                "line": 5,
-                "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html/home.html.heex"
-              }
-            ]
-          }
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html/new.html.heex",
-          {
-            "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html/new.html.heex",
-            "assignSources": {},
-            "controllers": [
-              {
-                "controllerModule": "BetterMeWeb.UserRegistrationController",
-                "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_controller.ex",
-                "action": "new",
-                "templateName": "new",
-                "assigns": [
-                  "changeset"
-                ],
-                "assignsWithTypes": [
-                  {
-                    "name": "changeset",
-                    "variableName": "changeset"
-                  }
-                ],
-                "line": 9,
-                "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html/new.html.heex"
-              },
-              {
-                "controllerModule": "BetterMeWeb.UserRegistrationController",
-                "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_controller.ex",
-                "action": "create",
-                "templateName": "new",
-                "assigns": [
-                  "changeset"
-                ],
-                "assignsWithTypes": [
-                  {
-                    "name": "changeset",
-                    "variableName": "changeset"
-                  }
-                ],
-                "line": 20,
-                "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html/new.html.heex"
-              }
-            ]
-          }
-        ],
-        [
-          "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_html/new.html.heex",
-          {
-            "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_html/new.html.heex",
-            "assignSources": {},
-            "controllers": [
-              {
-                "controllerModule": "BetterMeWeb.UserSessionController",
-                "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_controller.ex",
-                "action": "new",
-                "templateName": "new",
-                "assigns": [
-                  "form"
-                ],
-                "assignsWithTypes": [
-                  {
-                    "name": "form",
-                    "variableName": "form"
-                  }
-                ],
-                "line": 11,
-                "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_html/new.html.heex"
-              }
-            ]
-          }
-        ],
         [
           "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_settings_html/edit.html.heex",
           {
@@ -2815,29 +3377,107 @@
               }
             ]
           }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html/home.html.heex",
+          {
+            "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html/home.html.heex",
+            "assignSources": {},
+            "controllers": [
+              {
+                "controllerModule": "BetterMeWeb.PageController",
+                "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_controller.ex",
+                "action": "home",
+                "templateName": "home",
+                "assigns": [],
+                "assignsWithTypes": [],
+                "line": 8,
+                "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html/home.html.heex"
+              }
+            ]
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_html/new.html.heex",
+          {
+            "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_html/new.html.heex",
+            "assignSources": {},
+            "controllers": [
+              {
+                "controllerModule": "BetterMeWeb.UserSessionController",
+                "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_controller.ex",
+                "action": "new",
+                "templateName": "new",
+                "assigns": [
+                  "form"
+                ],
+                "assignsWithTypes": [
+                  {
+                    "name": "form",
+                    "variableName": "form"
+                  }
+                ],
+                "line": 11,
+                "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_html/new.html.heex"
+              }
+            ]
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html/new.html.heex",
+          {
+            "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html/new.html.heex",
+            "assignSources": {},
+            "controllers": [
+              {
+                "controllerModule": "BetterMeWeb.UserRegistrationController",
+                "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_controller.ex",
+                "action": "new",
+                "templateName": "new",
+                "assigns": [
+                  "changeset"
+                ],
+                "assignsWithTypes": [
+                  {
+                    "name": "changeset",
+                    "variableName": "changeset"
+                  }
+                ],
+                "line": 9,
+                "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html/new.html.heex"
+              },
+              {
+                "controllerModule": "BetterMeWeb.UserRegistrationController",
+                "controllerFile": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_controller.ex",
+                "action": "create",
+                "templateName": "new",
+                "assigns": [
+                  "changeset"
+                ],
+                "assignsWithTypes": [
+                  {
+                    "name": "changeset",
+                    "variableName": "changeset"
+                  }
+                ],
+                "line": 20,
+                "templatePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html/new.html.heex"
+              }
+            ]
+          }
         ]
       ],
       "fileHashes": {
-        "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_controller.ex": "05cbb189fed9f8659ded43c49b399c1c0713a37e",
-        "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_controller.ex": "710b74805a020710dbd656c1a73b62aa3579e7d9",
-        "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_controller.ex": "6a4a9b384da4a40871b84e2da4d43499095e9141",
-        "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_settings_controller.ex": "b1aa7eee32ebde9b255e457e86632913477b4d49"
+        "/Users/divij/projects/better_me/lib/better_me_web/controllers/google_oauth_controller.ex": "b9e33e18111ccdc9b9ed51ad7b2c8dc183a4038a",
+        "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_settings_controller.ex": "b1aa7eee32ebde9b255e457e86632913477b4d49",
+        "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_controller.ex": "90710c5bcd67c1106455cd5907d766e9a8fec9ee",
+        "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_controller.ex": "56a0c1ed13f4f0a2d6608e4aadb9321b2b1637bd",
+        "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_controller.ex": "710b74805a020710dbd656c1a73b62aa3579e7d9"
       },
       "workspaceRoot": "/Users/divij/projects/better_me"
     },
     "templates": {
       "templatesByModule": [
-        [
-          "BetterMeWeb.PageHTML",
-          [
-            {
-              "moduleName": "BetterMeWeb.PageHTML",
-              "name": "home",
-              "format": "html",
-              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html/home.html.heex"
-            }
-          ]
-        ],
         [
           "BetterMeWeb.UserRegistrationHTML",
           [
@@ -2867,6 +3507,17 @@
           ]
         ],
         [
+          "BetterMeWeb.PageHTML",
+          [
+            {
+              "moduleName": "BetterMeWeb.PageHTML",
+              "name": "home",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html/home.html.heex"
+            }
+          ]
+        ],
+        [
           "BetterMeWeb.UserSettingsHTML",
           [
             {
@@ -2874,6 +3525,204 @@
               "name": "edit",
               "format": "html",
               "filePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_settings_html/edit.html.heex"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.AnalyticsLive.Index",
+          [
+            {
+              "moduleName": "BetterMeWeb.AnalyticsLive.Index",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/analytics/index.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.HabitsLive.Form",
+          [
+            {
+              "moduleName": "BetterMeWeb.HabitsLive.Form",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/habits/form.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.HabitsLive.Index",
+          [
+            {
+              "moduleName": "BetterMeWeb.HabitsLive.Index",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/habits/index.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.InsightsLive.Index",
+          [
+            {
+              "moduleName": "BetterMeWeb.InsightsLive.Index",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/insights/index.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.HealthLive.Form",
+          [
+            {
+              "moduleName": "BetterMeWeb.HealthLive.Form",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/health/form.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.IngredientsLive.Form",
+          [
+            {
+              "moduleName": "BetterMeWeb.IngredientsLive.Form",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/ingredients/form.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.HealthLive.Index",
+          [
+            {
+              "moduleName": "BetterMeWeb.HealthLive.Index",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/health/index.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.JournalLive.Index",
+          [
+            {
+              "moduleName": "BetterMeWeb.JournalLive.Index",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/journal/index.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.JournalLive.Form",
+          [
+            {
+              "moduleName": "BetterMeWeb.JournalLive.Form",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/journal/form.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.HabitsLive.Show",
+          [
+            {
+              "moduleName": "BetterMeWeb.HabitsLive.Show",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/habits/show.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.ProfileLive.Index",
+          [
+            {
+              "moduleName": "BetterMeWeb.ProfileLive.Index",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/profile/index.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.IngredientsLive.Index",
+          [
+            {
+              "moduleName": "BetterMeWeb.IngredientsLive.Index",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/ingredients/index.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.TodosLive.Form",
+          [
+            {
+              "moduleName": "BetterMeWeb.TodosLive.Form",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/todos/form.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.TodosLive.Index",
+          [
+            {
+              "moduleName": "BetterMeWeb.TodosLive.Index",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/todos/index.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.RecipesLive.Index",
+          [
+            {
+              "moduleName": "BetterMeWeb.RecipesLive.Index",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/index.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.RecipesLive.Form",
+          [
+            {
+              "moduleName": "BetterMeWeb.RecipesLive.Form",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/form.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.NutritionLive.Index",
+          [
+            {
+              "moduleName": "BetterMeWeb.NutritionLive.Index",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/nutrition/index.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.WorkoutsLive.Index",
+          [
+            {
+              "moduleName": "BetterMeWeb.WorkoutsLive.Index",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/index.ex#render"
             }
           ]
         ],
@@ -2887,18 +3736,31 @@
               "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex#render"
             }
           ]
+        ],
+        [
+          "BetterMeWeb.WorkoutsLive.Show",
+          [
+            {
+              "moduleName": "BetterMeWeb.WorkoutsLive.Show",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/show.ex#render"
+            }
+          ]
+        ],
+        [
+          "BetterMeWeb.RecipesLive.Show",
+          [
+            {
+              "moduleName": "BetterMeWeb.RecipesLive.Show",
+              "name": "render",
+              "format": "html",
+              "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/show.ex#render"
+            }
+          ]
         ]
       ],
       "templatesByPath": [
-        [
-          "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html/home.html.heex",
-          {
-            "moduleName": "BetterMeWeb.PageHTML",
-            "name": "home",
-            "format": "html",
-            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html/home.html.heex"
-          }
-        ],
         [
           "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html/new.html.heex",
           {
@@ -2927,12 +3789,183 @@
           }
         ],
         [
+          "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html/home.html.heex",
+          {
+            "moduleName": "BetterMeWeb.PageHTML",
+            "name": "home",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html/home.html.heex"
+          }
+        ],
+        [
           "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_settings_html/edit.html.heex",
           {
             "moduleName": "BetterMeWeb.UserSettingsHTML",
             "name": "edit",
             "format": "html",
             "filePath": "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_settings_html/edit.html.heex"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/analytics/index.ex#render",
+          {
+            "moduleName": "BetterMeWeb.AnalyticsLive.Index",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/analytics/index.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/habits/form.ex#render",
+          {
+            "moduleName": "BetterMeWeb.HabitsLive.Form",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/habits/form.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/habits/index.ex#render",
+          {
+            "moduleName": "BetterMeWeb.HabitsLive.Index",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/habits/index.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/insights/index.ex#render",
+          {
+            "moduleName": "BetterMeWeb.InsightsLive.Index",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/insights/index.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/health/form.ex#render",
+          {
+            "moduleName": "BetterMeWeb.HealthLive.Form",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/health/form.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/ingredients/form.ex#render",
+          {
+            "moduleName": "BetterMeWeb.IngredientsLive.Form",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/ingredients/form.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/health/index.ex#render",
+          {
+            "moduleName": "BetterMeWeb.HealthLive.Index",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/health/index.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/journal/index.ex#render",
+          {
+            "moduleName": "BetterMeWeb.JournalLive.Index",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/journal/index.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/journal/form.ex#render",
+          {
+            "moduleName": "BetterMeWeb.JournalLive.Form",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/journal/form.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/habits/show.ex#render",
+          {
+            "moduleName": "BetterMeWeb.HabitsLive.Show",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/habits/show.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/profile/index.ex#render",
+          {
+            "moduleName": "BetterMeWeb.ProfileLive.Index",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/profile/index.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/ingredients/index.ex#render",
+          {
+            "moduleName": "BetterMeWeb.IngredientsLive.Index",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/ingredients/index.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/todos/form.ex#render",
+          {
+            "moduleName": "BetterMeWeb.TodosLive.Form",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/todos/form.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/todos/index.ex#render",
+          {
+            "moduleName": "BetterMeWeb.TodosLive.Index",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/todos/index.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/index.ex#render",
+          {
+            "moduleName": "BetterMeWeb.RecipesLive.Index",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/index.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/form.ex#render",
+          {
+            "moduleName": "BetterMeWeb.RecipesLive.Form",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/form.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/nutrition/index.ex#render",
+          {
+            "moduleName": "BetterMeWeb.NutritionLive.Index",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/nutrition/index.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/index.ex#render",
+          {
+            "moduleName": "BetterMeWeb.WorkoutsLive.Index",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/index.ex#render"
           }
         ],
         [
@@ -2943,13 +3976,27 @@
             "format": "html",
             "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex#render"
           }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/show.ex#render",
+          {
+            "moduleName": "BetterMeWeb.WorkoutsLive.Show",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/show.ex#render"
+          }
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/show.ex#render",
+          {
+            "moduleName": "BetterMeWeb.RecipesLive.Show",
+            "name": "render",
+            "format": "html",
+            "filePath": "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/show.ex#render"
+          }
         ]
       ],
       "moduleByFile": [
-        [
-          "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html.ex",
-          "BetterMeWeb.PageHTML"
-        ],
         [
           "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html.ex",
           "BetterMeWeb.UserRegistrationHTML"
@@ -2959,20 +4006,124 @@
           "BetterMeWeb.UserSessionHTML"
         ],
         [
+          "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html.ex",
+          "BetterMeWeb.PageHTML"
+        ],
+        [
           "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_settings_html.ex",
           "BetterMeWeb.UserSettingsHTML"
         ],
         [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/analytics/index.ex",
+          "BetterMeWeb.AnalyticsLive.Index"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/habits/form.ex",
+          "BetterMeWeb.HabitsLive.Form"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/habits/index.ex",
+          "BetterMeWeb.HabitsLive.Index"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/insights/index.ex",
+          "BetterMeWeb.InsightsLive.Index"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/health/form.ex",
+          "BetterMeWeb.HealthLive.Form"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/ingredients/form.ex",
+          "BetterMeWeb.IngredientsLive.Form"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/health/index.ex",
+          "BetterMeWeb.HealthLive.Index"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/journal/index.ex",
+          "BetterMeWeb.JournalLive.Index"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/journal/form.ex",
+          "BetterMeWeb.JournalLive.Form"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/habits/show.ex",
+          "BetterMeWeb.HabitsLive.Show"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/profile/index.ex",
+          "BetterMeWeb.ProfileLive.Index"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/ingredients/index.ex",
+          "BetterMeWeb.IngredientsLive.Index"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/todos/form.ex",
+          "BetterMeWeb.TodosLive.Form"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/todos/index.ex",
+          "BetterMeWeb.TodosLive.Index"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/index.ex",
+          "BetterMeWeb.RecipesLive.Index"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/form.ex",
+          "BetterMeWeb.RecipesLive.Form"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/nutrition/index.ex",
+          "BetterMeWeb.NutritionLive.Index"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/index.ex",
+          "BetterMeWeb.WorkoutsLive.Index"
+        ],
+        [
           "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex",
           "BetterMeWeb.WorkoutsLive.Form"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/show.ex",
+          "BetterMeWeb.WorkoutsLive.Show"
+        ],
+        [
+          "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/show.ex",
+          "BetterMeWeb.RecipesLive.Show"
         ]
       ],
       "fileHashes": {
-        "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html.ex": "4347c8dc912449cd8ceebd6cd71bddaffae03388",
         "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_registration_html.ex": "7788c497a459fbb5feb603a2df50706b4d1d3b52",
-        "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_html.ex": "22430cf25a6bc10b0d5764d53647d477b8a303a0",
+        "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_session_html.ex": "188ba65f679aa749a50da88504a4fb85e580766c",
+        "/Users/divij/projects/better_me/lib/better_me_web/controllers/page_html.ex": "4347c8dc912449cd8ceebd6cd71bddaffae03388",
         "/Users/divij/projects/better_me/lib/better_me_web/controllers/user_settings_html.ex": "bc18bb8e622a71364e0ce514d0785d23e43c45d6",
-        "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex": "694db6f887e7673583ef967ed61bd4e1a10358a2"
+        "/Users/divij/projects/better_me/lib/better_me_web/live/analytics/index.ex": "2e3cc3fee2b7c38d6eb3f454e77204404a8480aa",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/habits/form.ex": "2c26896c8500388ce4299c97521a887589d17b5a",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/habits/index.ex": "ba8cd7a160d74eb652309f43060f192ec71597e1",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/insights/index.ex": "73f71b60550e4ae8f8454de395a08ca4f8a6fafe",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/health/form.ex": "47f59dc435b8963c21aed6a8a9f5d479bde1bb1e",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/ingredients/form.ex": "aea71a707dcddd18600f47b2a96ecc507b227d46",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/health/index.ex": "80730bee4fbc81b71de6bf40721d96a2ae859d29",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/journal/index.ex": "0ce86d03af234c4cb31e9f975e9e077ef55b7f3d",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/journal/form.ex": "27d3d3dac03c95b27a23e28ea15381ccf0a869d8",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/habits/show.ex": "40fda17e49df18e200b814fcc53bb620eb4cdeb6",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/profile/index.ex": "f490cb4363779e41b43dd9b7840365b92a3c04e2",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/ingredients/index.ex": "4b04967ebd4e5412b41e125cbf92f1aff76d0a55",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/todos/form.ex": "858893abab69cc15dde56708ac14bff326460de4",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/todos/index.ex": "7f8ce0317f131b2ecc30da2ef114aca218d6454f",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/index.ex": "95d956a48505bb6c619c4621ab4fed2ebbe43d0e",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/form.ex": "41f7f1eb176aafdc99690ea77453eee4d40aed86",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/nutrition/index.ex": "1820c39821c619882ba5c0fe2f59546a36caa7be",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/index.ex": "fb03cc60b00a7c0bea52f4f3300ccc472d3d0ada",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/form.ex": "4f5e3faf511c7fa83f7fb9bfca695540c674f914",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/workouts/show.ex": "0c831ff48c1687d0537e6f4f390f261d3851ef50",
+        "/Users/divij/projects/better_me/lib/better_me_web/live/recipes/show.ex": "177366f787bd23238415f3e87f0f7c4b4b1c298d"
       },
       "workspaceRoot": "/Users/divij/projects/better_me"
     },
