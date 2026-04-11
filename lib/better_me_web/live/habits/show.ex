@@ -95,7 +95,7 @@ defmodule BetterMeWeb.HabitsLive.Show do
     attrs = %{date: Date.utc_today(), completed: true}
 
     with {:ok, _log} <-
-           Habits.log_habit(socket.assigns.user_id, socket.assigns.habit_id, attrs),
+           Habits.log_habit(socket.assigns.habit_id, attrs),
          {:ok, stats} <- Habits.habit_stats(socket.assigns.habit_id, socket.assigns.user_id) do
       assign(socket, :stats, stats)
     else

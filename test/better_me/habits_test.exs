@@ -107,7 +107,7 @@ defmodule BetterMe.HabitsTest do
   describe "log_habit/2" do
     test "logs a habit for today by default", %{user: user} do
       habit = insert(:habit, user: user)
-      assert {:ok, log} = Habits.log_habit(user.id, habit.id, %{})
+      assert {:ok, log} = Habits.log_habit(habit.id, %{})
       assert log.habit_id == habit.id
       assert log.date == Date.utc_today()
     end
@@ -115,14 +115,14 @@ defmodule BetterMe.HabitsTest do
     test "logs a habit for a specific date", %{user: user} do
       habit = insert(:habit, user: user)
       date = Date.add(Date.utc_today(), -1)
-      assert {:ok, log} = Habits.log_habit(user.id, habit.id, %{date: date})
+      assert {:ok, log} = Habits.log_habit(habit.id, %{date: date})
       assert log.date == date
     end
 
     test "prevents duplicate log on the same date", %{user: user} do
       habit = insert(:habit, user: user)
-      assert {:ok, _} = Habits.log_habit(user.id, habit.id, %{date: Date.utc_today()})
-      assert {:error, changeset} = Habits.log_habit(user.id, habit.id, %{date: Date.utc_today()})
+      assert {:ok, _} = Habits.log_habit(habit.id, %{date: Date.utc_today()})
+      assert {:error, changeset} = Habits.log_habit(habit.id, %{date: Date.utc_today()})
       assert changeset.valid? == false
     end
   end
@@ -166,7 +166,7 @@ defmodule BetterMe.HabitsTest do
       today = Date.utc_today()
 
       for days_ago <- [0, 1, 2] do
-        Habits.log_habit(user.id, habit.id, %{date: Date.add(today, -days_ago)})
+        Habits.log_habit(habit.id, %{date: Date.add(today, -days_ago)})
       end
 
       assert {:ok, 3} = Habits.current_streak(habit.id, user.id)
@@ -198,7 +198,7 @@ defmodule BetterMe.HabitsTest do
     test "excludes logs older than the window", %{user: user} do
       habit = insert(:habit, user: user)
       old_date = Date.add(Date.utc_today(), -60)
-      Habits.log_habit(user.id, habit.id, %{date: old_date})
+      Habits.log_habit(habit.id, %{date: old_date})
       assert {:ok, []} = Habits.recent_logs(habit.id, user.id, 30)
     end
 

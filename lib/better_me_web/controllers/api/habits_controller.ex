@@ -23,10 +23,9 @@ defmodule BetterMeWeb.Api.HabitsController do
   end
 
   def log(conn, %{"habit_id" => habit_id} = params) do
-    user_id = conn.assigns.current_scope.user.id
     attrs = if params["date"], do: %{date: params["date"]}, else: %{}
 
-    case Habits.log_habit(user_id, habit_id, attrs) do
+    case Habits.log_habit(habit_id, attrs) do
       {:ok, log} ->
         conn |> put_status(:created) |> json(%{data: %{id: log.id, habit_id: log.habit_id}})
 
