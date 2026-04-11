@@ -9,10 +9,16 @@ defmodule BetterMe.Workouts.Actions.LogSet do
 
     with {:ok, set} <-
            Repository.add_exercise_set(exercise.id, Map.put(attrs, "set_number", set_number)) do
-      case DetectPR.run(user_id, exercise, set) do
-        {:pr, _exercise, set} -> {:ok, set, :pr}
-        {:no_pr, _exercise, set} -> {:ok, set, :no_pr}
-      end
+      {result, _exercise, set} = DetectPR.run(user_id, exercise, set)
+      pr_flag = if result == :pr, do: :pr, else: :no_pr
+
+      Phoenix.PubSub.broadcast(
+        BetterMe.PubSub,
+        "workout:#{exercise.workout_id}",
+        {:set_logged, set, pr_flag}
+      )
+
+      {:ok, set, pr_flag}
     end
   end
 end

@@ -19,7 +19,7 @@ defmodule BetterMe.Habits do
   defdelegate update_habit(habit, attrs), to: Repository
   defdelegate delete_habit(habit), to: Repository
   defdelegate change_habit(habit, attrs \\ %{}), to: Repository
-  defdelegate log_habit(habit_id, attrs), to: LogHabit, as: :run
+  defdelegate log_habit(user_id, habit_id, attrs), to: LogHabit, as: :run
   defdelegate current_streak(habit_id, user_id), to: CurrentStreak, as: :run
   defdelegate recent_logs(habit_id, user_id, days \\ 30), to: RecentLogs, as: :run
   defdelegate logged_today?(habit_id, user_id), to: LoggedToday, as: :run

@@ -16,6 +16,25 @@ defmodule BetterMeWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    plug Corsica,
+      origins: "*",
+      allow_headers: ["authorization", "content-type", "accept"],
+      allow_credentials: false
+
+    plug BetterMeWeb.Plugs.ApiRateLimit
+  end
+
+  pipeline :api_authenticated do
+    plug :accepts, ["json"]
+
+    plug Corsica,
+      origins: "*",
+      allow_headers: ["authorization", "content-type", "accept"],
+      allow_credentials: false
+
+    plug BetterMeWeb.Plugs.ApiRateLimit
+    plug BetterMeWeb.Plugs.BearerAuth
   end
 
   scope "/", BetterMeWeb do
@@ -24,10 +43,27 @@ defmodule BetterMeWeb.Router do
     get "/", PageController, :home
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", BetterMeWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", BetterMeWeb.Api do
+    pipe_through :api
+
+    post "/auth/google", AuthController, :google
+  end
+
+  scope "/api", BetterMeWeb.Api do
+    pipe_through :api_authenticated
+
+    get "/habits", HabitsController, :index
+    post "/habits", HabitsController, :create
+    post "/habits/:habit_id/log", HabitsController, :log
+
+    get "/health/metrics", HealthController, :index
+    post "/health/metrics", HealthController, :create
+
+    get "/workouts", WorkoutsController, :index
+    post "/workouts", WorkoutsController, :create
+    post "/workouts/:workout_id/exercises", WorkoutsController, :add_exercise
+    post "/workouts/:workout_id/exercises/:exercise_id/sets", WorkoutsController, :log_set
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:better_me, :dev_routes) do

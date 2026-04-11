@@ -79,7 +79,8 @@ defmodule BetterMe.MixProject do
       {:plug_attack, "~> 0.4"},
       {:ex_machina, "~> 2.8", only: :test},
       {:hackney, "~> 1.8"},
-      {:sentry, "~> 10.2.0"}
+      {:sentry, "~> 10.2.0"},
+      {:corsica, "~> 2.1"}
     ]
   end
 

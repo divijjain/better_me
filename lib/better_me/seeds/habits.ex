@@ -30,7 +30,7 @@ defmodule BetterMe.Seeds.Habits do
       {:ok, habit} = Habits.create_habit(user.id, attrs)
 
       Enum.each(seed.log_days, fn days_ago ->
-        Habits.log_habit(habit.id, %{date: Date.add(today, -days_ago), completed: true})
+        Habits.log_habit(user.id, habit.id, %{date: Date.add(today, -days_ago), completed: true})
       end)
 
       IO.puts("  Created: #{habit.name} (#{length(seed.log_days)} logs)")

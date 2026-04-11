@@ -25,7 +25,9 @@ config :better_me, :openai, api_key: System.get_env("OPENAI_API_KEY")
 
 config :better_me, :google,
   client_id: System.get_env("GOOGLE_CLIENT_ID"),
-  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
+  ios_client_id: System.get_env("GOOGLE_IOS_CLIENT_ID"),
+  android_client_id: System.get_env("GOOGLE_ANDROID_CLIENT_ID")
 
 config :better_me, BetterMeWeb.Endpoint,
   http: [port: String.to_integer(System.get_env("PORT", "4000"))]
