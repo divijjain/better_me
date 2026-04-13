@@ -33,7 +33,10 @@ defmodule BetterMe.Health.Repository do
   def log_metric(user_id, attrs) do
     %BodyMetric{user_id: user_id}
     |> BodyMetric.create_changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(
+      on_conflict: {:replace, [:weight, :body_fat_pct, :measurements, :updated_at]},
+      conflict_target: [:user_id, :date]
+    )
   end
 
   def update_metric(metric, attrs) do

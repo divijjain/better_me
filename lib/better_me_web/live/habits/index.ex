@@ -67,7 +67,8 @@ defmodule BetterMeWeb.HabitsLive.Index do
     user_id = socket.assigns.current_scope.user.id
 
     with {:ok, habit} <- Habits.get_habit(habit_id, user_id),
-         {:ok, _log} <- Habits.log_habit(habit.id, %{date: Date.utc_today(), completed: true}) do
+         {:ok, _log} <-
+           Habits.log_habit(habit.id, %{date: Date.utc_today(), completed: true}) do
       load_habits(socket, user_id)
     else
       {:error, _} -> put_flash(socket, :error, "Could not log habit")
