@@ -63,6 +63,24 @@ defmodule BetterMeWeb.Router do
     post "/workouts", WorkoutsController, :create
     post "/workouts/:workout_id/exercises", WorkoutsController, :add_exercise
     post "/workouts/:workout_id/exercises/:exercise_id/sets", WorkoutsController, :log_set
+
+    get "/todos", TodosController, :index
+    post "/todos", TodosController, :create
+    patch "/todos/:id/complete", TodosController, :complete
+    delete "/todos/:id", TodosController, :delete
+
+    get "/journal", JournalController, :index
+    post "/journal", JournalController, :create
+    put "/journal/:id", JournalController, :update
+    delete "/journal/:id", JournalController, :delete
+
+    get "/nutrition/summary", NutritionController, :daily_summary
+    get "/nutrition/recipes", NutritionController, :recipes
+    post "/nutrition/meals", NutritionController, :log_meal
+    delete "/nutrition/meals/:id", NutritionController, :delete_meal
+
+    post "/insights/ask", InsightsController, :ask
+    get "/insights/quota", InsightsController, :quota
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
