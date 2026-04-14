@@ -4,13 +4,86 @@ defmodule BetterMeWeb.UIComponents do
 
   import BetterMeWeb.CoreComponents, only: [icon: 1]
 
+  # ── Navigation components ──────────────────────────────────────────────────
+
+  @doc """
+  Desktop sidebar nav link with active state detection.
+  """
+  attr :navigate, :string, required: true
+  attr :icon, :string, required: true
+  attr :label, :string, required: true
+  attr :current_path, :string, default: ""
+
+  def sidebar_link(assigns) do
+    active = String.starts_with?(assigns.current_path, assigns.navigate)
+    assigns = assign(assigns, :active, active)
+
+    ~H"""
+    <.link
+      navigate={@navigate}
+      class={[
+        "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+        if(@active,
+          do: "bg-teal-500/10 text-teal-400",
+          else: "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+        )
+      ]}
+    >
+      <.icon name={@icon} class="h-4 w-4 shrink-0" />
+      {@label}
+      <div :if={@active} class="ml-auto h-1.5 w-1.5 rounded-full bg-teal-400" />
+    </.link>
+    """
+  end
+
+  @doc """
+  Mobile bottom nav link with active state detection.
+  """
+  attr :navigate, :string, required: true
+  attr :label, :string, required: true
+  attr :current_path, :string, default: ""
+  slot :inner_block, required: true
+
+  def mobile_nav_link(assigns) do
+    active = String.starts_with?(assigns.current_path, assigns.navigate)
+    assigns = assign(assigns, :active, active)
+
+    ~H"""
+    <.link
+      navigate={@navigate}
+      class={[
+        "flex flex-col items-center gap-0.5 px-3 py-2 text-xs font-medium transition-colors min-w-0 flex-1",
+        if(@active, do: "text-teal-600", else: "text-slate-400 hover:text-slate-600")
+      ]}
+    >
+      <div class={[
+        "flex items-center justify-center rounded-lg w-8 h-6 transition-colors",
+        if(@active, do: "bg-teal-50", else: "")
+      ]}>
+        {render_slot(@inner_block)}
+      </div>
+      <span class={if(@active, do: "font-bold", else: "")}>{@label}</span>
+    </.link>
+    """
+  end
+
+  # ── Page layout components ─────────────────────────────────────────────────
+
+  @doc """
+  Standard page wrapper — constrains width, adds padding, responsive.
+  """
+  slot :inner_block, required: true
+
+  def page_container(assigns) do
+    ~H"""
+    <div class="max-w-2xl mx-auto px-4 py-6 md:py-8">
+      {render_slot(@inner_block)}
+    </div>
+    """
+  end
+
   @doc """
   Page header with a title and an optional "New" action button.
-
-  ## Examples
-
-      <.page_header title="Habits" new_path={~p"/habits/new"} new_label="New" />
-      <.page_header title="Body Metrics" new_path={~p"/health/new"} new_label="Log" />
   """
   attr :title, :string, required: true
   attr :new_path, :string, default: nil
@@ -19,11 +92,11 @@ defmodule BetterMeWeb.UIComponents do
   def page_header(assigns) do
     ~H"""
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-2xl font-bold text-gray-900">{@title}</h1>
+      <h1 class="text-xl font-bold text-slate-900">{@title}</h1>
       <.link
         :if={@new_path}
         navigate={@new_path}
-        class="inline-flex items-center gap-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-500"
+        class="inline-flex items-center gap-1.5 rounded-lg bg-teal-600 px-3 py-2 text-sm font-semibold text-white hover:bg-teal-500 transition-colors shadow-sm"
       >
         <.icon name="hero-plus" class="h-4 w-4" /> {@new_label}
       </.link>
@@ -33,50 +106,42 @@ defmodule BetterMeWeb.UIComponents do
 
   @doc """
   Form page header with a back arrow and title.
-
-  ## Examples
-
-      <.form_header title="New Habit" back_path={~p"/habits"} />
-      <.form_header title="Edit Todo" back_path={~p"/todos"} />
   """
   attr :title, :string, required: true
   attr :back_path, :string, required: true
 
   def form_header(assigns) do
     ~H"""
-    <div class="mb-6 flex items-center gap-2">
-      <.link navigate={@back_path} class="text-gray-400 hover:text-gray-600">
-        <.icon name="hero-arrow-left" class="h-5 w-5" />
+    <div class="mb-6 flex items-center gap-3">
+      <.link
+        navigate={@back_path}
+        class="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition"
+      >
+        <.icon name="hero-arrow-left" class="h-4 w-4" />
       </.link>
-      <h1 class="text-2xl font-bold text-gray-900">{@title}</h1>
+      <h1 class="text-xl font-bold text-slate-900">{@title}</h1>
     </div>
     """
   end
 
   @doc """
   Empty state message shown when a list has no items.
-
-  ## Examples
-
-      <.empty_state :if={@habits == []} message="No habits yet. Add your first one!" />
   """
   attr :message, :string, required: true
 
   def empty_state(assigns) do
     ~H"""
-    <div class="text-center py-16 text-gray-400">
-      {@message}
+    <div class="flex flex-col items-center justify-center py-14 text-center">
+      <div class="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
+        <.icon name="hero-inbox" class="h-6 w-6 text-slate-400" />
+      </div>
+      <p class="text-sm font-medium text-slate-500">{@message}</p>
     </div>
     """
   end
 
   @doc """
   Form action buttons: submit, cancel, and optional delete.
-
-  ## Examples
-
-      <.form_actions action={:new} cancel_path={~p"/habits"} />
-      <.form_actions action={:edit} cancel_path={~p"/todos"} on_delete="delete" />
   """
   attr :action, :atom, required: true
   attr :cancel_path, :string, required: true
@@ -85,16 +150,16 @@ defmodule BetterMeWeb.UIComponents do
 
   def form_actions(assigns) do
     ~H"""
-    <div class="flex gap-3 pt-2">
+    <div class="flex items-center gap-3 pt-4 border-t border-slate-100 mt-2">
       <button
         type="submit"
-        class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500"
+        class="rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-500 transition-colors shadow-sm"
       >
-        {@submit_label || if(@action == :new, do: "Create", else: "Save")}
+        {@submit_label || if(@action == :new, do: "Create", else: "Save changes")}
       </button>
       <.link
         navigate={@cancel_path}
-        class="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 transition"
       >
         Cancel
       </.link>
@@ -103,7 +168,7 @@ defmodule BetterMeWeb.UIComponents do
         type="button"
         phx-click={@on_delete}
         data-confirm="Are you sure you want to delete this?"
-        class="ml-auto rounded-md text-sm font-medium text-red-500 hover:text-red-700"
+        class="ml-auto rounded-lg px-3 py-2 text-sm font-medium text-red-500 hover:bg-red-50 hover:text-red-600 transition"
       >
         Delete
       </button>
@@ -113,41 +178,49 @@ defmodule BetterMeWeb.UIComponents do
 
   @doc """
   Edit pencil icon link used in list rows.
-
-  ## Examples
-
-      <.edit_link path={~p"/habits/\#{habit.id}/edit"} />
   """
   attr :path, :string, required: true
 
   def edit_link(assigns) do
     ~H"""
-    <.link navigate={@path} class="flex-shrink-0 text-gray-400 hover:text-gray-600">
+    <.link
+      navigate={@path}
+      class="flex-shrink-0 flex h-7 w-7 items-center justify-center rounded-md text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition"
+    >
       <.icon name="hero-pencil-square" class="h-4 w-4" />
     </.link>
     """
   end
 
+  # ── Nutrition-specific components ──────────────────────────────────────────
+
   @doc """
-  Tab bar for the Nutrition section — shared across /recipes and /ingredients.
-
-  ## Examples
-
-      <.nutrition_tabs active={:recipes} />
-      <.nutrition_tabs active={:ingredients} />
+  Tab bar for the Nutrition section.
   """
-  attr :active, :atom, required: true, values: [:recipes, :ingredients]
+  attr :active, :atom, required: true, values: [:log, :recipes, :ingredients]
 
   def nutrition_tabs(assigns) do
     ~H"""
-    <div class="mb-6 flex border-b border-gray-200">
+    <div class="mb-6 flex gap-1 border-b border-slate-200">
+      <.link
+        navigate={~p"/nutrition"}
+        class={[
+          "px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition-colors",
+          if(@active == :log,
+            do: "border-teal-600 text-teal-600",
+            else: "border-transparent text-slate-500 hover:text-slate-700"
+          )
+        ]}
+      >
+        Daily Log
+      </.link>
       <.link
         navigate={~p"/recipes"}
         class={[
-          "px-4 py-2 text-sm font-medium border-b-2 -mb-px",
+          "px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition-colors",
           if(@active == :recipes,
-            do: "border-indigo-600 text-indigo-600",
-            else: "border-transparent text-gray-500 hover:text-gray-700"
+            do: "border-teal-600 text-teal-600",
+            else: "border-transparent text-slate-500 hover:text-slate-700"
           )
         ]}
       >
@@ -156,10 +229,10 @@ defmodule BetterMeWeb.UIComponents do
       <.link
         navigate={~p"/ingredients"}
         class={[
-          "px-4 py-2 text-sm font-medium border-b-2 -mb-px",
+          "px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition-colors",
           if(@active == :ingredients,
-            do: "border-indigo-600 text-indigo-600",
-            else: "border-transparent text-gray-500 hover:text-gray-700"
+            do: "border-teal-600 text-teal-600",
+            else: "border-transparent text-slate-500 hover:text-slate-700"
           )
         ]}
       >
@@ -171,10 +244,6 @@ defmodule BetterMeWeb.UIComponents do
 
   @doc """
   Veg / non-veg badge pill.
-
-  ## Examples
-
-      <.veg_badge is_vegetarian={ingredient.is_vegetarian} />
   """
   attr :is_vegetarian, :boolean, required: true
 
@@ -182,13 +251,13 @@ defmodule BetterMeWeb.UIComponents do
     ~H"""
     <span
       :if={@is_vegetarian}
-      class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700"
+      class="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700"
     >
       veg
     </span>
     <span
       :if={!@is_vegetarian}
-      class="rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-700"
+      class="rounded-full bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-700"
     >
       non-veg
     </span>
@@ -197,11 +266,6 @@ defmodule BetterMeWeb.UIComponents do
 
   @doc """
   4-column macro summary grid (calories, protein, carbs, fat).
-  Used on recipe show and nutrition index (no-targets view).
-
-  ## Examples
-
-      <.macro_grid calories={312.0} protein={28.5} carbs={18.0} fat={10.2} />
   """
   attr :calories, :float, required: true
   attr :protein, :float, required: true
@@ -210,43 +274,23 @@ defmodule BetterMeWeb.UIComponents do
 
   def macro_grid(assigns) do
     ~H"""
-    <div class="grid grid-cols-4 gap-2 rounded-lg border border-gray-200 bg-white p-4 text-center shadow-sm">
-      <div>
-        <p class="text-lg font-bold text-gray-900">{round(@calories)}</p>
-        <p class="text-xs text-gray-400">kcal</p>
+    <div class="grid grid-cols-4 gap-3 rounded-xl border border-slate-200 bg-white p-4 text-center shadow-sm">
+      <div class="space-y-0.5">
+        <p class="text-lg font-bold text-slate-900">{round(@calories)}</p>
+        <p class="text-xs font-medium text-slate-400">kcal</p>
       </div>
-      <div>
-        <p class="text-lg font-bold text-gray-900">{Float.round(@protein, 1)}g</p>
-        <p class="text-xs text-gray-400">protein</p>
+      <div class="space-y-0.5 border-l border-slate-100">
+        <p class="text-lg font-bold text-red-500">{Float.round(@protein, 1)}g</p>
+        <p class="text-xs font-medium text-slate-400">protein</p>
       </div>
-      <div>
-        <p class="text-lg font-bold text-gray-900">{Float.round(@carbs, 1)}g</p>
-        <p class="text-xs text-gray-400">carbs</p>
+      <div class="space-y-0.5 border-l border-slate-100">
+        <p class="text-lg font-bold text-amber-500">{Float.round(@carbs, 1)}g</p>
+        <p class="text-xs font-medium text-slate-400">carbs</p>
       </div>
-      <div>
-        <p class="text-lg font-bold text-gray-900">{Float.round(@fat, 1)}g</p>
-        <p class="text-xs text-gray-400">fat</p>
+      <div class="space-y-0.5 border-l border-slate-100">
+        <p class="text-lg font-bold text-purple-500">{Float.round(@fat, 1)}g</p>
+        <p class="text-xs font-medium text-slate-400">fat</p>
       </div>
-    </div>
-    """
-  end
-
-  @doc """
-  Standard page wrapper — constrains width and adds padding.
-  Use as the outermost div on every page.
-
-  ## Examples
-
-      <.page_container>
-        ...
-      </.page_container>
-  """
-  slot :inner_block, required: true
-
-  def page_container(assigns) do
-    ~H"""
-    <div class="max-w-xl mx-auto px-4 py-8">
-      {render_slot(@inner_block)}
     </div>
     """
   end

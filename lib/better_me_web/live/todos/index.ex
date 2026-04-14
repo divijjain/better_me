@@ -26,7 +26,7 @@ defmodule BetterMeWeb.TodosLive.Index do
           class={[
             "rounded-full px-3 py-1 text-sm font-medium transition",
             if(@filter == "pending",
-              do: "bg-indigo-600 text-white",
+              do: "bg-teal-600 text-white",
               else: "bg-gray-100 text-gray-600 hover:bg-gray-200"
             )
           ]}
@@ -38,7 +38,7 @@ defmodule BetterMeWeb.TodosLive.Index do
           class={[
             "rounded-full px-3 py-1 text-sm font-medium transition",
             if(@filter == "done",
-              do: "bg-indigo-600 text-white",
+              do: "bg-teal-600 text-white",
               else: "bg-gray-100 text-gray-600 hover:bg-gray-200"
             )
           ]}
@@ -69,8 +69,8 @@ defmodule BetterMeWeb.TodosLive.Index do
             class={[
               "flex-shrink-0 h-5 w-5 rounded border-2 transition",
               if(todo.completed,
-                do: "border-indigo-600 bg-indigo-600",
-                else: "border-gray-300 hover:border-indigo-400"
+                do: "border-teal-600 bg-teal-600",
+                else: "border-gray-300 hover:border-teal-400"
               )
             ]}
           >

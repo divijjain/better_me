@@ -33,8 +33,8 @@ defmodule BetterMeWeb.HabitsLive.Index do
               class={[
                 "flex h-8 w-8 items-center justify-center rounded-full border-2 transition pointer-events-auto",
                 if(habit.logged_today,
-                  do: "border-indigo-600 bg-indigo-600 text-white",
-                  else: "border-gray-300 text-gray-300 hover:border-indigo-400"
+                  do: "border-teal-600 bg-teal-600 text-white",
+                  else: "border-gray-300 text-gray-300 hover:border-teal-400"
                 )
               ]}
               disabled={habit.logged_today}
@@ -48,7 +48,7 @@ defmodule BetterMeWeb.HabitsLive.Index do
             </div>
           </div>
           <div class="relative flex items-center gap-3">
-            <span class="text-sm font-semibold text-indigo-600">
+            <span class="text-sm font-semibold text-teal-600">
               {habit.streak}🔥
             </span>
             <.edit_link path={~p"/habits/#{habit.id}/edit"} />

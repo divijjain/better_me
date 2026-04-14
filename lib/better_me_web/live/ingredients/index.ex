@@ -28,16 +28,16 @@ defmodule BetterMeWeb.IngredientsLive.Index do
   def render(assigns) do
     ~H"""
     <.page_container>
-      <div class="flex items-center justify-between mb-2">
-        <h1 class="text-2xl font-bold text-gray-900">Nutrition</h1>
+      <.nutrition_tabs active={:ingredients} />
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-bold text-slate-900">Ingredients</h2>
         <.link
           navigate={~p"/ingredients/new"}
-          class="inline-flex items-center gap-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-500"
+          class="inline-flex items-center gap-1 rounded-lg bg-teal-600 px-3 py-2 text-sm font-semibold text-white hover:bg-teal-500 transition-colors shadow-sm"
         >
           <.icon name="hero-plus" class="h-4 w-4" /> New
         </.link>
       </div>
-      <.nutrition_tabs active={:ingredients} />
 
       <form phx-change="search" class="mb-3">
         <input
@@ -46,7 +46,7 @@ defmodule BetterMeWeb.IngredientsLive.Index do
           value={@query}
           placeholder="Search ingredients…"
           phx-debounce="200"
-          class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
         />
       </form>
 
@@ -98,7 +98,7 @@ defmodule BetterMeWeb.IngredientsLive.Index do
           phx-value-category={cat}
           class={[
             "flex-shrink-0 rounded-full px-3 py-1 text-xs font-medium border capitalize transition",
-            @category_filter == cat && "bg-indigo-600 text-white border-indigo-600",
+            @category_filter == cat && "bg-teal-600 text-white border-teal-600",
             @category_filter != cat && "bg-white text-gray-600 border-gray-200 hover:border-gray-400"
           ]}
         >
@@ -138,7 +138,7 @@ defmodule BetterMeWeb.IngredientsLive.Index do
               :key={ingredient.id}
               class={[
                 "flex items-center justify-between rounded-lg border bg-white px-4 py-2.5 shadow-sm",
-                comparing?(ingredient, @comparing) && "border-indigo-300 bg-indigo-50",
+                comparing?(ingredient, @comparing) && "border-teal-300 bg-teal-50",
                 !comparing?(ingredient, @comparing) && "border-gray-100"
               ]}
             >
@@ -149,7 +149,7 @@ defmodule BetterMeWeb.IngredientsLive.Index do
                   disabled={!comparing?(ingredient, @comparing) && length(@comparing) >= @max_compare}
                   phx-click="toggle_compare"
                   phx-value-id={ingredient.id}
-                  class="mt-1 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed flex-shrink-0"
+                  class="mt-1 h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed flex-shrink-0"
                 />
                 <div class="min-w-0">
                   <div class="flex items-center gap-2 flex-wrap">
@@ -197,15 +197,15 @@ defmodule BetterMeWeb.IngredientsLive.Index do
     <%!-- Comparison panel — outside page_container so fixed positioning works --%>
     <div
       :if={@comparing != []}
-      class="fixed bottom-14 left-0 right-0 z-[60] bg-white border-t-2 border-indigo-100 shadow-2xl"
+      class="fixed bottom-14 left-0 right-0 z-[60] bg-white border-t-2 border-teal-100 shadow-2xl"
     >
       <div class="max-w-2xl mx-auto px-4 pt-3 pb-4">
         <%!-- Header --%>
         <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
-            <.icon name="hero-scale" class="h-4 w-4 text-indigo-500" />
+            <.icon name="hero-scale" class="h-4 w-4 text-teal-500" />
             <span class="text-sm font-semibold text-gray-800">Compare</span>
-            <span class="rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-600">
+            <span class="rounded-full bg-teal-100 px-2 py-0.5 text-xs font-medium text-teal-600">
               {length(@comparing)} / {@max_compare}
             </span>
           </div>
@@ -225,7 +225,7 @@ defmodule BetterMeWeb.IngredientsLive.Index do
         <%!-- Legend --%>
         <p class="text-xs text-gray-400 mt-3 text-center">
           Bar width shows relative value among selected.
-          <span class="text-indigo-500 font-medium">Indigo</span>
+          <span class="text-teal-500 font-medium">Indigo</span>
           = best for that nutrient.
         </p>
       </div>
@@ -296,14 +296,14 @@ defmodule BetterMeWeb.IngredientsLive.Index do
           <div class="flex justify-between items-center mb-0.5">
             <span class={[
               "text-xs font-medium",
-              row.is_best && "text-indigo-600",
+              row.is_best && "text-teal-600",
               !row.is_best && "text-gray-500"
             ]}>
               {row.label}
             </span>
             <span class={[
               "text-xs font-semibold",
-              row.is_best && "text-indigo-600",
+              row.is_best && "text-teal-600",
               !row.is_best && "text-gray-700"
             ]}>
               {row.display}
@@ -313,7 +313,7 @@ defmodule BetterMeWeb.IngredientsLive.Index do
             <div
               class={[
                 "h-full rounded-full transition-all",
-                row.is_best && "bg-indigo-500",
+                row.is_best && "bg-teal-500",
                 !row.is_best && row.color
               ]}
               style={"width: #{row.pct}%"}

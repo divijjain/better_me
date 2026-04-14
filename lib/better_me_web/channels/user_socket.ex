@@ -15,7 +15,7 @@ defmodule BetterMeWeb.UserSocket do
   alias BetterMe.Accounts
 
   channel "workout:*", BetterMeWeb.WorkoutChannel
-  channel "health:*",  BetterMeWeb.HealthChannel
+  channel "health:*", BetterMeWeb.HealthChannel
 
   @impl true
   def connect(%{"token" => encoded}, socket, _connect_info) do

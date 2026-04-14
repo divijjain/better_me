@@ -97,7 +97,7 @@ defmodule BetterMeWeb.InsightsLive.Index do
           id={"msg-#{i}"}
           class={[
             "rounded-2xl px-4 py-3 text-sm leading-relaxed max-w-[85%]",
-            msg.role == :user && "ml-auto bg-indigo-600 text-white",
+            msg.role == :user && "ml-auto bg-teal-600 text-white",
             msg.role == :assistant && "bg-white border border-gray-200 text-gray-800 shadow-sm",
             msg.role == :error && "bg-red-50 border border-red-200 text-red-700"
           ]}
@@ -121,13 +121,13 @@ defmodule BetterMeWeb.InsightsLive.Index do
           value={@question}
           placeholder="Ask about your habits, nutrition, workouts…"
           autocomplete="off"
-          class="flex-1 rounded-full border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          class="flex-1 rounded-full border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
           disabled={@loading}
         />
         <button
           type="submit"
           disabled={@loading}
-          class="rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+          class="rounded-full bg-teal-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-teal-700 disabled:opacity-50"
         >
           Ask
         </button>

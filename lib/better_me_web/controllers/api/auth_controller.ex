@@ -41,13 +41,15 @@ defmodule BetterMeWeb.Api.AuthController do
 
   defp verify_google_token(%{"access_token" => access_token}, _valid_client_ids) do
     # Access tokens from native OAuth (expo-auth-session) — verify via userinfo
-    resp = Req.get!("https://www.googleapis.com/oauth2/v3/userinfo",
-      headers: [{"Authorization", "Bearer #{access_token}"}]
-    )
+    resp =
+      Req.get!("https://www.googleapis.com/oauth2/v3/userinfo",
+        headers: [{"Authorization", "Bearer #{access_token}"}]
+      )
 
     case resp.status do
       200 ->
         body = resp.body
+
         if body["sub"] && body["email"] do
           {:ok, body}
         else

@@ -45,7 +45,7 @@ defmodule BetterMeWeb.JournalLive.Form do
               class={[
                 "flex flex-1 cursor-pointer items-center justify-center rounded-lg border py-2 text-xl transition",
                 if(to_string(mood) == current_mood,
-                  do: "border-indigo-400 bg-indigo-50",
+                  do: "border-teal-400 bg-teal-50",
                   else: "border-gray-200 bg-white hover:bg-gray-50"
                 )
               ]}
@@ -83,7 +83,7 @@ defmodule BetterMeWeb.JournalLive.Form do
             value={@tags_input}
             placeholder="e.g. gym, focus, sleep"
             phx-debounce="300"
-            class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
           />
         </div>
 

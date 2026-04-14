@@ -34,7 +34,7 @@ defmodule BetterMeWeb.HabitsLive.Show do
       <%!-- Streak stats --%>
       <div class="grid grid-cols-2 gap-4 mb-8">
         <div class="rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm text-center">
-          <p class="text-3xl font-bold text-indigo-600">{@stats.current_streak}🔥</p>
+          <p class="text-3xl font-bold text-teal-600">{@stats.current_streak}🔥</p>
           <p class="mt-1 text-sm text-gray-500">Current streak</p>
         </div>
         <div class="rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm text-center">
@@ -53,7 +53,7 @@ defmodule BetterMeWeb.HabitsLive.Show do
             class={[
               "h-9 w-9 rounded-md flex items-center justify-center text-xs font-medium",
               if(MapSet.member?(@stats.calendar_dates, day),
-                do: "bg-indigo-500 text-white",
+                do: "bg-teal-500 text-white",
                 else: "bg-gray-100 text-gray-400"
               )
             ]}
@@ -63,7 +63,7 @@ defmodule BetterMeWeb.HabitsLive.Show do
         </div>
         <div class="mt-3 flex items-center gap-2 text-xs text-gray-400">
           <div class="h-3 w-3 rounded-sm bg-gray-100" /> Not done
-          <div class="h-3 w-3 rounded-sm bg-indigo-500 ml-2" /> Done
+          <div class="h-3 w-3 rounded-sm bg-teal-500 ml-2" /> Done
         </div>
       </div>
 
@@ -75,8 +75,8 @@ defmodule BetterMeWeb.HabitsLive.Show do
         class={[
           "w-full rounded-xl py-3 text-sm font-semibold transition",
           if(logged_today,
-            do: "bg-indigo-100 text-indigo-400 cursor-not-allowed",
-            else: "bg-indigo-600 text-white hover:bg-indigo-500"
+            do: "bg-teal-100 text-teal-400 cursor-not-allowed",
+            else: "bg-teal-600 text-white hover:bg-teal-500"
           )
         ]}
       >

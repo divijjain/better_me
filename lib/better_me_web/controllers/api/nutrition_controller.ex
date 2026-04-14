@@ -84,6 +84,7 @@ defmodule BetterMeWeb.Api.NutritionController do
       {:ok, profile} ->
         t = Profiles.calculate_targets(profile)
         %{calories: t.calories, protein_g: t.protein_g, carbs_g: t.carbs_g, fat_g: t.fat_g}
+
       {:error, _} ->
         nil
     end
@@ -91,6 +92,7 @@ defmodule BetterMeWeb.Api.NutritionController do
 
   defp parse_date(nil), do: Date.utc_today()
   defp parse_date(%Date{} = d), do: d
+
   defp parse_date(str) when is_binary(str) do
     case Date.from_iso8601(str) do
       {:ok, d} -> d
@@ -104,12 +106,14 @@ defmodule BetterMeWeb.Api.NutritionController do
 
   defp parse_float(v) when is_float(v), do: v
   defp parse_float(v) when is_integer(v), do: v * 1.0
+
   defp parse_float(v) when is_binary(v) do
     case Float.parse(v) do
       {f, _} -> f
       :error -> 1.0
     end
   end
+
   defp parse_float(_), do: 1.0
 
   defp format_errors(changeset) do

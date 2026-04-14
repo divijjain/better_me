@@ -90,7 +90,10 @@ defmodule BetterMeWeb.WorkoutChannel do
   end
 
   defp serialize_exercise(exercise) do
-    sets = if Ecto.assoc_loaded?(exercise.exercise_sets), do: Enum.map(exercise.exercise_sets, &serialize_set/1), else: []
+    sets =
+      if Ecto.assoc_loaded?(exercise.exercise_sets),
+        do: Enum.map(exercise.exercise_sets, &serialize_set/1),
+        else: []
 
     %{
       id: exercise.id,

@@ -104,7 +104,7 @@
 
 /* This file is for your main application CSS */
 
-/* Hide scrollbar on the bottom nav scroll container */
+/* Hide scrollbar utility */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -112,3 +112,11 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* Thin scrollbar for sidebar */
+.sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 transparent;
+}
+.sidebar-scroll::-webkit-scrollbar { width: 4px; }
+.sidebar-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }

@@ -24,10 +24,18 @@ defmodule BetterMeWeb.Api.InsightsController do
 
         case InsightWorkflow.run(user_id, question) do
           {:ok, answer} ->
-            json(conn, %{data: %{answer: answer, queries_today: queries_today(user_id), daily_limit: @daily_limit}})
+            json(conn, %{
+              data: %{
+                answer: answer,
+                queries_today: queries_today(user_id),
+                daily_limit: @daily_limit
+              }
+            })
 
           {:error, reason} ->
-            conn |> put_status(:internal_server_error) |> json(%{errors: %{detail: inspect(reason)}})
+            conn
+            |> put_status(:internal_server_error)
+            |> json(%{errors: %{detail: inspect(reason)}})
         end
     end
   end
