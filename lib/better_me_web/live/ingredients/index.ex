@@ -51,7 +51,7 @@ defmodule BetterMeWeb.IngredientsLive.Index do
       </form>
 
       <%!-- Filter bar --%>
-      <div class="flex gap-2 overflow-x-auto pb-3 scrollbar-hide">
+      <div class="flex gap-2 overflow-x-auto pb-3 scrollbar-hide w-full min-w-0">
         <%!-- Veg toggle --%>
         <button
           phx-click="set_veg_filter"
@@ -132,62 +132,58 @@ defmodule BetterMeWeb.IngredientsLive.Index do
             />
           </button>
 
-          <ul :if={MapSet.member?(@open, category)} class="mt-1 space-y-1 pl-1">
+          <ul :if={MapSet.member?(@open, category)} class="mt-1 space-y-1">
             <li
               :for={ingredient <- ingredients}
               :key={ingredient.id}
               class={[
-                "flex items-center justify-between rounded-lg border bg-white px-4 py-2.5 shadow-sm",
+                "rounded-lg border bg-white px-3 py-2.5 shadow-sm",
                 comparing?(ingredient, @comparing) && "border-teal-300 bg-teal-50",
                 !comparing?(ingredient, @comparing) && "border-gray-100"
               ]}
             >
-              <div class="flex items-start gap-3 flex-1 min-w-0">
+              <%!-- Top row: checkbox + name + badge + edit --%>
+              <div class="flex items-center gap-2 min-w-0">
                 <input
                   type="checkbox"
                   checked={comparing?(ingredient, @comparing)}
                   disabled={!comparing?(ingredient, @comparing) && length(@comparing) >= @max_compare}
                   phx-click="toggle_compare"
                   phx-value-id={ingredient.id}
-                  class="mt-1 h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed flex-shrink-0"
+                  class="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed flex-shrink-0"
                 />
-                <div class="min-w-0">
-                  <div class="flex items-center gap-2 flex-wrap">
-                    <p class="font-medium text-gray-900 text-sm">{ingredient.name}</p>
-                    <span :if={ingredient.brand} class="text-xs text-gray-400">
-                      ({ingredient.brand})
-                    </span>
-                    <.veg_badge is_vegetarian={ingredient.is_vegetarian} />
-                  </div>
-                  <div class="mt-1.5">
-                    <p class="text-xs text-gray-400 mb-1">per 100g</p>
-                    <div class="flex flex-wrap gap-x-3 gap-y-1">
-                      <span class="text-xs font-semibold text-gray-700">
-                        {ingredient.calories_per_100g} kcal
-                      </span>
-                      <span class="text-xs text-rose-500">
-                        Protein {ingredient.protein_per_100g}g
-                      </span>
-                      <span class="text-xs text-amber-500">
-                        Carbs {ingredient.carbs_per_100g}g
-                      </span>
-                      <span class="text-xs text-emerald-500">
-                        Fat {ingredient.fat_per_100g}g
-                      </span>
-                      <span class="text-xs text-gray-400">
-                        Fiber {ingredient.fiber_per_100g}g
-                      </span>
-                      <span class="text-xs text-pink-400">
-                        Sugar {ingredient.sugar_per_100g}g
-                      </span>
-                      <span :if={ingredient.glycemic_index} class="text-xs text-purple-400">
-                        GI {ingredient.glycemic_index}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                <p class="font-medium text-gray-900 text-sm truncate flex-1">{ingredient.name}</p>
+                <.veg_badge is_vegetarian={ingredient.is_vegetarian} />
+                <.edit_link path={~p"/ingredients/#{ingredient.id}/edit"} />
               </div>
-              <.edit_link path={~p"/ingredients/#{ingredient.id}/edit"} />
+              <%!-- Brand --%>
+              <p :if={ingredient.brand} class="text-xs text-gray-400 ml-6 mt-0.5">
+                {ingredient.brand}
+              </p>
+              <%!-- Macros grid: 2 columns --%>
+              <div class="mt-2 ml-6 grid grid-cols-2 gap-x-4 gap-y-1">
+                <span class="text-xs font-semibold text-gray-700">
+                  🔥 {ingredient.calories_per_100g} kcal
+                </span>
+                <span class="text-xs text-rose-500">
+                  Protein {ingredient.protein_per_100g}g
+                </span>
+                <span class="text-xs text-amber-500">
+                  Carbs {ingredient.carbs_per_100g}g
+                </span>
+                <span class="text-xs text-emerald-500">
+                  Fat {ingredient.fat_per_100g}g
+                </span>
+                <span class="text-xs text-gray-400">
+                  Fiber {ingredient.fiber_per_100g}g
+                </span>
+                <span class="text-xs text-pink-400">
+                  Sugar {ingredient.sugar_per_100g}g
+                </span>
+                <span :if={ingredient.glycemic_index} class="text-xs text-purple-400">
+                  GI {ingredient.glycemic_index}
+                </span>
+              </div>
             </li>
           </ul>
         </div>
@@ -197,7 +193,7 @@ defmodule BetterMeWeb.IngredientsLive.Index do
     <%!-- Comparison panel — outside page_container so fixed positioning works --%>
     <div
       :if={@comparing != []}
-      class="fixed bottom-14 left-0 right-0 z-[60] bg-white border-t-2 border-teal-100 shadow-2xl"
+      class="fixed bottom-[57px] md:bottom-0 left-0 right-0 z-[60] bg-white border-t-2 border-teal-100 shadow-2xl"
     >
       <div class="max-w-2xl mx-auto px-4 pt-3 pb-4">
         <%!-- Header --%>

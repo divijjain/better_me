@@ -87,7 +87,7 @@
       </nav>
 
       <%!-- User footer --%>
-      <div class="border-t border-slate-800 px-4 py-3">
+      <div class="border-t border-slate-800 px-4 py-3 mb-6">
         <p class="text-xs text-slate-500 truncate mb-2">{@current_scope.user.email}</p>
         <div class="flex items-center gap-3 text-xs text-slate-500">
           <.link navigate={~p"/profile"} class="hover:text-teal-400 transition">
@@ -105,7 +105,7 @@
     </aside>
 
     <%!-- ── Main content (offset by sidebar on md+) ───────────────────── --%>
-    <main class="flex-1 md:ml-56 min-h-screen pb-20 md:pb-8">
+    <main class="flex-1 md:ml-56 min-h-screen pb-20 md:pb-8 overflow-x-hidden">
       <%!-- Mobile top bar (hidden on md+) --%>
       <div class="flex items-center justify-center px-4 py-3 border-b border-slate-100 bg-white md:hidden">
         <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-teal-500 text-white font-bold text-xs mr-2">
