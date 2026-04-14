@@ -67,6 +67,40 @@ defmodule BetterMeWeb.UIComponents do
     """
   end
 
+  @doc """
+  Row link inside the mobile More slide-up sheet.
+  """
+  attr :navigate, :string, required: true
+  attr :label, :string, required: true
+  attr :icon, :string, required: true
+  attr :current_path, :string, default: ""
+  attr :"phx-click", :any, default: nil
+
+  def more_sheet_link(assigns) do
+    active = String.starts_with?(assigns.current_path, assigns.navigate)
+    assigns = assign(assigns, :active, active)
+
+    ~H"""
+    <.link
+      navigate={@navigate}
+      phx-click={assigns[:"phx-click"]}
+      class={[
+        "flex items-center gap-4 px-3 py-3 rounded-xl text-sm font-medium transition-colors",
+        if(@active, do: "bg-teal-50 text-teal-600", else: "text-slate-700 hover:bg-slate-50")
+      ]}
+    >
+      <span class={[
+        "flex h-9 w-9 items-center justify-center rounded-lg shrink-0",
+        if(@active, do: "bg-teal-100 text-teal-600", else: "bg-slate-100 text-slate-500")
+      ]}>
+        <.icon name={@icon} class="h-5 w-5" />
+      </span>
+      {@label}
+      <.icon name="hero-chevron-right" class="h-4 w-4 ml-auto text-slate-300" />
+    </.link>
+    """
+  end
+
   # ── Page layout components ─────────────────────────────────────────────────
 
   @doc """
