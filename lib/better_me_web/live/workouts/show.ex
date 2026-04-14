@@ -127,7 +127,7 @@ defmodule BetterMeWeb.WorkoutsLive.Show do
                     step="0.5"
                     min="0"
                     placeholder="—"
-                    class="w-full rounded border border-gray-200 px-2 py-1 text-sm focus:border-indigo-400 focus:outline-none"
+                    class="w-full rounded border border-gray-200 px-2 py-1 text-sm focus:border-teal-400 focus:outline-none"
                     phx-debounce="500"
                   />
                   <input
@@ -136,7 +136,7 @@ defmodule BetterMeWeb.WorkoutsLive.Show do
                     value={set.reps}
                     min="1"
                     placeholder="—"
-                    class="w-full rounded border border-gray-200 px-2 py-1 text-sm focus:border-indigo-400 focus:outline-none"
+                    class="w-full rounded border border-gray-200 px-2 py-1 text-sm focus:border-teal-400 focus:outline-none"
                     phx-debounce="500"
                   />
                 </.form>
@@ -156,7 +156,7 @@ defmodule BetterMeWeb.WorkoutsLive.Show do
             <button
               phx-click="add_set"
               phx-value-exercise-id={exercise.id}
-              class="w-full rounded-md border border-dashed border-indigo-300 py-1.5 text-xs font-medium text-indigo-500 hover:bg-indigo-50 transition"
+              class="w-full rounded-md border border-dashed border-teal-300 py-1.5 text-xs font-medium text-teal-500 hover:bg-teal-50 transition"
             >
               + Add Set
             </button>
@@ -185,7 +185,7 @@ defmodule BetterMeWeb.WorkoutsLive.Show do
 
           <button
             type="submit"
-            class="w-full rounded-md bg-indigo-600 py-2 text-sm font-medium text-white hover:bg-indigo-500"
+            class="w-full rounded-md bg-teal-600 py-2 text-sm font-medium text-white hover:bg-teal-500"
           >
             Add Exercise
           </button>

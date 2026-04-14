@@ -64,7 +64,7 @@ defmodule BetterMeWeb.WorkoutsLive.Form do
             <select
               phx-change="select_template"
               name="template_id"
-              class="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              class="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
             >
               <option value="">— No routine —</option>
               <option
@@ -83,7 +83,7 @@ defmodule BetterMeWeb.WorkoutsLive.Form do
             <select
               phx-change="select_day"
               name="day_id"
-              class="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              class="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
             >
               <option value="">— Select a day —</option>
               <option

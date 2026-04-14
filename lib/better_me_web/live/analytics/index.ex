@@ -41,7 +41,7 @@ defmodule BetterMeWeb.AnalyticsLive.Index do
             value_key={:weight}
             label_fn={&format_date/1}
             unit="kg"
-            color="bg-indigo-500"
+            color="bg-teal-500"
           />
         <% end %>
       </section>
@@ -134,7 +134,7 @@ defmodule BetterMeWeb.AnalyticsLive.Index do
                 <span class="text-gray-500">{h.logged} days · {h.rate}%</span>
               </div>
               <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div class="h-full bg-indigo-400 rounded-full" style={"width: #{min(h.rate, 100)}%"}>
+                <div class="h-full bg-teal-400 rounded-full" style={"width: #{min(h.rate, 100)}%"}>
                 </div>
               </div>
             </div>
@@ -151,7 +151,7 @@ defmodule BetterMeWeb.AnalyticsLive.Index do
   attr :value_key, :atom, required: true
   attr :label_fn, :any, required: true
   attr :unit, :string, default: ""
-  attr :color, :string, default: "bg-indigo-500"
+  attr :color, :string, default: "bg-teal-500"
   attr :max, :any, default: nil
 
   defp bar_chart(assigns) do

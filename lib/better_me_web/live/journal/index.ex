@@ -37,7 +37,7 @@ defmodule BetterMeWeb.JournalLive.Index do
                 <span
                   :for={tag <- entry.tags}
                   :key={tag}
-                  class="rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-600"
+                  class="rounded-full bg-teal-50 px-2 py-0.5 text-xs font-medium text-teal-600"
                 >
                   #{tag}
                 </span>

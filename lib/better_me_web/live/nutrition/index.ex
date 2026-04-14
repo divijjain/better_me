@@ -26,9 +26,11 @@ defmodule BetterMeWeb.NutritionLive.Index do
   def render(assigns) do
     ~H"""
     <.page_container>
+      <.nutrition_tabs active={:log} />
+
       <%!-- Header + date nav --%>
       <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold text-gray-900">Nutrition</h1>
+        <h2 class="text-lg font-bold text-slate-900">Daily Log</h2>
         <div class="flex items-center gap-2">
           <button phx-click="prev_day" class="text-gray-400 hover:text-gray-600 p-1">
             <.icon name="hero-chevron-left" class="h-5 w-5" />
@@ -54,7 +56,7 @@ defmodule BetterMeWeb.NutritionLive.Index do
           actual={round(@summary.totals.calories)}
           target={@targets.calories}
           unit="kcal"
-          color="bg-indigo-500"
+          color="bg-teal-500"
         />
         <.macro_grid
           :if={!@targets}
@@ -88,7 +90,7 @@ defmodule BetterMeWeb.NutritionLive.Index do
           color="bg-emerald-400"
         />
         <p :if={!@targets} class="text-center text-xs text-gray-400 pt-1">
-          <.link navigate={~p"/profile"} class="text-indigo-500 hover:underline">
+          <.link navigate={~p"/profile"} class="text-teal-500 hover:underline">
             Set up your profile
           </.link>
           to see targets and progress bars
@@ -147,7 +149,7 @@ defmodule BetterMeWeb.NutritionLive.Index do
       <button
         :if={!@show_log_form}
         phx-click="show_log_form"
-        class="w-full rounded-xl border-2 border-dashed border-indigo-300 py-3 text-sm font-medium text-indigo-500 hover:border-indigo-400 hover:text-indigo-600 transition"
+        class="w-full rounded-xl border-2 border-dashed border-teal-300 py-3 text-sm font-medium text-teal-500 hover:border-teal-400 hover:text-teal-600 transition"
       >
         + Log a meal
       </button>
@@ -161,7 +163,7 @@ defmodule BetterMeWeb.NutritionLive.Index do
             <label class="block text-xs font-medium text-gray-600 mb-1">Recipe</label>
             <select
               name="recipe_id"
-              class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
             >
               <option value="">Select recipe…</option>
               <option :for={recipe <- @recipes} :key={recipe.id} value={recipe.id}>
@@ -175,7 +177,7 @@ defmodule BetterMeWeb.NutritionLive.Index do
               <label class="block text-xs font-medium text-gray-600 mb-1">Meal type</label>
               <select
                 name="meal_type"
-                class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
               >
                 <option :for={type <- Nutrition.meal_type_order()} :key={type} value={type}>
                   {meal_type_label(type)}
@@ -190,7 +192,7 @@ defmodule BetterMeWeb.NutritionLive.Index do
                 value="1"
                 min="0.1"
                 step="0.1"
-                class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
               />
             </div>
           </div>
@@ -198,7 +200,7 @@ defmodule BetterMeWeb.NutritionLive.Index do
           <div class="flex gap-2 pt-1">
             <button
               type="submit"
-              class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500"
+              class="rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-500"
             >
               Log
             </button>

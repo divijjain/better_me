@@ -11,16 +11,16 @@ defmodule BetterMeWeb.RecipesLive.Index do
   def render(assigns) do
     ~H"""
     <.page_container>
-      <div class="flex items-center justify-between mb-2">
-        <h1 class="text-2xl font-bold text-gray-900">Nutrition</h1>
+      <.nutrition_tabs active={:recipes} />
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-bold text-slate-900">Recipes</h2>
         <.link
           navigate={~p"/recipes/new"}
-          class="inline-flex items-center gap-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-500"
+          class="inline-flex items-center gap-1 rounded-lg bg-teal-600 px-3 py-2 text-sm font-semibold text-white hover:bg-teal-500 transition-colors shadow-sm"
         >
           <.icon name="hero-plus" class="h-4 w-4" /> New
         </.link>
       </div>
-      <.nutrition_tabs active={:recipes} />
 
       <.empty_state :if={@recipes == []} message="No recipes yet. Add your first one!" />
 

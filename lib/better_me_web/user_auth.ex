@@ -204,6 +204,15 @@ defmodule BetterMeWeb.UserAuth do
     socket = mount_current_scope(socket, session)
 
     if socket.assigns.current_scope && socket.assigns.current_scope.user do
+      socket =
+        socket
+        |> Phoenix.Component.assign(:current_path, "")
+        |> Phoenix.LiveView.attach_hook(:set_current_path, :handle_params, fn
+          _params, url, socket ->
+            uri = URI.parse(url)
+            {:cont, Phoenix.Component.assign(socket, :current_path, uri.path)}
+        end)
+
       {:cont, socket}
     else
       {:halt, Phoenix.LiveView.redirect(socket, to: ~p"/users/log-in")}

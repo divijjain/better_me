@@ -117,7 +117,8 @@ defmodule BetterMeWeb.Router do
     get "/users/settings/confirm-email/:token", UserSettingsController, :confirm_email
 
     live_session :authenticated,
-      on_mount: [{BetterMeWeb.UserAuth, :require_authenticated}] do
+      on_mount: [{BetterMeWeb.UserAuth, :require_authenticated}],
+      layout: {BetterMeWeb.Layouts, :app} do
       live "/habits", HabitsLive.Index, :index
       live "/habits/new", HabitsLive.Form, :new
       live "/habits/:id", HabitsLive.Show, :show

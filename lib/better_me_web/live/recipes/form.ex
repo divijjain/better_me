@@ -37,7 +37,7 @@ defmodule BetterMeWeb.RecipesLive.Form do
             name="tags_input"
             value={Enum.join(@form[:tags].value || [], ", ")}
             placeholder="e.g. lunch, high-protein"
-            class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
           />
         </div>
 

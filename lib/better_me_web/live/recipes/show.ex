@@ -33,7 +33,7 @@ defmodule BetterMeWeb.RecipesLive.Show do
         <span
           :for={tag <- @recipe.tags}
           :key={tag}
-          class="rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-600"
+          class="rounded-full bg-teal-50 px-2 py-0.5 text-xs font-medium text-teal-600"
         >
           {tag}
         </span>
@@ -86,7 +86,7 @@ defmodule BetterMeWeb.RecipesLive.Show do
             <label class="block text-xs font-medium text-gray-600 mb-1">Ingredient</label>
             <select
               name="ingredient_id"
-              class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
             >
               <option value="">Select…</option>
               <optgroup
@@ -108,12 +108,12 @@ defmodule BetterMeWeb.RecipesLive.Show do
               min="0.1"
               step="0.1"
               placeholder="100"
-              class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
             />
           </div>
           <button
             type="submit"
-            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-500"
+            class="rounded-md bg-teal-600 px-3 py-2 text-sm font-medium text-white hover:bg-teal-500"
           >
             Add
           </button>
