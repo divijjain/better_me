@@ -18,4 +18,8 @@ defmodule BetterMe.Health do
   defdelegate list_activity(user_id, opts \\ []), to: Repository
   defdelegate get_activity_for_date(user_id, date), to: Repository
   defdelegate log_activity(user_id, attrs), to: LogActivity, as: :run
+  defdelegate activity_for_date(user_id, date), to: Repository
+  defdelegate steps_trend(user_id, days \\ 30), to: Repository
+  defdelegate sleep_trend(user_id, days \\ 30), to: Repository
+  defdelegate resting_hr_trend(user_id, days \\ 30), to: Repository
 end

@@ -83,6 +83,46 @@ defmodule BetterMe.Health.Repository do
     )
   end
 
+  def activity_for_date(user_id, date) do
+    case Repo.get_by(ActivityLog, user_id: user_id, date: date) do
+      nil -> nil
+      log -> log
+    end
+  end
+
+  def steps_trend(user_id, days \\ 30) do
+    since = Date.add(Date.utc_today(), -days)
+
+    Repo.all(
+      from a in ActivityLog,
+        where: a.user_id == ^user_id and a.date >= ^since and not is_nil(a.steps),
+        order_by: [asc: a.date],
+        select: %{date: a.date, steps: a.steps}
+    )
+  end
+
+  def sleep_trend(user_id, days \\ 30) do
+    since = Date.add(Date.utc_today(), -days)
+
+    Repo.all(
+      from a in ActivityLog,
+        where: a.user_id == ^user_id and a.date >= ^since and not is_nil(a.sleep_minutes),
+        order_by: [asc: a.date],
+        select: %{date: a.date, sleep_minutes: a.sleep_minutes}
+    )
+  end
+
+  def resting_hr_trend(user_id, days \\ 30) do
+    since = Date.add(Date.utc_today(), -days)
+
+    Repo.all(
+      from a in ActivityLog,
+        where: a.user_id == ^user_id and a.date >= ^since and not is_nil(a.resting_hr_bpm),
+        order_by: [asc: a.date],
+        select: %{date: a.date, resting_hr_bpm: a.resting_hr_bpm}
+    )
+  end
+
   # --- Body Metrics ---
 
   def weight_trend(user_id, days \\ 30) do

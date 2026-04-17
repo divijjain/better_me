@@ -15,6 +15,9 @@ defmodule BetterMeWeb.AnalyticsLive.Index do
      socket
      |> assign(:page_title, "Analytics")
      |> assign(:weight, Health.weight_trend(user_id))
+     |> assign(:steps, Health.steps_trend(user_id))
+     |> assign(:sleep, Health.sleep_trend(user_id))
+     |> assign(:resting_hr, Health.resting_hr_trend(user_id))
      |> assign(:workout_freq, Workouts.workout_frequency(user_id))
      |> assign(:workout_types, Workouts.workout_by_type(user_id))
      |> assign(:calories, Nutrition.daily_calories(user_id))
@@ -42,6 +45,60 @@ defmodule BetterMeWeb.AnalyticsLive.Index do
             label_fn={&format_date/1}
             unit="kg"
             color="bg-teal-500"
+          />
+        <% end %>
+      </section>
+
+      <%!-- Daily Steps --%>
+      <section>
+        <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
+          Daily Steps — Last 30 Days
+        </h2>
+        <%= if @steps == [] do %>
+          <p class="text-sm text-gray-400">No data yet. Sync from Apple Health to populate.</p>
+        <% else %>
+          <.bar_chart
+            data={@steps}
+            value_key={:steps}
+            label_fn={&format_date/1}
+            unit=" steps"
+            color="bg-blue-400"
+          />
+        <% end %>
+      </section>
+
+      <%!-- Sleep --%>
+      <section>
+        <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
+          Sleep — Last 30 Days
+        </h2>
+        <%= if @sleep == [] do %>
+          <p class="text-sm text-gray-400">No data yet. Sync from Apple Health to populate.</p>
+        <% else %>
+          <.bar_chart
+            data={Enum.map(@sleep, &Map.update!(&1, :sleep_minutes, fn m -> Float.round(m / 60, 1) end))}
+            value_key={:sleep_minutes}
+            label_fn={&format_date/1}
+            unit=" hrs"
+            color="bg-indigo-400"
+          />
+        <% end %>
+      </section>
+
+      <%!-- Resting Heart Rate --%>
+      <section>
+        <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
+          Resting Heart Rate — Last 30 Days
+        </h2>
+        <%= if @resting_hr == [] do %>
+          <p class="text-sm text-gray-400">No data yet. Sync from Apple Health to populate.</p>
+        <% else %>
+          <.bar_chart
+            data={@resting_hr}
+            value_key={:resting_hr_bpm}
+            label_fn={&format_date/1}
+            unit=" bpm"
+            color="bg-rose-400"
           />
         <% end %>
       </section>
