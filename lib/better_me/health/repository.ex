@@ -58,9 +58,13 @@ defmodule BetterMe.Health.Repository do
 
   def list_activity(user_id, opts \\ []) do
     limit = Keyword.get(opts, :limit, 90)
+    date_from = Keyword.get(opts, :date_from)
+    date_to = Keyword.get(opts, :date_to)
 
     ActivityLog
     |> where(user_id: ^user_id)
+    |> then(fn q -> if date_from, do: where(q, [a], a.date >= ^date_from), else: q end)
+    |> then(fn q -> if date_to, do: where(q, [a], a.date <= ^date_to), else: q end)
     |> order_by([a], desc: a.date)
     |> limit(^limit)
     |> Repo.all()
