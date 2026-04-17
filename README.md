@@ -84,11 +84,30 @@ Most health and productivity apps do one thing. better_me is a single place that
 - Average mood per week — from journal entries
 - Habit completion rates — % per habit over 30 days
 
-### phase 5 — native integrations (planned)
+### phase 5 — native app (active)
 
-- React Native + Expo app for native device features
-- Apple Health (HealthKit) — sync weight, workouts, calories burned, steps (requires Expo)
-- Android Health Connect — replacement for deprecated Google Fit, SDK-only, requires Expo
+React Native + Expo app (`better_me_mobile/`) with feature parity to the web for all core flows.
+
+**Tab navigation:** Habits | Food | Gym | Body | More
+
+**Screens:**
+- Habits — list, create, edit/delete, one-tap log
+- Todos — list, create, edit/delete, one-tap complete
+- Workouts — list, create, real-time exercise logging via Phoenix Channel (live sets + PR detection)
+- Body Stats — weight/body fat history with delete; sync from Apple Health / Android Health Connect
+- Nutrition — daily macro summary, log meals by type
+- Journal — list, create, edit/delete with mood picker and tags
+- AI Insights — natural language chat backed by the same RAG workflow as the web
+- More — navigation hub, sign out
+
+**Apple Health / Android Health Connect sync:**
+Single tap syncs: weight, steps, active calories, resting heart rate, sleep duration.
+Data stored in `body_metrics.measurements` JSONB per day.
+
+**Real-time via Phoenix Channels:**
+- `workout:<id>` — live exercise adds and set logs with PR alerts
+- `health:<user_id>` — metric_logged push after HealthKit sync
+- `habits:<user_id>` — habit logged push
 
 ## stack
 
@@ -100,8 +119,11 @@ Most health and productivity apps do one thing. better_me is a single place that
 | AI / vector search | pgvector (Phase 3) |
 | Embedding model | OpenAI `text-embedding-3-small` (Phase 3) |
 | Chat model | Anthropic `claude-haiku-4-5-20251001` (Phase 3) |
-| Frontend (Phase 1–2) | Phoenix LiveView — runs in mobile browser |
-| Frontend (Phase 3+) | React Native + Expo — native features |
+| Frontend (web) | Phoenix LiveView — runs in browser + mobile browser |
+| Frontend (native) | React Native + Expo — `better_me_mobile/`, Expo Router v6 |
+| Real-time (native) | Phoenix Channels — workout, health, habits topics |
+| Health sync (iOS) | react-native-health (HealthKit) |
+| Health sync (Android) | react-native-health-connect (Health Connect) |
 
 ## getting started
 
@@ -211,7 +233,7 @@ priv/repo/
 | 2 | Nutrition — ingredients, recipes, meal logs, user profile | complete |
 | 3 | AI insights — journal, RAG, insight workflow, chat UI | complete |
 | 4 | Analytics dashboards — body weight, workouts, calories, mood, habits | complete |
-| 5 | Native integrations — Apple Health, Android Health Connect | planned |
+| 5 | Native app — Expo, HealthKit sync, Phoenix Channels, full screen parity | active |
 
 ## AI architecture
 

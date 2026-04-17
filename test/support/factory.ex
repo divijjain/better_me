@@ -83,7 +83,6 @@ defmodule BetterMe.Factory do
     %BodyMetric{
       date: Date.utc_today(),
       weight: 75.0,
-      measurements: %{},
       user: build(:user)
     }
   end

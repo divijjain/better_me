@@ -39,4 +39,21 @@ defmodule BetterMeWeb.HealthChannel do
 
     {:noreply, socket}
   end
+
+  # Receive PubSub broadcast from LogActivity action and push to mobile client
+  @impl true
+  def handle_info({:activity_logged, log}, socket) do
+    push(socket, "activity_logged", %{
+      activity: %{
+        id: log.id,
+        date: log.date,
+        steps: log.steps,
+        active_kcal: log.active_kcal,
+        resting_hr_bpm: log.resting_hr_bpm,
+        sleep_minutes: log.sleep_minutes
+      }
+    })
+
+    {:noreply, socket}
+  end
 end

@@ -1,6 +1,7 @@
 defmodule BetterMe.Health.Repository do
   import Ecto.Query
 
+  alias BetterMe.Health.Schema.ActivityLog
   alias BetterMe.Health.Schema.BodyMetric
   alias BetterMe.Repo
 
@@ -34,7 +35,7 @@ defmodule BetterMe.Health.Repository do
     %BodyMetric{user_id: user_id}
     |> BodyMetric.create_changeset(attrs)
     |> Repo.insert(
-      on_conflict: {:replace, [:weight, :body_fat_pct, :measurements, :updated_at]},
+      on_conflict: {:replace, [:weight, :body_fat_pct, :updated_at]},
       conflict_target: [:user_id, :date]
     )
   end
@@ -52,6 +53,37 @@ defmodule BetterMe.Health.Repository do
   def change_metric(metric, attrs \\ %{}) do
     BodyMetric.update_changeset(metric, attrs)
   end
+
+  # --- Activity Logs ---
+
+  def list_activity(user_id, opts \\ []) do
+    limit = Keyword.get(opts, :limit, 90)
+
+    ActivityLog
+    |> where(user_id: ^user_id)
+    |> order_by([a], desc: a.date)
+    |> limit(^limit)
+    |> Repo.all()
+  end
+
+  def get_activity_for_date(user_id, date) do
+    case Repo.get_by(ActivityLog, user_id: user_id, date: date) do
+      nil -> {:error, :not_found}
+      log -> {:ok, log}
+    end
+  end
+
+  def log_activity(user_id, attrs) do
+    %ActivityLog{user_id: user_id}
+    |> ActivityLog.changeset(attrs)
+    |> Repo.insert(
+      on_conflict:
+        {:replace, [:steps, :active_kcal, :resting_hr_bpm, :sleep_minutes, :updated_at]},
+      conflict_target: [:user_id, :date]
+    )
+  end
+
+  # --- Body Metrics ---
 
   def weight_trend(user_id, days \\ 30) do
     since = Date.add(Date.utc_today(), -days)

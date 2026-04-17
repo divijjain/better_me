@@ -54,10 +54,16 @@ defmodule BetterMeWeb.Router do
 
     get "/habits", HabitsController, :index
     post "/habits", HabitsController, :create
+    put "/habits/:id", HabitsController, :update
+    delete "/habits/:id", HabitsController, :delete
     post "/habits/:habit_id/log", HabitsController, :log
 
     get "/health/metrics", HealthController, :index
     post "/health/metrics", HealthController, :create
+    delete "/health/metrics/:id", HealthController, :delete
+
+    get "/health/activity", ActivityController, :index
+    post "/health/activity", ActivityController, :create
 
     get "/workouts", WorkoutsController, :index
     post "/workouts", WorkoutsController, :create
@@ -66,6 +72,7 @@ defmodule BetterMeWeb.Router do
 
     get "/todos", TodosController, :index
     post "/todos", TodosController, :create
+    patch "/todos/:id", TodosController, :update
     patch "/todos/:id/complete", TodosController, :complete
     delete "/todos/:id", TodosController, :delete
 

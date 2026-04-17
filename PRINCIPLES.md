@@ -389,19 +389,23 @@ defmodule BetterMe.Habits.Habit do
 end
 ```
 
-### embed flexible data as map
+### prefer typed columns over JSONB maps for known fields
 ```elixir
-# body_metric.ex — measurements vary per person
-schema "body_metrics" do
-  field :date,         :date
-  field :weight,       :float
-  field :body_fat_pct, :float
-  field :measurements, :map, default: %{}
-  # measurements stores: %{"chest" => 100, "waist" => 82, "hips" => 95}
+# activity_log.ex — steps/sleep/HR are all known fields with fixed types
+# Use a dedicated table with typed columns, not JSONB, so queries are efficient
+# and the schema enforces types at the Ecto layer.
+schema "activity_logs" do
+  field :date,            :date
+  field :steps,           :integer
+  field :active_kcal,     :float
+  field :resting_hr_bpm,  :integer
+  field :sleep_minutes,   :integer
   belongs_to :user, BetterMe.Accounts.User
   timestamps()
 end
 ```
+
+Use `:map` (JSONB) only for genuinely open-ended / user-defined data (e.g. recipe tags, journal metadata). If the keys are known at schema design time, model them as columns.
 
 ---
 

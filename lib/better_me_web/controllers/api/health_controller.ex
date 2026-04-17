@@ -23,6 +23,18 @@ defmodule BetterMeWeb.Api.HealthController do
     end
   end
 
+  def delete(conn, %{"id" => id}) do
+    user_id = conn.assigns.current_scope.user.id
+
+    with {:ok, metric} <- Health.get_metric(id, user_id),
+         {:ok, _} <- Health.delete_metric(metric) do
+      send_resp(conn, :no_content, "")
+    else
+      {:error, :not_found} ->
+        conn |> put_status(:not_found) |> json(%{errors: %{detail: "Not found"}})
+    end
+  end
+
   defp serialize(metric) do
     %{
       id: metric.id,

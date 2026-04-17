@@ -25,24 +25,22 @@ defmodule BetterMe.HealthTest do
       assert %{date: [_]} = errors_on(changeset)
     end
 
-    test "allows body_fat_pct and measurements", %{user: user} do
+    test "allows body_fat_pct", %{user: user} do
       attrs = %{
         date: Date.utc_today(),
         weight: 78.5,
-        body_fat_pct: 18.0,
-        measurements: %{"chest" => 100}
+        body_fat_pct: 18.0
       }
 
       assert {:ok, metric} = Health.log_metric(user.id, attrs)
       assert metric.body_fat_pct == 18.0
-      assert metric.measurements["chest"] == 100
     end
 
-    test "returns error for duplicate date", %{user: user} do
+    test "upserts on duplicate date", %{user: user} do
       date = Date.utc_today()
       assert {:ok, _} = Health.log_metric(user.id, %{date: date, weight: 75.0})
-      assert {:error, changeset} = Health.log_metric(user.id, %{date: date, weight: 76.0})
-      assert changeset.valid? == false
+      assert {:ok, metric} = Health.log_metric(user.id, %{date: date, weight: 76.0})
+      assert metric.weight == 76.0
     end
   end
 
