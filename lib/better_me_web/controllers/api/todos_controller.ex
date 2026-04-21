@@ -23,6 +23,21 @@ defmodule BetterMeWeb.Api.TodosController do
     end
   end
 
+  def update(conn, %{"id" => id, "todo" => attrs}) do
+    user_id = conn.assigns.current_scope.user.id
+
+    with {:ok, todo} <- Todos.get_todo(id, user_id),
+         {:ok, updated} <- Todos.update_todo(todo, attrs) do
+      json(conn, %{data: serialize(updated)})
+    else
+      {:error, :not_found} ->
+        conn |> put_status(:not_found) |> json(%{errors: %{detail: "Not found"}})
+
+      {:error, changeset} ->
+        conn |> put_status(:unprocessable_entity) |> json(%{errors: format_errors(changeset)})
+    end
+  end
+
   def complete(conn, %{"id" => id}) do
     user_id = conn.assigns.current_scope.user.id
 

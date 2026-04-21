@@ -22,6 +22,33 @@ defmodule BetterMeWeb.Api.HabitsController do
     end
   end
 
+  def update(conn, %{"id" => id, "habit" => attrs}) do
+    user_id = conn.assigns.current_scope.user.id
+
+    with {:ok, habit} <- Habits.get_habit(id, user_id),
+         {:ok, updated} <- Habits.update_habit(habit, attrs) do
+      json(conn, %{data: serialize(updated)})
+    else
+      {:error, :not_found} ->
+        conn |> put_status(:not_found) |> json(%{errors: %{detail: "Not found"}})
+
+      {:error, changeset} ->
+        conn |> put_status(:unprocessable_entity) |> json(%{errors: format_errors(changeset)})
+    end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    user_id = conn.assigns.current_scope.user.id
+
+    with {:ok, habit} <- Habits.get_habit(id, user_id),
+         {:ok, _} <- Habits.delete_habit(habit) do
+      send_resp(conn, :no_content, "")
+    else
+      {:error, :not_found} ->
+        conn |> put_status(:not_found) |> json(%{errors: %{detail: "Not found"}})
+    end
+  end
+
   def log(conn, %{"habit_id" => habit_id} = params) do
     attrs = if params["date"], do: %{date: params["date"]}, else: %{}
 

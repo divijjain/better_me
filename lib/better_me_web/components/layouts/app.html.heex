@@ -186,33 +186,53 @@
         id="more-btn"
         phx-click={
           JS.toggle(to: "#more-backdrop", display: "block")
-          |> JS.toggle(to: "#more-sheet",
-               in: {"transition-all duration-300 ease-out", "translate-y-full opacity-0", "translate-y-0 opacity-100"},
-               out: {"transition-all duration-200 ease-in", "translate-y-0 opacity-100", "translate-y-full opacity-0"})
+          |> JS.toggle(
+            to: "#more-sheet",
+            in:
+              {"transition-all duration-300 ease-out", "translate-y-full opacity-0",
+               "translate-y-0 opacity-100"},
+            out:
+              {"transition-all duration-200 ease-in", "translate-y-0 opacity-100",
+               "translate-y-full opacity-0"}
+          )
         }
         class={[
           "flex flex-col items-center gap-0.5 px-3 py-2 text-xs font-medium transition-colors min-w-0 flex-1",
-          if(String.starts_with?(@current_path, "/todos") or
-             String.starts_with?(@current_path, "/journal") or
-             String.starts_with?(@current_path, "/insights") or
-             String.starts_with?(@current_path, "/analytics") or
-             String.starts_with?(@current_path, "/profile"),
-             do: "text-teal-600",
-             else: "text-slate-400 hover:text-slate-600")
+          if(
+            String.starts_with?(@current_path, "/todos") or
+              String.starts_with?(@current_path, "/journal") or
+              String.starts_with?(@current_path, "/insights") or
+              String.starts_with?(@current_path, "/analytics") or
+              String.starts_with?(@current_path, "/profile"),
+            do: "text-teal-600",
+            else: "text-slate-400 hover:text-slate-600"
+          )
         ]}
       >
         <div class={[
           "flex items-center justify-center rounded-lg w-8 h-6 transition-colors",
-          if(String.starts_with?(@current_path, "/todos") or
-             String.starts_with?(@current_path, "/journal") or
-             String.starts_with?(@current_path, "/insights") or
-             String.starts_with?(@current_path, "/analytics") or
-             String.starts_with?(@current_path, "/profile"),
-             do: "bg-teal-50",
-             else: "")
+          if(
+            String.starts_with?(@current_path, "/todos") or
+              String.starts_with?(@current_path, "/journal") or
+              String.starts_with?(@current_path, "/insights") or
+              String.starts_with?(@current_path, "/analytics") or
+              String.starts_with?(@current_path, "/profile"),
+            do: "bg-teal-50",
+            else: ""
+          )
         ]}>
-          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
           </svg>
         </div>
         <span>More</span>
@@ -293,8 +313,18 @@
         method="delete"
         class="flex items-center gap-3 text-sm font-medium text-red-500"
       >
-        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+        <svg
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+          />
         </svg>
         Log out
       </.link>
